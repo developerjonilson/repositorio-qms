@@ -1,3 +1,17 @@
+/qms/node_modules
+/qms/public/hot
+/qms/public/storage
+/qms/storage/*.key
+/qms/vendor
+/qms/.idea
+/qms/.vagrant
+/qms/Homestead.json
+/qms/Homestead.yaml
+/qms/npm-debug.log
+/qms/.env
+/qms/.phpintel
+/.phpintel
+
 vendor/
 node_modules/
 npm-debug.log
