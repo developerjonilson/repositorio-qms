@@ -3,16 +3,15 @@
 
 O projeto tem como intuito fornecer um sistema simples e personalizado para o Sistema Único de Saúde, pois atualmente, os softwares usados não se enquadram na realidade brasileira, além de serem pesados e lentos.
 
-Planejamento
-***
+## Planejamento
 A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, onde as selecionadas já foram implementadas.
 
-# Geral
+### Geral
 - [x] Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**
 - [ ] Login no sistema
 
 
-# Módulo Operador
+### Módulo Operador
 - [ ] Alteração de Senha Padrão no Primeiro Login realizado
 - [ ] Perfil Usuário
 - [ ] Alteração de Perfil Usuário
@@ -30,7 +29,7 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 - [ ] Gerar relatório personalizado de consultas agendas
 
 
-# Módulo Administrador
+### Módulo Administrador
 - [ ] Alteração de Senha Padrão no Primeiro Login realizado
 - [ ] Perfil Usuário
 - [ ] Alteração de Perfil Usuário
