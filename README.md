@@ -10,8 +10,7 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 **Obs.:** Para ver detalhes da tarefa, clique em seu nome.
 
 ### Geral
-- [x] Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**
-[Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**](https://github.com/jonilsondeveloper/repositorio-qms/tree/master/planejamento/interfaces.md)
+- [x] [Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**](https://github.com/jonilsondeveloper/repositorio-qms/tree/master/planejamento/interfaces.md)
 - [ ] Login no sistema
 
 
