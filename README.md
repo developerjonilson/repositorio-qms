@@ -1,13 +1,17 @@
 # Projeto QMS - Query Management System
 ### Sistema de gestão de consultas médicas 
 
-O projeto tem como intuito fornecer um sistema simples e personalizado para o Sistema Único de Saúde, pois atualmente, os softwares usados não se enquadram na realidade brasileira, além de serem pesados e lentos.
+### O projeto tem como intuito fornecer um sistema simples e personalizado para o Sistema Único de Saúde, pois atualmente, os softwares usados não se enquadram na realidade brasileira, além de serem pesados e lentos.
+
+***
 
 ## Planejamento
 A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, onde as selecionadas já foram implementadas.
+**Obs.:** Para ver detalhes da tarefa, clique em seu nome.
 
 ### Geral
 - [x] Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**
+[Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**](https://github.com/jonilsondeveloper/repositorio-qms/tree/master/planejamento/interfaces.md)
 - [ ] Login no sistema
 
 
