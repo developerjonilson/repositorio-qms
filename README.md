@@ -1,53 +1,47 @@
 # Projeto QMS - Query Management System
-Sistema de gestão de consultas médicas 
+### Sistema de gestão de consultas médicas 
 
 O projeto tem como intuito fornecer um sistema simples e personalizado para o Sistema Único de Saúde, pois atualmente, os softwares usados não se enquadram na realidade brasileira, além de serem pesados e lentos.
 
 Planejamento
+***
+A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, onde as selecionadas já foram implementadas.
 
-A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, onde as selecionadas já foram implementadas
+# Geral
+- [x] Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**
+- [ ] Login no sistema
 
-Geral
 
- Login no sistema
-Administrador
+# Módulo Operador
+- [ ] Alteração de Senha Padrão no Primeiro Login realizado
+- [ ] Perfil Usuário
+- [ ] Alteração de Perfil Usuário
+- [ ] Alteração de Senha de Usuário
 
-Cadastrar primeiro administrador
-Cadastrar informações do hospital
-Gerenciamento de administradores
-Gerenciamento de médicos
-Liberar acesso ao histórico
-Médicos
+- [ ] Cadastrar Pacientes
+- [ ] Pesquisar Pacientes
+- [ ] Alterar registros de pacientes
+- [ ] Agendar consultas
+- [ ] Alterar consultas agendadas
+- [ ] Pesquisar Consultas
 
- Cadastro de carga horária
- Pesquisa de pacientes
- Consultas do dia
+- [ ] Gerar relatório diário de consultas agendas
+- [ ] Gerar relatório mensal de consultas agendas
+- [ ] Gerar relatório personalizado de consultas agendas
 
-Gerenciamento de pacientes
-Pesquisa por médico
-Gerenciamento de consultas
 
-Pesquisa de pacientes
+# Módulo Administrador
+- [ ] Alteração de Senha Padrão no Primeiro Login realizado
+- [ ] Perfil Usuário
+- [ ] Alteração de Perfil Usuário
+- [ ] Alteração de Senha de Usuário
 
-Extras
+- [ ] Cadastrar novos administradores
 
-Licença de uso
+- [ ] Cadastrar Médicos
+- [ ] Alterar registros de médicos
+- [ ] Cadastrar horários médicos
 
-Atualmente o sistema conta com a licença de uso GPL v3, com ela, o sistema exige algumas regras, veja-as resumidamente abaixo:
-
-Exigido:
-
-Aviso de licença e direitos autorais
-Mudanças de Estado
-Divulgação de código-fonte
-Permitido:
-
-Uso comercial
-Modificação
-Distribuição
-Concessão de Patente
-Proibido:
-
-Responsabilidade Assegurada
-Sublicenciamento
-Leia a documentação inteira clicando aqui, o texto acima foi retirado de Escolha uma licença
+- [ ] Cadastrar Operadores
+- [ ] Alterar Operadores
+- [ ] Excluir Operadores
