@@ -11,7 +11,7 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 
 ### Geral
 - [x] [Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/1-interfaces.md)
-- [ ] Login no sistema
+- [ ] [Login no sistema](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/2-login.md)
 
 
 ### Módulo Operador
