@@ -18,7 +18,6 @@ Route::get('/administrador/alterar-medico', 'AdministradorController@alterarMedi
 Route::get('/administrador/remover-operador', 'AdministradorController@removerOperador');
 Route::get('/administrador/remover-medico', 'AdministradorController@removerMedico');
 Route::get('/administrador/cadastrar-horario', 'AdministradorController@cadastrarHorario');
-Route::get('/administrador/manual-administrador', 'AdministradorController@manual');
 
 
 Route::get('/administrador/perfil', 'AdministradorController@perfilUsuario');
@@ -27,9 +26,6 @@ Route::get('/administrador/alterar-dados', 'AdministradorController@alterarUsuar
 
 
 //Rotas de operador
-Route::get('/operador', 'OperadorController@index');
-Route::get('/operador/perfil', 'OperadorController@index');
-Route::get('/operador/perfil/alterar', 'OperadorController@index');
 Route::get('/operador', 'OperadorController@index');
 
 Route::get('/operador/perfil', 'OperadorController@perfil');

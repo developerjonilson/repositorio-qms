@@ -38,28 +38,17 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">1</span>
-							</a>
-							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>Altere sua senha agora</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Bem-Vindo ao QMS</a></li>
-								<li><a href="#" class="more">Ver Todas as Notificações</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Manual de Usuário</a></li>
+								<li><a href="{{ action('SistemaController@manualOperador') }}">Manual de Usuário</a></li>
 								<li><a href="#">Falar com Administrador</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/user.png" class="img-circle" alt="Avatar"> <span>Fábio</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="perfil.html"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Configurações</span></a></li>
+								<li><a href="{{ action('OperadorController@perfil') }}"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
+								<li><a href="{{ action('OperadorController@alterarSenha') }}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
 								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Sair</span></a></li>
 							</ul>
 						</li>
