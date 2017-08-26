@@ -58,7 +58,6 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/user.png" class="img-circle" alt="Avatar"> <span>Fábio</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="perfil.html"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Mensagens</span></a></li>
 								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Configurações</span></a></li>
 								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Sair</span></a></li>
 							</ul>

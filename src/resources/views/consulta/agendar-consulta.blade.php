@@ -2,27 +2,15 @@
 
 @section('conteudo')
 
-	<h3 class="page-title">Agendar consulta</h3>
+	{{-- <h3 class="page-title">Agendar consulta</h3> --}}
 	<div class="row">
 		<div class="col-md-12">
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<h3 class="panel-title">Dados do paciente</h3>
-					<p class="panel-subtitle">O campo abaixo é obrigatório</p>
+					<h3 class="panel-title">Agendar consulta</h3>
 				</div>
 				<div class="panel-body">
-					<div class="row">
-						<div class="col-md-4">
-							<h4>Informe o CNS:</h4>
-							<div class="input-group">
-								<input type="text" class="form-control">
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-primary"><i class="fa fa-search"></i>Buscar</button>
-								</span>
-							</div>
-						</div>
-					</div><br>
 					<div class="row">
 						<hr>
 					</div>
@@ -65,7 +53,7 @@
 					</div><br>
 					<div class="row">
 						<div class="col-md-3">
-							<button type="button" class="btn btn-success"><i class="fa fa-calendar"></i> Agendar consulta</button>
+							<button type="button" class="btn btn-success"><i class="fa fa-calendar"></i>   Agendar consulta</button>
 						</div>
 					</div>
 				</div>

@@ -2,23 +2,23 @@
 
 @section('conteudo')
 
-	<h3 class="page-title">Checar consulta</h3>
+	{{-- <h3 class="page-title">Checar consulta</h3> --}}
 	<div class="row">
 		<div class="col-md-12">
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<h3 class="panel-title">Dados do paciente</h3>
-					<p class="panel-subtitle">O campo abaixo é obrigatório</p>
+					<h3 class="panel-title">Buscar consultas por paciente</h3>
+					<p class="panel-subtitle">(*) O campo abaixo é obrigatório</p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-4">
-							<h4>Informe o CNS:</h4>
+							<h4>Informe o CNS:*</h4>
 							<div class="input-group">
 								<input type="text" class="form-control">
 								<span class="input-group-btn">
-									<button type="button" class="btn btn-primary"><i class="fa fa-search"></i>Buscar</button>
+									<button type="button" class="btn btn-primary"><i class="lnr lnr-checkmark-circle"></i>    Buscar</button>
 								</span>
 							</div>
 						</div>
@@ -58,9 +58,9 @@
 									<td>Cícero Pereira</td>
 									<td>Em aberto</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-danger btn-sm">Editar</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 								<tr>
@@ -69,8 +69,8 @@
 									<td>Carlos Pedro</td>
 									<td>Encerrada</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 								<tr>
@@ -79,8 +79,8 @@
 									<td>Paulo Matias</td>
 									<td>Encerrada</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 								<tr>
@@ -89,8 +89,8 @@
 									<td>Paulo Matias</td>
 									<td>Encerrada</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 							</tbody>

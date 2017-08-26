@@ -2,7 +2,7 @@
 
 @section('conteudo')
 
-	<h3 class="page-title">Relatório mensal</h3>
+	{{-- <h3 class="page-title">Relatório mensal</h3> --}}
 	{{-- <div class="panel-heading">
 		<p class="panel-subtitle">Selecione o mês e o ano desejado, ao término clique no botão "Gerar relatório".</p>
 	</div> --}}
@@ -11,7 +11,7 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<h3 class="panel-title">Dados para o relatório</h3>
+					<h3 class="panel-title">Relatório mensal de consultas</h3>
 					<p class="panel-subtitle">Todos os campos abaixo são obrigatórios</p>
 				</div>
 				<div class="panel-body">
@@ -79,9 +79,8 @@
 									<td>Ortopedia</td>
 									<td>Cícero Pereira</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-danger btn-sm">Editar</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 								<tr>
@@ -89,9 +88,8 @@
 									<td>Pediatria</td>
 									<td>Marcos Paulo</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-danger btn-sm">Editar</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 								<tr>
@@ -99,9 +97,8 @@
 									<td>Cardiologia</td>
 									<td>Paulo Matias</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-danger btn-sm">Editar</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 								<tr>
@@ -109,9 +106,8 @@
 									<td>Anestesiologia</td>
 									<td>Henrique Cardoso</td>
 									<td>
-										<button type="button" class="btn btn-default btn-sm">Ver</button>
-										<button type="button" class="btn btn-danger btn-sm">Editar</button>
-										<button type="button" class="btn btn-success btn-sm">Imprimir</button>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
 									</td>
 								</tr>
 							</tbody>
@@ -119,7 +115,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<button type="button" class="btn btn-success"><i class="fa fa-line-chart"></i> Imprimir Relatório Completo</button>
+								<button type="button" class="btn btn-success btn-lg"><i class="fa fa-line-chart"></i> Imprimir Relatório Completo</button>
 							</div>
 						</div>
 
