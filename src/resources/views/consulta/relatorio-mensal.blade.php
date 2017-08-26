@@ -12,12 +12,13 @@
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					<h3 class="panel-title">Relatório mensal de consultas</h3>
-					<p class="panel-subtitle">Todos os campos abaixo são obrigatórios</p>
+					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-4">
-							<h4>Mês:</h4><select class="form-control">
+							<h4>Mês:<span class="vermelho">*</span></h4>
+							<select class="form-control">
 								<option value="cheese">Selecione</option>
 								<option value="tomatoes">Janeiro</option>
 								<option value="mozarella">Fevereiro</option>
@@ -35,7 +36,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<h4>Ano</h4>
+							<h4>Ano<span class="vermelho">*</span></h4>
 							<input class="form-control" type="text" name="" value="" placeholder="2017">
 						</div>
 						<div class="col-md-1">

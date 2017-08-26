@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="/vendor/chartist/css/chartist-custom.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/my-style.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="/css/demo.css">
 	<!-- GOOGLE FONTS -->

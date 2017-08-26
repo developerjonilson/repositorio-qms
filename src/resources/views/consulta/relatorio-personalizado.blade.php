@@ -9,7 +9,7 @@
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					<h3 class="panel-title">Relatórios Personalizados</h3>
-					<p class="panel-subtitle">Todos os campos abaixo são obrigatórios</p>
+					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -17,14 +17,14 @@
 
 	            <div class="col-sm-3">
 	              <div class="form-group">
-	                <label>Data*</label>
+									<h4>Data:<span class="vermelho">*</span></h4>
 	                <input type="date" name="data" class="form-control">
 	              </div>
 	            </div>
 
-	            <div class="col-sm-3">
+	            <div class="col-sm-4">
 	              <div class="form-group">
-	                  <label>Especialidade*</label>
+										<h4>Especialidade:<span class="vermelho">*</span></h4>
 	                  <select class="form-control" name="especialidade">
 	                      <option value="pediatria" selected>Pediatria</option>
 	                      <option value="ortopedia e traumatologia">Ortopedia e Traumatologia</option>
@@ -32,18 +32,18 @@
 	              </div>
 	            </div>
 
-	            <div class="col-sm-6">
+	            <div class="col-sm-5">
 	              <div class="form-group">
-	                  <label>Médico*</label>
+										<h4>Médico:<span class="vermelho">*</span></h4>
 	                  <select class="form-control" name="medico">
 	                      <option value="Pedro" selected>Pedro</option>
-	                      <option value="Paulo">Paulo</option>
+	                      <option value="Paulo">Paulo Francisco</option>
 	                  </select>
 	              </div>
 	            </div>
 
 	            <div class="col-sm-4">
-	              <button type="button" class="btn btn-primary"><i class="lnr lnr-magnifier"></i> Gerar Relatório</button>
+	              <button type="button" class="btn btn-primary"><i class="fa fa-line-chart"></i> Gerar Relatório</button>
 	            </div>
 
 	          </form>

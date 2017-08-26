@@ -9,12 +9,12 @@
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					<h3 class="panel-title">Buscar consultas por paciente</h3>
-					<p class="panel-subtitle">(*) O campo abaixo é obrigatório</p>
+					<p class="panel-subtitle"><span class="vermelho">(*) O campo abaixo é obrigatório</span></p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-4">
-							<h4>Informe o CNS:*</h4>
+							<h4>Informe o CNS:<span class="vermelho">*</span></h4>
 							<div class="input-group">
 								<input type="text" class="form-control">
 								<span class="input-group-btn">
