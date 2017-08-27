@@ -29,7 +29,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="index.html"><img src="/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a href="{{ action('AdministradorController@index')}}"><img src="/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -46,8 +46,8 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/user.png" class="img-circle" alt="Avatar"> <span>Fábio</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="perfil.html"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Configurações</span></a></li>
+								<li><a href="{{action('AdministradorController@perfilUsuario')}}"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
+								<li><a href="{{action('AdministradorController@alterarSenhaUsuario')}}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
 								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Sair</span></a></li>
 							</ul>
 						</li>
@@ -62,33 +62,43 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="index.html" class="active"><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
+						<li><a href="{{action('AdministradorController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
 
 						<li>
-							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Atendentes</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subAtendente" class="collapse ">
+								<ul class="nav">
+									<li><a href="#" class="">Cadastrar Atendente</a></li>
+									<li><a href="#" class="">Editar Atendente</a></li>
+									<li><a href="#" class="">Remover Atendente</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Operadores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPaciente" class="collapse ">
 								<ul class="nav">
-									<li><a href="cadastrar-paciente.html" class="">Cadastrar Paciente</a></li>
-									<li><a href="pesquisar-paciente.html" class="">Pesquisar Paciente</a></li>
+									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Cadastrar Operador</a></li>
+									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Editar Operador</a></li>
+									<li><a href="{{ action('AdministradorController@removerOperador') }}" class="">Remover Operador</a></li>
 								</ul>
 							</div>
 						</li>
 						<li>
-							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-user-md"></i> <span>Médicos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subConsulta" class="collapse ">
 								<ul class="nav">
-									<li><a href="agendar-consulta.html" class="">Agendar Consulta Médica</a></li>
-									<li><a href="pesquisar-consultas.html" class="">Pesquisar Consultas</a></li>
+									<li><a href="{{ action('AdministradorController@cadastrarMedico') }}">Cadastrar Médico</a></li>
+									<li><a href="{{ action('AdministradorController@alterarMedico') }}">Alterar dados dos Médicos</a></li>
+									<li><a href="{{ action('AdministradorController@removerMedico') }}">Remover Médicos</a></li>
 								</ul>
 							</div>
 						</li>
 						<li>
-							<a href="#subRelatorio" data-toggle="collapse" class="collapsed"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subRelatorio" class="collapse ">
+							<a href="#subCalendario" data-toggle="collapse" class="collapsed"><i class="lnr lnr-calendar-full"></i> <span>Calendários</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subCalendario" class="collapse ">
 								<ul class="nav">
-									<li><a href="page-profile.html" class="">Diário</a></li>
-									<li><a href="page-profile.html" class="">Mensal</a></li>
-									<li><a href="page-profile.html" class="">Personalizado</a></li>
+									<li><a href="{{ action('AdministradorController@cadastrarHorario') }}">Alterar Horários</a></li>
 								</ul>
 							</div>
 						</li>
