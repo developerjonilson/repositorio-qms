@@ -10,7 +10,8 @@
 				<div class="profile-header">
 					<div class="overlay"></div>
 					<div class="profile-main">
-						<img src="/img/user-medium.png" class="img-circle" alt="Avatar">
+						<i class="fa fa-user-circle fa-5x"></i>
+						{{-- <img src="/img/user-medium.png" class="img-circle" alt="Avatar"> --}}
 						<h3 class="name">Thiago</h3>
 					</div>
 				</div>

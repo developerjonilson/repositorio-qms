@@ -44,7 +44,7 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/user.png" class="img-circle" alt="Avatar"> <span>Fábio</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle"></i><span>Fábio</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="{{action('AdministradorController@perfilUsuario')}}"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
 								<li><a href="{{action('AdministradorController@alterarSenhaUsuario')}}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
