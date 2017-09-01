@@ -62,33 +62,101 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{ action('OperadorController@index') }}" class="active"><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
+						<li><a href="{{ action('OperadorController@index') }}" class="
+							@if(isset($rota) && ($rota  == 'operador'))
+								active
+							@endif
+							"><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
 
 						<li>
-							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPaciente" class="collapse ">
+							<a href="#subPaciente" data-toggle="collapse" class="
+							@if(isset($rota) && ($rota  == 'operador/cadastrar-paciente' || $rota  == 'operador/buscar-paciente'))
+									 active
+								@else
+									collapsed
+							@endif
+							"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPaciente" class="collapse
+							@if (isset($rota) && ($rota  == 'operador/cadastrar-paciente' || $rota  == 'operador/buscar-paciente'))
+									in
+							@endif
+							">
 								<ul class="nav">
-									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="">Cadastrar Paciente</a></li>
-									<li><a href="{{ action('PacienteController@buscarPaciente') }}" class="">Pesquisar Paciente</a></li>
+									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="
+										@if (isset($rota) && ($rota  == 'operador/cadastrar-paciente'))
+												active
+										@endif
+										">Cadastrar Paciente</a></li>
+									<li><a href="{{ action('PacienteController@buscarPaciente') }}" class="
+										@if (isset($rota) && ($rota  == 'operador/buscar-paciente'))
+												active
+										@endif
+										">Pesquisar Paciente</a></li>
 								</ul>
 							</div>
 						</li>
+
+
 						<li>
-							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subConsulta" class="collapse ">
+							<a href="#subConsulta" data-toggle="collapse" class="
+							@if(isset($rota) && ($rota  == 'operador/agendar-consulta' || $rota  == 'operador/buscar-consulta'))
+									 active
+								@else
+									collapsed
+							@endif
+							"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subConsulta" class="collapse
+							@if (isset($rota) && ($rota  == 'operador/agendar-consulta' || $rota  == 'operador/buscar-consulta'))
+									in
+							@endif
+							">
 								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="">Agendar Consulta Médica</a></li>
-									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="">Pesquisar Consultas</a></li>
+									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="
+										@if (isset($rota) && ($rota  == 'operador/agendar-consulta'))
+												active
+										@endif
+										">Agendar Consulta Médica</a></li>
+									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="
+										@if (isset($rota) && ($rota  == 'operador/buscar-consulta'))
+												active
+										@endif
+										">Pesquisar Consultas</a></li>
 								</ul>
 							</div>
 						</li>
+						@if (isset($rota) && ($rota == 'operador/relatorio-diario'))
+							active
+						@endif
+
 						<li>
-							<a href="#subRelatorio" data-toggle="collapse" class="collapsed"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subRelatorio" class="collapse ">
+							<a href="#subRelatorio" data-toggle="collapse" class="
+							@if (isset($rota) && ($rota == 'operador/relatorio-diario' || $rota == 'operador/relatorio-mensal' || $rota == 'operador/relatorio-personalizado'))
+								active
+							@else
+								collapsed
+							@endif
+							"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subRelatorio" class="collapse
+								@if (isset($rota) && ($rota == 'operador/relatorio-diario' || $rota == 'operador/relatorio-mensal' || $rota == 'operador/relatorio-personalizado'))
+									in
+								@endif
+							">
 								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@relatorioDiario') }}" class="">Diário</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioMensal') }}" class="">Mensal</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioPersonalizado') }}" class="">Personalizado</a></li>
+									<li><a href="{{ action('ConsultaController@relatorioDiario') }}" class="
+											@if (isset($rota) && ($rota == 'operador/relatorio-diario'))
+												active
+											@endif
+										">Diário</a></li>
+									<li><a href="{{ action('ConsultaController@relatorioMensal') }}" class="
+											@if (isset($rota) && ($rota == 'operador/relatorio-mensal'))
+												active
+											@endif
+										">Mensal</a></li>
+									<li><a href="{{ action('ConsultaController@relatorioPersonalizado') }}" class="
+											@if (isset($rota) && ($rota == 'operador/relatorio-personalizado'))
+												active
+											@endif
+										">Personalizado</a></li>
 								</ul>
 							</div>
 						</li>
@@ -126,6 +194,7 @@
 	<script src="/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 	<script src="/vendor/chartist/js/chartist.min.js"></script>
 	<script src="/scripts/klorofil-common.js"></script>
+	<script src="/scripts/script.js"></script>
 
 </body>
 
