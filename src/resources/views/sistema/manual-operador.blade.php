@@ -2,24 +2,22 @@
 
 @section('conteudo')
 
-	{{-- <h3 class="page-title">Buscar paciente</h3> --}}
-	<div class="row">
-		<div class="col-md-12">
-			<!-- PANEL HEADLINE -->
-			<div class="panel panel-headline">
-				<div class="panel-heading">
-					<h3 class="panel-title">Manual de Operador do QMS</h3>
-					<p class="panel-subtitle">Aqui abaixo você pode ver o manual de utilização do sistema QMS</p>
-					<hr>
-				</div>
-				<div class="panel-body">
-					<div class="row">
-						PDF fica aqui!
-					</div>
-				</div>
-			</div>
+  <div class="row">
+      <div class="col-lg-12">
+          <h1 class="page-header">Manual do QMS (Operador) - Query Management System</h1>
+      </div>
+      <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
 
-	</div>
-</div>
+  <div class="row">
+
+    <div class="form-group">
+      <button type="button" name="ver" class="btn btn-primary btn-large">Visualizar Manual do Sistema</button>
+    </div>
+
+
+  </div>
+  <!-- /.row -->
 
 @endsection
