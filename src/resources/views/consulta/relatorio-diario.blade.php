@@ -2,73 +2,78 @@
 
 @section('conteudo')
 
-  <div class="row">
-      <div class="col-lg-12">
-          <h1 class="page-header">Relatório Diário de Consultas Médicas</h1>
-      </div>
-      <!-- /.col-lg-12 -->
-  </div>
-  <!-- /.row -->
+	{{-- <h3 class="page-title">Relatório diário de consultas</h3> --}}
+	<div class="row">
+		<div class="col-md-12">
+			<!-- PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Relatório diário de consultas</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Paciente</th>
+								<th>Especialidade</th>
+								<th>Médico</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>João Carlos</td>
+								<td>Ortopedia</td>
+								<td>Cícero Pereira</td>
+								<td>
+									<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+									<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+									<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+								</td>
+							</tr>
+							<tr>
+								<td>Antônio Pedro</td>
+								<td>Pediatria</td>
+								<td>Marcos Paulo</td>
+								<td>
+									<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+									<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+									<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+								</td>
+							</tr>
+							<tr>
+								<td>Cícero Santos</td>
+								<td>Cardiologia</td>
+								<td>Paulo Matias</td>
+								<td>
+									<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+									<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+									<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+								</td>
+							</tr>
+							<tr>
+								<td>Leonardo da Silva</td>
+								<td>Anestesiologia</td>
+								<td>Henrique Cardoso</td>
+								<td>
+									<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+									<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+									<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
-  <div class="well">
+					<div class="row">
+						<div class="col-md-3">
+							<button type="button" class="btn btn-success btn-lg"><i class="fa fa-line-chart"></i> Gerar relatório</button>
+						</div>
+					</div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="panel panel-green">
-        <!-- Default panel contents -->
-        <div class="panel-heading btn-right">
-          <button type="button" name="relatorio" class="btn btn-primary"><i class="fa fa-print"></i>    Imprimir</button>
-        </div>
-        <!-- Table -->
-        <table class="table table-condensed table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Paciente</th>
-              <th>Especialidade</th>
-              <th>Médico</th>
-              <th class="coluna-botoes">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John</td>
-              <td>Ortopedia</td>
-              <td>Pedro Silva</td>
-              <td>
-                <button type="button" name="visualizar"  class="btn btn-outline btn-info btn-sm">Visualizar</button>
-                <button type="button" name="alterar"  class="btn btn-outline btn-warning btn-sm">Alterar</button>
-                <button type="button" name="gerar_pdf"  class="btn btn-outline btn-success btn-sm">Gerar PDF</button>
-              </td>
-            </tr>
-            <tr>
-              <td>John</td>
-              <td>Ortopedia</td>
-              <td>Pedro Silva</td>
-              <td>
-                <button type="button" name="visualizar"  class="btn btn-outline btn-info btn-sm">Visualizar</button>
-                <button type="button" name="alterar"  class="btn btn-outline btn-warning btn-sm">Alterar</button>
-                <button type="button" name="gerar_pdf"  class="btn btn-outline btn-success btn-sm">Gerar PDF</button>
-              </td>
-            </tr>
-            <tr>
-              <td>John</td>
-              <td>Ortopedia</td>
-              <td>Pedro Silva</td>
-              <td>
-                <button type="button" name="visualizar"  class="btn btn-outline btn-info btn-sm">Visualizar</button>
-                <button type="button" name="alterar"  class="btn btn-outline btn-warning btn-sm">Alterar</button>
-                <button type="button" name="gerar_pdf"  class="btn btn-outline btn-success btn-sm">Gerar PDF</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        </table>
-        </div>
-      </div>
-    </div>
-    <!-- /.row -->
-
-  </div>
+			</div>
+			<!-- END PANEL HEADLINE -->
+		</div>
+	</div>
+</div>
 
 @endsection

@@ -1,68 +1,45 @@
 @extends('layout.layout-operador')
 
 @section('conteudo')
-  <div class="row">
-      <div class="col-lg-12">
-          <h1 class="page-header">Alterar Senha de Usuário</h1>
-      </div>
-      <!-- /.col-lg-12 -->
-  </div>
-  <!-- /.row -->
 
-  <div class="row">
-    <label class="col-sm-1"></label>
-    <div class="col-sm-10">
-      <!-- alertas e mensagens -->
-    </div>
-    <label class="col-sm-1"></label>
-  </div>
+	<div class="row">
+		<div class="col-md-12">
+			<!-- PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Alterar senha de usuário</h3>
+					<p class="panel-subtitle"><span class="vermelho">(*) Todos os campos abaixo são obrigatórios</span></p>
+					<p class="panel-subtitle">A nova senha deve conter no mínimo de 6 caracteres</p>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Senha atual:<span class="vermelho">*</span></h4>
+							<input class="form-control" type="password" name="" value="" placeholder="">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Nova senha:<span class="vermelho">*</span></h4>
+							<input class="form-control" type="password" name="" value="">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Confirmar nova senha:<span class="vermelho">*</span></h4>
+							<input class="form-control" type="password" name="" value="" placeholder="">
+						</div>
+					</div><br>
+					<div class="row">
+						<div class="col-md-2">
+							<button type="button" class="btn btn-success"><i class="lnr lnr-checkmark-circle"></i> Salvar alterações</button>
+						</div>
+					</div>
+				</div><br>
 
-  <div class="row">
-    <label class="col-sm-3"></label>
-    <div class="col-sm-6">
-      <form class="" action="#" method="post">
-          <div class="panel panel-warning">
-            <div class="panel-heading">
-              Formulário para alteração de senha
-            </div>
-            <div class="panel-body">
-              <div class="col-sm-12">
-                <div class="form-group">
-                    <label>Senha Atual</label>
-                    <input type="password" class="form-control" name="senha" value="" placeholder="Senha Usada Atualmente" autofocus>
-                </div>
-              </div>
+				</div>
+			</div>
+			<!-- END PANEL HEADLINE -->
+		</div>
 
-              <div class="col-sm-12">
-                <div class="form-group">
-                    <label>Nova Senha</label>
-                    <input type="password" class="form-control" name="novaSenha" value="" placeholder="Nova Senha">
-                </div>
-              </div>
-
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label>Confirmar Nova Senha</label>
-                  <input type="password" class="form-control" name="confirmarNovaSenha" value="" placeholder="Confirme a Nova Senha">
-                </div>
-              </div>
-
-              <div class="col-sm-5">
-                <button type="submit" class="btn btn-success"><i class="fa fa-check fa-fw"></i>  Confirmar Alteração</button>
-              </div>
-
-              <div class="col-sm-5">
-                <a href="#" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>  Cancelar</a>
-              </div>
-            </div>
-          </div>
-      </form>
-
-    </div>
-    <label class="col-sm-3"></label>
-  </div>
-  <!-- /.row -->
-
-  </div>
-  <!-- /#page-wrapper -->
 @endsection

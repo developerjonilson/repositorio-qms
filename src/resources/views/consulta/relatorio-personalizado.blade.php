@@ -2,114 +2,135 @@
 
 @section('conteudo')
 
-  <div class="row">
-      <div class="col-lg-12">
-          <h1 class="page-header">Relatório Personalizado de Consultas Médicas</h1>
-      </div>
-      <!-- /.col-lg-12 -->
-  </div>
-  <!-- /.row -->
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="panel panel-green">
-        <div class="panel-heading">
-          Informe os campos desejados para o relátorio
-        </div>
-        <div class="panel-body">
-          <form class="" action="#" method="post">
+	{{-- <h3 class="page-title">Relatórios Personalizados</h3> --}}
+	<div class="row">
+		<div class="col-md-12">
+			<!-- PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Relatórios Personalizados</h3>
+					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<form class="" action="#" method="post">
 
-            <div class="col-sm-3">
-              <div class="form-group">
-                <label>Data</label>
-                <input type="date" name="data" class="form-control">
-              </div>
-            </div>
+	            <div class="col-sm-3">
+	              <div class="form-group">
+									<h4>Data:<span class="vermelho">*</span></h4>
+	                <input type="date" name="data" class="form-control">
+	              </div>
+	            </div>
 
-            <div class="col-sm-3">
-              <div class="form-group">
-                  <label>Especialidade*</label>
-                  <select class="form-control" name="especialidade">
-                      <option value="pediatria" selected>Pediatria</option>
-                      <option value="ortopedia e traumatologia">Ortopedia e Traumatologia</option>
-                  </select>
-              </div>
-            </div>
+	            <div class="col-sm-4">
+	              <div class="form-group">
+										<h4>Especialidade:<span class="vermelho">*</span></h4>
+	                  <select class="form-control" name="especialidade">
+	                      <option value="pediatria" selected>Pediatria</option>
+	                      <option value="ortopedia e traumatologia">Ortopedia e Traumatologia</option>
+	                  </select>
+	              </div>
+	            </div>
 
-            <div class="col-sm-6">
-              <div class="form-group">
-                  <label>Médico*</label>
-                  <select class="form-control" name="medico">
-                      <option value="Pedro" selected>Pedro</option>
-                      <option value="Paulo">Paulo</option>
-                  </select>
-              </div>
-            </div>
+	            <div class="col-sm-5">
+	              <div class="form-group">
+										<h4>Médico:<span class="vermelho">*</span></h4>
+	                  <select class="form-control" name="medico">
+	                      <option value="Pedro" selected>Pedro</option>
+	                      <option value="Paulo">Paulo Francisco</option>
+	                  </select>
+	              </div>
+	            </div>
 
-            <div class="col-sm-4">
-              <button type="submit" class="btn btn-success"><i class="fa fa-search fa-fw"></i>  Gerar</button>
-            </div>
+	            <div class="col-sm-4">
+	              <button type="button" class="btn btn-primary"><i class="fa fa-line-chart"></i> Gerar Relatório</button>
+	            </div>
 
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+	          </form>
+					</div>
 
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="panel panel-green">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        <button type="button" name="relatorio" class="btn btn-primary btn-sm btn-right">Imprimir Relatório Completo</button>
-      </div>
-      <!-- Table -->
-      <table class="table table-condensed table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Paciente</th>
-            <th>Especialidade</th>
-            <th>Médico</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John</td>
-            <td>Ortopedia</td>
-            <td>Pedro Silva</td>
-            <td>
-              <button type="button" name="visualizar"  class="btn btn-info btn-sm">Visualizar</button>
-              <button type="button" name="alterar"  class="btn btn-primary btn-sm">Alterar</button>
-              <button type="button" name="gerar_pdf"  class="btn btn-success btn-sm">Gerar PDF</button>
-            </td>
-          </tr>
-          <tr>
-            <td>John</td>
-            <td>Ortopedia</td>
-            <td>Pedro Silva</td>
-            <td>
-              <button type="button" name="visualizar"  class="btn btn-info btn-sm">Visualizar</button>
-              <button type="button" name="alterar"  class="btn btn-primary btn-sm">Alterar</button>
-              <button type="button" name="gerar_pdf"  class="btn btn-success btn-sm">Gerar PDF</button>
-            </td>
-          </tr>
-          <tr>
-            <td>John</td>
-            <td>Ortopedia</td>
-            <td>Pedro Silva</td>
-            <td>
-              <button type="button" name="visualizar"  class="btn btn-info btn-sm">Visualizar</button>
-              <button type="button" name="alterar"  class="btn btn-primary btn-sm">Alterar</button>
-              <button type="button" name="gerar_pdf"  class="btn btn-success btn-sm">Gerar PDF</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+					<br>
+				</div>
+			</div>
+			<!-- END PANEL HEADLINE -->
+		</div>
 
-      </table>
-      </div>
-    </div>
-  </div>
-  <!-- /.row -->
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Consultas</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Paciente</th>
+									<th>Especialidade</th>
+									<th>Médico</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>João Carlos</td>
+									<td>Ortopedia</td>
+									<td>Cícero Pereira</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+								<tr>
+									<td>Antônio Pedro</td>
+									<td>Pediatria</td>
+									<td>Marcos Paulo</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+								<tr>
+									<td>Cícero Santos</td>
+									<td>Cardiologia</td>
+									<td>Paulo Matias</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+								<tr>
+									<td>Leonardo da Silva</td>
+									<td>Anestesiologia</td>
+									<td>Henrique Cardoso</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="row">
+							<div class="col-md-3">
+								<button type="button" class="btn btn-success btn-lg"><i class="fa fa-line-chart"></i> Imprimir Relatório Completo</button>
+							</div>
+						</div>
+
+					</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- END PANEL HEADLINE -->
+		</div>
 
 @endsection

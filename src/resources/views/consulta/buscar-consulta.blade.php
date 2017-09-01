@@ -2,51 +2,106 @@
 
 @section('conteudo')
 
-  <div class="row">
-      <div class="col-lg-12">
-          <h1 class="page-header">Pesquisa de Consultas Médicas</h1>
-      </div>
-      <!-- /.col-lg-12 -->
-  </div>
-  <!-- /.row -->
+	{{-- <h3 class="page-title">Checar consulta</h3> --}}
+	<div class="row">
+		<div class="col-md-12">
+			<!-- PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Buscar consultas por paciente</h3>
+					<p class="panel-subtitle"><span class="vermelho">(*) O campo abaixo é obrigatório</span></p>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-4">
+							<h4>Informe o CNS:<span class="vermelho">*</span></h4>
+							<div class="input-group">
+								<input type="text" class="form-control">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-primary"><i class="lnr lnr-checkmark-circle"></i>    Buscar</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<hr>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Paciente:</h4><div class="form-control">Carlos Henrique Matias</div>
+						</div>
+						<div class="col-md-3">
+							<h4>CNS:</h4><div class="form-control">1234-1234-1234-1234</div>
+						</div>
+						<div class="col-md-3">
+							<h4>CPF:</h4><div class="form-control">123.456.789-10</div>
+						</div>
+					</div>
+					<div class="row">
+						<hr>
+					</div>
+					<div class="row">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID da consulta</th>
+									<th>Data da consulta</th>
+									<th>Médico</th>
+									<th>Status</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>25/10/2017</td>
+									<td>Cícero Pereira</td>
+									<td>Em aberto</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-warning"><i class="lnr lnr-pencil"></i>   Editar</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>05/08/2017</td>
+									<td>Carlos Pedro</td>
+									<td>Encerrada</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>02/02/2017</td>
+									<td>Paulo Matias</td>
+									<td>Encerrada</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>02/02/2017</td>
+									<td>Paulo Matias</td>
+									<td>Encerrada</td>
+									<td>
+										<button type="button" class="btn btn-info"><i class="lnr lnr-eye"></i>   Ver</button>
+										<button type="button" class="btn btn-success"><i class="lnr lnr-printer"></i>   Imprimir</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-  <div class="well">
+			</div>
+			<!-- END PANEL HEADLINE -->
+		</div>
 
-    <div class="row">
-      <form class="" action="index.html" method="post">
-        <div class="col-sm-12">
+	</div>
+</div>
 
-          <div class="panel panel-green">
-            <div class="panel-heading">
-              Por favor preencha um dos campos com os dados do paciente para a pesquisa
-            </div>
-            <div class="panel-body">
-
-              <div class="col-sm-6">
-                <div class="form-group">
-                    <label>CPF</label>
-                    <input type="text" class="form-control" name="cpf" value="" placeholder="000.000.000-00">
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Número do Cartão do SUS</label>
-                    <input type="text" class="form-control" name="cartaoSus" value="" placeholder="0000.0000.0000.0000">
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <button type="submit" class="btn btn-success"><i class="fa fa-search fa-fw"></i>  Pesquisar</button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <!-- /.row -->
-
-
-  </div>
 @endsection

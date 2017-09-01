@@ -2,114 +2,74 @@
 
 @section('conteudo')
 
-  <div class="row">
-      <div class="col-lg-12">
-          <h1 class="page-header">Agendamento de Consulta Médica</h1>
-      </div>
-      <!-- /.col-lg-12 -->
-  </div>
-  <!-- /.row -->
-  <div class="well">
+	{{-- <h3 class="page-title">Agendar consulta</h3> --}}
+	<div class="row">
+		<div class="col-md-12">
+			<!-- PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Agendar consulta</h3>
+					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<hr>
+						<div class="col-md-6">
+							<h4>Paciente:</h4><div class="form-control">Carlos Henrique Matias</div>
+						</div>
+						<div class="col-md-3">
+							<h4>CNS:</h4><div class="form-control">1234-1234-1234-1234</div>
+						</div>
+						<div class="col-md-3">
+							<h4>CPF:</h4><div class="form-control">123.456.789-10</div>
+						</div>
+					</div>
+					<div class="row">
+						<hr>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h4>Período:<span class="vermelho">*</span></h4>
+							<select class="form-control">
+								<option value="0">Selecione</option>
+								<option value="manha">Manhã</option>
+								<option value="tarde">Tarde</option>
+								<option value="noite">Noite</option>
+							</select>
+						</div>
+						<div class="col-md-3">
+							<h4>Data da consulta:<span class="vermelho">*</span></h4>
+							<input class="form-control" type="date" name="" value="">
+						</div>
+						<div class="col-md-6">
+							<h4>Especialidade:<span class="vermelho">*</span></h4>
+							<select class="form-control">
+								<option value="0">Selecione</option>
+								<option value="1"></option>
+								<option value="2"></option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h4>Nome do médico:<span class="vermelho">*</span></h4>
+							<select class="form-control">
+								<option value="0">Selecione</option>
+								<option value="1"></option>
+								<option value="2"></option>
+							</select>
+						</div>
+					</div><br>
+					<div class="row">
+						<div class="col-md-3">
+							<button type="button" class="btn btn-success"><i class="fa fa-calendar"></i>   Agendar consulta</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END PANEL HEADLINE -->
+		</div>
 
-    <div class="row">
-      <form class="" action="#" method="post">
-      <div class="col-sm-12">
-        <div class="panel panel-green">
-          <div class="panel-heading">
-            Informações do Paciente
-          </div>
-          <div class="panel-body">
-            <div class="col-lg-6">
-              <div class="form-group">
-                  <label>CPF*</label>
-                  <input type="text" class="form-control" name="cpf" value="" placeholder="000.000.000-00" autofocus>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="form-group">
-                  <label>Número do Cartão do SUS*</label>
-                  <input type="text" class="form-control" name="cartaoSus" value="" placeholder="0000.0000.0000.0000">
-              </div>
-            </div>
-
-            <div class="col-sm-12">
-              <div class="form-group">
-                  <label>Nome Completo*</label>
-                  <input type="text" class="form-control" name="nome" value="" disabled>
-              </div>
-            </div>
-          </div>
-          <div class="panel-footer">
-            Nessa etapa o paciente já deve estar cadastrado no sistema.
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12">
-        <div class="panel panel-green">
-          <div class="panel-heading">
-            Informações da Consulta
-          </div>
-          <div class="panel-body">
-            <div class="col-sm-4">
-              <div class="form-group">
-                  <label>Especialidade*</label>
-                  <select class="form-control" name="especialidade">
-                      <option value="pediatria" selected>Pediatria</option>
-                      <option value="ortopedia e traumatologia">Ortopedia e Traumatologia</option>
-                  </select>
-              </div>
-            </div>
-
-            <div class="col-sm-8">
-              <div class="form-group">
-                  <label>Médico*</label>
-                  <select class="form-control" name="medico">
-                      <option value="Pedro" selected>Pedro</option>
-                      <option value="Paulo">Paulo</option>
-                  </select>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="form-group">
-                  <label>Data da Consulta*</label>
-                  <input type="date" class="form-control" name="data">
-              </div>
-            </div>
-
-            <div class="col-sm-8">
-              <div class="form-group">
-                  <label>Local da Consulta*</label>
-                  <select class="form-control" name="local">
-                      <option value="hospital" selected>Hospital Nossa Senhora dos Milagres</option>
-                  </select>
-              </div>
-            </div>
-
-            <div class="col-lg-12">
-              <div class="form-group">
-                  <label>Observações</label>
-                  <textarea class="form-control" rows="3" name="observacao"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-12">
-        <div class="col-sm-4">
-          <button type="submit" class="btn btn-success"><i class="fa fa-check fa-fw"></i>  Confirmar Agendamento de Consulta</button>
-        </div>
-        <div class="col-sm-4">
-          <a href="#" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>  Cancelar</a>
-        </div>
-      </div>
-      <label></label>
-      </form>
-    </div>
-    <!-- /.row -->
-
-  </div>
+	</div>
 
 @endsection
