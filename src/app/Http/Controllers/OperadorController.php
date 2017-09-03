@@ -6,18 +6,10 @@ use Illuminate\Http\Request;
 
 class OperadorController extends Controller
 {
-  public function index() {
-    return view('operador.index');
+  public function index(Request $request) {
+    $uri = $request->path();
+    return view('operador.index')->with('rota', $uri);
   }
-
-  public function cadastrarPaciente() {
-    return view('paciente.cadastrar-paciente');
-  }
-
-  public function buscarPaciente() {
-    return view('paciente.buscar-paciente');
-  }
-
 
   //aagora funções do usuario logado:
   public function perfil() {

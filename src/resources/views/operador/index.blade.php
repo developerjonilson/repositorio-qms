@@ -48,8 +48,7 @@
 			</div>
 			<div class="row">
 
-				colocar alguma coisa aqui!
-
+				colocar alguma coisa aqui
 			</div>
 		</div>
 	</div>

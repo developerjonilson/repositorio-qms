@@ -62,33 +62,35 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{ action('OperadorController@index') }}" class="active"><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
+						<li><a href="{{ action('OperadorController@index') }}" id="home" class=""><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
 
 						<li>
-							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPaciente" class="collapse ">
+							<a href="#subPaciente" id="pacientes" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPaciente" class="collapse">
 								<ul class="nav">
-									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="">Cadastrar Paciente</a></li>
-									<li><a href="{{ action('PacienteController@buscarPaciente') }}" class="">Pesquisar Paciente</a></li>
+									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="" id="menu_cadastrar_paciente">Cadastrar Paciente</a></li>
+									<li><a href="{{ action('PacienteController@buscarPaciente') }}" class="" id="menu_pesquisar_paciente">Pesquisar Paciente</a></li>
 								</ul>
 							</div>
 						</li>
+
 						<li>
-							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subConsulta" class="collapse ">
+							<a href="#subConsulta" id="consultas" data-toggle="collapse" class="collapsed"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subConsulta" class="collapse">
 								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="">Agendar Consulta Médica</a></li>
-									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="">Pesquisar Consultas</a></li>
+									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="" id="menu_agendar_consulta">Agendar Consulta Médica</a></li>
+									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="" id="menu_pesquisar_consulta">Pesquisar Consultas</a></li>
 								</ul>
 							</div>
 						</li>
+
 						<li>
-							<a href="#subRelatorio" data-toggle="collapse" class="collapsed"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subRelatorio" class="collapse ">
+							<a href="#subRelatorio" id="relatorios" data-toggle="collapse" class="collapsed"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subRelatorio" class="collapse">
 								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@relatorioDiario') }}" class="">Diário</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioMensal') }}" class="">Mensal</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioPersonalizado') }}" class="">Personalizado</a></li>
+									<li><a href="{{ action('ConsultaController@relatorioDiario') }}" class="" id="menu_relatorio_diario">Diário</a></li>
+									<li><a href="{{ action('ConsultaController@relatorioMensal') }}" class="" id="menu_relatorio_mensal">Mensal</a></li>
+									<li><a href="{{ action('ConsultaController@relatorioPersonalizado') }}" class="" id="menu_relatorio_personalizado">Personalizado</a></li>
 								</ul>
 							</div>
 						</li>
@@ -126,6 +128,7 @@
 	<script src="/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 	<script src="/vendor/chartist/js/chartist.min.js"></script>
 	<script src="/scripts/klorofil-common.js"></script>
+	<script src="/scripts/script.js"></script>
 
 </body>
 
