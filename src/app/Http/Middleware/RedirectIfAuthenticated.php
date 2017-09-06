@@ -17,8 +17,23 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // if (Auth::guard($guard)->check()) {
+        //     return redirect('/home');
+        // }
+
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+          $tipoUser = \Auth::user()->tipo;
+            if (strcmp($tipoUser, 'operador' ) == 0) {
+              return redirect('/operador');
+            } else {
+              if (strcmp($tipoUser, 'administrador' ) == 0) {
+                return redirect('/administrador');
+              } else {
+                // aqui é pra retornar para o index de atendende, que não foi feito ainda
+                return redirect('/administrador');
+              }
+
+            }
         }
 
         return $next($request);

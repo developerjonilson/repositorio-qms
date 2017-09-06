@@ -1,9 +1,4 @@
 $(document).ready(function () {
-  var url = window.location.href;
-  //alert(url);
-
-  // var pathname = window.location.pathname;
-  //alert(pathname);
 
   $(window).on('load', function() {
     var pathname = window.location.pathname;

@@ -1,4 +1,4 @@
-@extends('layout.layout-operador')
+@extends('layouts.layout-operador')
 
 @section('conteudo')
 

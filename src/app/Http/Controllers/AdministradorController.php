@@ -4,8 +4,12 @@ namespace qms\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdministradorController extends Controller
-{
+class AdministradorController extends Controller {
+
+  public function __construct() {
+      $this->middleware('auth');
+      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddlewareAdministrador::class');
+  }
 
   public function index() {
     return view('administrador.index');
@@ -35,10 +39,6 @@ class AdministradorController extends Controller
     return view('administrador.cadastrar-horario');
   }
 
-  public function manual() {
-    return view('sistema.manual-administrador');
-  }
-
   public function perfilUsuario() {
     return view('administrador.perfil-usuario');
   }
@@ -49,5 +49,13 @@ class AdministradorController extends Controller
 
   public function alterarSenhaUsuario() {
     return view('administrador.alterar-senha-usuario');
+  }
+
+  public function manualAdministrador() {
+    return view('administrador.manual-administrador');
+  }
+
+  public function acessoNegadoAdministrador() {
+    return view('administrador.erro-acesso-administrador');
   }
 }

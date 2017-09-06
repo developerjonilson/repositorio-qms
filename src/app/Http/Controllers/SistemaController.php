@@ -4,13 +4,13 @@ namespace qms\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SistemaController extends Controller
-{
-  public function manualOperador() {
-    return view('sistema.manual-operador');
+class SistemaController extends Controller {
+  public function __construct() {
+      $this->middleware('auth');
   }
 
-  public function manualAdministrador() {
-    return view('sistema.manual-administrador');
+  public function acessoNegadoAtendente() {
+    return view('sistema.erro-acesso-atendente');
   }
+
 }
