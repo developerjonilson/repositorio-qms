@@ -12,7 +12,7 @@
 					<div class="profile-main">
 						<i class="fa fa-user-circle fa-5x"></i>
 						{{-- <img src="/img/user-medium.png" class="img-circle" alt="Avatar"> --}}
-						<h3 class="name">Thiago</h3>
+						{{-- <h3 class="name">{{ Auth::user()->name }}</h3> --}}
 					</div>
 				</div>
 				<!-- END PROFILE HEADER -->
@@ -21,8 +21,8 @@
 					<div class="profile-info">
 						<h4 class="heading">Informações Pessoais</h4>
 						<ul class="list-unstyled list-justify">
-							<li>CPF <span> 123.456.789-01</span></li>
-							<li>RG <span>2349234</span></li>
+							<li>CPF <span> {{ Auth::user()->cpf }}</span></li>
+							<li>RG <span>{{ Auth::user()->rg }}</span></li>
 							<li>Data de Nascimento <span>15/08/1990</span></li>
 						</ul>
 					</div>
@@ -32,7 +32,7 @@
 			<!-- END LEFT COLUMN -->
 			<!-- RIGHT COLUMN -->
 			<div class="profile-right">
-				<h4 class="heading">Thiago da Silva</h4>
+				<h4 class="heading">{{ Auth::user()->name }}</h4>
 				<div class="text-center"><a href="#" class="btn btn-primary">Editar Perfil</a></div>
 				<!-- TABBED CONTENT -->
 				<div class="custom-tabs-line tabs-line-bottom left-aligned">
@@ -46,7 +46,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<label>Telefone</label>
-								<input type="text" class="form-control" name="" value="(88) 98234-9235" disabled>
+								<input type="text" class="form-control" name="" value="" disabled>
 							</div>
 						</div>
 						<div class="row">
@@ -58,7 +58,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<label>Email</label>
-								<input type="text" class="form-control" name="" value="thiago@mail.com" disabled>
+								<input type="text" class="form-control" name="" value="{{ Auth::user()->email }}" disabled>
 							</div>
 						</div>
 						<br><br><br><br>
@@ -68,7 +68,7 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Rua</label>
-									<input type="text" class="form-control" value="Francisco da Rocha" disabled >
+									<input type="text" class="form-control" value="{{ Auth::user()->endereco_id }}" disabled >
 								</div>
 							</div>
 						</div>

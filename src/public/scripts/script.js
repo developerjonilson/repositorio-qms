@@ -54,5 +54,12 @@ $(document).ready(function () {
 
   });
 
-
+  $('#enviar').on('click', function() {
+    if ($('#senha_atual').val() != '' && $('#nova_senha').val() != '' && $('#confirma_nova_senha').val() != '') {
+      $('#icone-btn').removeClass('fa-check-circle');
+      $('#icone-btn').addClass('fa-spinner fa-spin');
+      $('.campo').attr('disabled', true);
+      $('#enviar').addClass('disabled');
+    }
+  });
 });

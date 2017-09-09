@@ -11,7 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        //$this->call(UsuarioTableSeeder::class);
+
         DB::table('telefones')->insert([
            'telefone_um' => '999410067',
            'telefone_dois' => '999410067',
@@ -40,9 +41,15 @@ class DatabaseSeeder extends Seeder
           'password'=> bcrypt('123456'),
           'cpf'=> '12345678902',
           'rg'=> '2007819984',
+          // 'data_nascimento'=> date('10/10/1998'),
           'tipo'=> 'administrador',
+          'numero_alteracao_senha'=> '0',
+          // 'data_alteracao_senha'=> date("d/m/Y"),
           'endereco_id'=> 1,
           'telefones_id'=> 1,
+          'created_at'=> date("Y/m/d h:i:s"),
+          'updated_at'=> date("Y/m/d h:i:s"),
         ]);
+
     }
 }
