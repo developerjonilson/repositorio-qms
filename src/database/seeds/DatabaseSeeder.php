@@ -30,21 +30,21 @@ class DatabaseSeeder extends Seeder
 
         DB::table('enderecos')->insert([
            'rua' => 'Francisco da Silva Pereira Costa',
-           'numero' => 100,
+           'numero' => 50,
            'bairro' => 'Bela Vista',
            'cidade_id' => 1,
         ]);
 
         DB::table('users')->insert([
-          'name'=> 'Pedro Admin',
-          'email'=> 'pedro.admin@gmail.com',
+          'name'=> 'Bruno da Silva Santos',
+          'email'=> 'bruno@gmail.com',
           'password'=> bcrypt('123456'),
-          'cpf'=> '12345678902',
-          'rg'=> '2007819984',
-          // 'data_nascimento'=> date('10/10/1998'),
-          'tipo'=> 'administrador',
-          'numero_alteracao_senha'=> '0',
-          // 'data_alteracao_senha'=> date("d/m/Y"),
+          'cpf'=> '12345678901',
+          'rg'=> '2007819982',
+          // 'data_nascimento'=> date("Y/m/d","1998/12/10"),
+          'tipo'=> 'operador',
+          // 'numero_alteracao_senha'=> '0',
+          // 'data_alteracao_senha'=> date("Y/m/d"),
           'endereco_id'=> 1,
           'telefones_id'=> 1,
           'created_at'=> date("Y/m/d h:i:s"),

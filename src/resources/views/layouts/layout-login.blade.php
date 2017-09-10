@@ -39,6 +39,14 @@
 		</div>
 	</div>
 	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="/vend/jquery/jquery.min.js"></script>
+	<script src="/vend/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/vend/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="/vend/chartist/js/chartist.min.js"></script>
+	<script src="/scripts/klorofil-common.js"></script>
+	<script src="/scripts/script.js"></script>
 </body>
 
 </html>

@@ -20,19 +20,6 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    // protected function redirectPath() {
-    //   if (strcmp(\Auth::user()->tipo, 'operador') == 0) {
-    //     return '/operador';
-    //   } else {
-    //     if (strcmp(\Auth::user()->tipo, 'administrador') == 0) {
-    //       return '/administrador';
-    //     } else {
-    //       //aqui é pra redirecionar para atendente index:
-    //       return '/administrador';
-    //     }
-    //   }
-    // }
-
     protected function redirectTo() {
       if (strcmp(\Auth::user()->tipo, 'operador') == 0) {
         return '/operador';
@@ -46,7 +33,18 @@ class LoginController extends Controller
       }
     }
 
-    // protected $redirectTo = '/operador';
+    // protected function redirectTo() {
+    //   if (strcmp(\Auth::user()->tipo, 'operador') == 0) {
+    //     return '/operador';
+    //   } else {
+    //     if (strcmp(\Auth::user()->tipo, 'administrador') == 0) {
+    //       return '/administrador';
+    //     } else {
+    //       //aqui é pra redirecionar para atendente index:
+    //       return '/administrador';
+    //     }
+    //   }
+    // }
 
     /**
      * Create a new controller instance.

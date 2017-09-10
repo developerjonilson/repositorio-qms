@@ -16,17 +16,17 @@
             </span>
         @endif
       </div>
-      <form class="form-auth-small" method="POST" action="{{ route('login') }}">
+      <form class="form-auth-small" method="POST" action="{{ route('login') }}" id="form_login">
         {{ csrf_field() }}
         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
           <label for="email" class="control-label sr-only">Email</label>
-          <input id="email" type="email" class="form-control" name="email" placeholder="Email" required autofocus>
+          <input id="email" type="email" class="form-control" name="email" id="email" placeholder="Email" required autofocus>
         </div>
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
           <label for="password" class="control-label sr-only">Senha</label>
-          <input id="password" type="password" class="form-control" name="password" placeholder="*************" required>
+          <input id="password" type="password" class="form-control campo" name="password" id="password" placeholder="*************" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn_login"><i id="icone_btn_login" class=""></i>LOGIN</button>
         <div class="bottom">
           <span class="helper-text"><i class="fa fa-lock"></i> <a href="{{ route('password.request') }}">Esqueceu sua senha?</a></span>
         </div>

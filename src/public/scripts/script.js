@@ -62,4 +62,9 @@ $(document).ready(function () {
       $('#enviar').addClass('disabled');
     }
   });
+
+  $('#form_login').submit(function() {
+    $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
+    $('#btn_login').addClass('disabled');
+  });
 });

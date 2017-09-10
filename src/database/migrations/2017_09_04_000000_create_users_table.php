@@ -22,10 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('cpf')->unique();
             $table->string('rg')->unique();
-            $table->date('data_nascimento');
+            $table->date('data_nascimento')->default('1998/12/10');
             $table->string('tipo');
-            $table->string('numero_alteracao_senha');
-            $table->date('data_alteracao_senha');
+            $table->string('numero_alteracao_senha')->default('0');
+            $table->date('data_alteracao_senha')->default('2017/09/10');
             $table->integer('endereco_id')->unsigned();
             $table->integer('telefones_id')->unsigned();
             $table->foreign('endereco_id')->references('id')->on('enderecos');
