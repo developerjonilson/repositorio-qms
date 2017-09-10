@@ -9,10 +9,10 @@
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- VENDOR CSS -->
-	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/vendor/linearicons/style.css">
-	<link rel="stylesheet" href="/vendor/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="/vend/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vend/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/vend/linearicons/style.css">
+	<link rel="stylesheet" href="/vend/chartist/css/chartist-custom.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/css/my-style.css">
@@ -141,11 +141,11 @@
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="/vendor/jquery/jquery.min.js"></script>
-	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-	<script src="/vendor/chartist/js/chartist.min.js"></script>
+	<script src="/vend/jquery/jquery.min.js"></script>
+	<script src="/vend/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/vend/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="/vend/chartist/js/chartist.min.js"></script>
 	<script src="/scripts/klorofil-common.js"></script>
 
 </body>

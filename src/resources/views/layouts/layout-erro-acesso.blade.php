@@ -9,10 +9,10 @@
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- VENDOR CSS -->
-	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/vendor/linearicons/style.css">
-	<link rel="stylesheet" href="/vendor/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="/vend/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vend/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/vend/linearicons/style.css">
+	<link rel="stylesheet" href="/vend/chartist/css/chartist-custom.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/css/my-style.css">
