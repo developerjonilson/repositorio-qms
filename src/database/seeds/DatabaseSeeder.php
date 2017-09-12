@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
           'name'=> 'Bruno da Silva Santos',
           'email'=> 'bruno@gmail.com',
-          'password'=> bcrypt('123456'),
+          'password'=> bcrypt('12345678'),
           'cpf'=> '12345678901',
           'rg'=> '2007819982',
           // 'data_nascimento'=> date("Y/m/d","1998/12/10"),

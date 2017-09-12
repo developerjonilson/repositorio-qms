@@ -9,16 +9,37 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Alterar senha de usuário</h3>
 					<p class="panel-subtitle"><span class="vermelho">(*) Todos os campos abaixo são obrigatórios</span></p>
-					<p class="panel-subtitle"><label>A nova senha deve conter no mínimo de 6 caracteres</label></p>
+					<p class="panel-subtitle"><label>A nova senha deve conter no mínimo de 8 caracteres</label></p>
 				</div>
 				<div class="panel-body">
 					<div class="mensagens">
-						{{-- <div class="alert alert-success" role="alert">
-							alguma coisa
-						</div> --}}
+						@if ($errors->has('equal-password'))
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<i class="fa fa-times-circle"></i> A nova senha não pode ser igual a anterior!
+							</div>
+		        @endif
+						@if ($errors->has('min-password'))
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<i class="fa fa-times-circle"></i> Senhas menores que o mínimo permitido!
+							</div>
+		        @endif
+						@if ($errors->has('password'))
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<i class="fa fa-times-circle"></i> Senha atual incorreta ou as novas senhas não coincidem!
+							</div>
+		        @endif
+						@if ($errors->has('less-password'))
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<i class="fa fa-times-circle"></i> Erro inesperado, por favor entre em contato com algum Administrador do sistema QMS!
+							</div>
+		        @endif
 					</div>
-
-					<form class="" action="#" method="post">
+					<form class="" action="{{ action('OperadorController@updateSenha') }}" method="post" id="form-change-password">
+						{{ csrf_field() }}
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
@@ -48,7 +69,7 @@
 								 <button id="enviar" type="submit" class="btn btn-success"><i id="icone-btn" class="fa fa-check-circle"></i> Salvar alterações</button>
 							 </div>
 						 </div>
-					</form>					
+					</form>
 				</div>
 				</div>
 			</div>

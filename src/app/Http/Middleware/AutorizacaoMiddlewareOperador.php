@@ -13,12 +13,14 @@ class AutorizacaoMiddlewareOperador {
           if (strcmp($user, 'operador') == 0) {
             $alteracoes = \Auth::user()->numero_alteracao_senha;
             $uri = $request->path();
-            if (strcmp($uri, 'operador/alterar-senha') == 0) {
+            //o erro está aqui:
+            if (strcmp($uri, 'operador/alterar-senha') == 0 || strcmp($uri, 'operador/update-senha') == 0) {
               //se o caminho for alteração de senha ele deixa passar
               return $next($request);
             } else {
-              if (strcmp($alteracoes, '0') == 0) {
-                //se o caminho as alteracoes for == 0 entao ele mandara sempre para a pagina de alteracao de senha
+              //if (strcmp($alteracoes, '0') != 0) {
+              if ($alteracoes === '0') {
+                //se a quantidade de alteracoes for == 0 entao ele mandara sempre para a pagina de alteracao de senha
                 return Redirect('/operador/alterar-senha');
               } else {
                 //verifica se já se passou um mês e manda ele alterar a data novamente

@@ -35,6 +35,8 @@ Route::get('/operador', 'OperadorController@index');
 Route::get('/operador/perfil', 'OperadorController@perfil');
 Route::get('/operador/alterar-dados', 'OperadorController@alterarUsuario');
 Route::get('/operador/alterar-senha', 'OperadorController@alterarSenha');
+Route::post('/operador/update-senha', 'OperadorController@updateSenha');
+Route::get('/operador/update-senha', 'OperadorController@alterarSenha');
 
 
 
