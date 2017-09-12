@@ -4,8 +4,12 @@ namespace qms\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ConsultaController extends Controller
-{
+class ConsultaController extends Controller {
+
+  public function __construct() {
+      $this->middleware('auth');
+  }
+
   public function buscarConsulta(Request $request) {
     $uri = $request->path();
     return view('consulta.buscar-consulta')->with('rota', $uri);

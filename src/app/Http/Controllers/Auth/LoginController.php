@@ -20,12 +20,31 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected function redirectTo() {
+      if (strcmp(\Auth::user()->tipo, 'operador') == 0) {
+        return '/operador';
+      } else {
+        if (strcmp(\Auth::user()->tipo, 'administrador') == 0) {
+          return '/administrador';
+        } else {
+          //aqui é pra redirecionar para atendente index:
+          return '/administrador';
+        }
+      }
+    }
+
+    // protected function redirectTo() {
+    //   if (strcmp(\Auth::user()->tipo, 'operador') == 0) {
+    //     return '/operador';
+    //   } else {
+    //     if (strcmp(\Auth::user()->tipo, 'administrador') == 0) {
+    //       return '/administrador';
+    //     } else {
+    //       //aqui é pra redirecionar para atendente index:
+    //       return '/administrador';
+    //     }
+    //   }
+    // }
 
     /**
      * Create a new controller instance.

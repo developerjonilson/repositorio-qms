@@ -1,9 +1,4 @@
 $(document).ready(function () {
-  var url = window.location.href;
-  //alert(url);
-
-  // var pathname = window.location.pathname;
-  //alert(pathname);
 
   $(window).on('load', function() {
     var pathname = window.location.pathname;
@@ -59,5 +54,14 @@ $(document).ready(function () {
 
   });
 
+  $('#form-change-password').submit(function() {
+    $('#icone-btn').removeClass('fa-check-circle');
+    $('#icone-btn').addClass('fa-spinner fa-spin');
+    $('#enviar').addClass('disabled');
+  });
 
+  $('#form_login').submit(function() {
+    $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
+    $('#btn_login').addClass('disabled');
+  });
 });

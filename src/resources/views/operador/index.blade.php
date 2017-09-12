@@ -1,4 +1,4 @@
-@extends('layout.layout-operador')
+@extends('layouts.layout-operador')
 
 @section('conteudo')
 
@@ -8,6 +8,14 @@
 			<p class="panel-subtitle">Período: Desde da implantação do QMS</p>
 		</div>
 		<div class="panel-body">
+			<div class="row">    {{-- div para mensagens de feedback para o usuario --}}
+				@if (Session::has("success"))
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<i class="fa fa-check-circle"></i> Senha alterada com sucesso!
+					</div>
+				@endif
+			</div>
 			<div class="row">
 				<div class="col-md-3">
 					<div class="metric">
@@ -48,7 +56,6 @@
 			</div>
 			<div class="row">
 
-				colocar alguma coisa aqui
 			</div>
 		</div>
 	</div>

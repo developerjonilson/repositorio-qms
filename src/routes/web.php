@@ -7,8 +7,12 @@
 */
 
 Route::get('/', function () {
-    return 'essa é para ser a página inicial que é a página de login';
+    return Redirect::route('login');
 });
+
+Route::get('/acesso-negado-operador', 'OperadorController@acessoNegadoOperador');
+Route::get('/acesso-negado-administrador', 'AdministradorController@acessoNegadoAdministrador');
+Route::get('/acesso-negado-atendente', 'SistemaController@acessoNegadoAtendente');
 
 //Rotas de administrador:
 Route::get('/administrador', 'AdministradorController@index');
@@ -31,6 +35,8 @@ Route::get('/operador', 'OperadorController@index');
 Route::get('/operador/perfil', 'OperadorController@perfil');
 Route::get('/operador/alterar-dados', 'OperadorController@alterarUsuario');
 Route::get('/operador/alterar-senha', 'OperadorController@alterarSenha');
+Route::post('/operador/update-senha', 'OperadorController@updateSenha');
+Route::get('/operador/update-senha', 'OperadorController@alterarSenha');
 
 
 
@@ -51,5 +57,17 @@ Route::get('/operador/relatorio-personalizado', 'ConsultaController@relatorioPer
 
 
 //Rotas do manual do sistema:
-Route::get('/operador/manual', 'SistemaController@manualOperador');
-Route::get('/administrador/manual', 'SistemaController@manualAdministrador');
+Route::get('/operador/manual', 'OperadorController@manualOperador');
+Route::get('/administrador/manual', 'AdministradorController@manualAdministrador');
+// Route::get('/operador/manual', [
+//     'middleware' => '\qms\Http\Middleware\AutorizacaoMiddlewareOperador::class',
+//     'uses' => 'SistemaController@manualOperador'
+// ]);
+// Route::get('/administrador/manual', [
+//     'middleware' => '\qms\Http\Middleware\AutorizacaoMiddlewareAdministrador::class',
+//     'uses' => 'SistemaController@manualAdministrador'
+// ]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -1,4 +1,4 @@
-@extends('layout.layout-operador')
+@extends('layouts.layout-operador')
 
 @section('conteudo')
 
@@ -14,10 +14,8 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-2">
+						<div class="col-md-5">
 							<h4>Informe o CNS:<span class="vermelho">*</span></h4>
-						</div>
-						<div class="col-md-4">
 							<div class="input-group">
 								<input type="text" class="form-control">
 								<span class="input-group-btn">

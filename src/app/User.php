@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'cpf', 'rg', 'tipo',
     ];
 
     /**
@@ -24,6 +24,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
+
+    public function endereco(){
+       return $this->hasOne('App\Endereco');
+    }
+
+    public function telefone(){
+       return $this->hasOne('App\Telefone');
+    }
+
 }

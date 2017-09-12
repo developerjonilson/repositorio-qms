@@ -1,4 +1,4 @@
-@extends('layout.layout-operador')
+@extends('layouts.layout-operador')
 
 @section('conteudo')
 
@@ -12,6 +12,9 @@
 					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
 				</div>
 				<div class="panel-body">
+					<form class="" action="index.html" method="post">
+
+					</form>
 					<div class="row">
 						<hr>
 					</div>
@@ -25,9 +28,9 @@
 						<div class="col-md-4">
 							<h4>Sexo:<span class="vermelho">*</span></h4>
 							<select class="form-control">
-								<option value="cheese">Selecione</option>
-								<option value="tomatoes">Masculino</option>
-								<option value="mozarella">Feminino</option>
+								<option value="0">Selecione</option>
+								<option value="masculino">Masculino</option>
+								<option value="feminino">Feminino</option>
 							</select>
 						</div>
 						<div class="col-md-4">
@@ -45,6 +48,19 @@
 							<h4>Responsável pelo paciente:</h4><input class="form-control" type="text" name="" value="" placeholder="Nome completo">
 						</div>
 					</div> --}}
+					<div class="row">
+						<hr>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+								<h4>Nome da Mãe:<span class="vermelho">*</span></h4>
+								<input class="form-control" type="text" name="" value="" placeholder="Nome completo">
+						</div>
+						<div class="col-md-6">
+								<h4>Nome da Pai:</h4>
+								<input class="form-control" type="text" name="" value="" placeholder="Nome completo">
+						</div>
+					</div>
 					<div class="row">
 						<hr>
 					</div>
