@@ -15,10 +15,12 @@ class CreateTelefonesTable extends Migration
     {
         Schema::create('telefones', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            
+
             $table->increments('id');
-            $table->string('telefone_um');
-            $table->string('telefone_dois');
+            $table->string('telefone_um')->nullable();
+            $table->string('telefone_dois')->nullable();
+            // $table->integer('paciente_id')->unsigned();
+            // $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
             $table->timestamps();
         });
     }

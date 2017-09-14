@@ -4,6 +4,8 @@ namespace qms;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use \qms\Endereco;
+use \qms\Telefone;
 
 class User extends Authenticatable
 {
@@ -28,11 +30,11 @@ class User extends Authenticatable
     ];
 
     public function endereco(){
-       return $this->hasOne('App\Endereco');
+       return $this->hasOne(Endereco::class);
     }
 
     public function telefone(){
-       return $this->hasOne('App\Telefone');
+       return $this->hasOne(Telefone::class);
     }
 
 }

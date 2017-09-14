@@ -20,7 +20,9 @@ class CreateCidadesTable extends Migration
             $table->string('nome_cidade');
             $table->string('cep');
             $table->integer('estado_id')->unsigned();
-            $table->foreign('estado_id')->references('id')->on('estados');
+            $table->foreign('estado_id')->references('id')->on('estados')->onDelete('cascade');
+            // $table->integer('endereco_id')->unsigned();
+            // $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');
             $table->timestamps();
         });
 

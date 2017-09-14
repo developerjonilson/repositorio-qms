@@ -64,4 +64,10 @@ $(document).ready(function () {
     $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
     $('#btn_login').addClass('disabled');
   });
+
+  $('#form-create-paciente').submit(function() {
+    $('#icone-btn-cadastro-paciente').removeClass('fa-check-circle');
+    $('#icone-btn-cadastro-paciente').addClass('fa fa-spinner fa-spin');
+    $('#btn-cadastrar-paciente').addClass('disabled');
+  });
 });

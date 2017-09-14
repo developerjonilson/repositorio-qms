@@ -16,16 +16,24 @@ class DatabaseSeeder extends Seeder
         DB::table('telefones')->insert([
            'telefone_um' => '999410067',
            'telefone_dois' => '999410067',
+           //'paciente_id' => 1,
+           'created_at'=> date("Y/m/d h:i:s"),
+           'updated_at'=> date("Y/m/d h:i:s"),
         ]);
 
         DB::table('estados')->insert([
            'nome_estado' => 'Ceará',
+           //'cidade_id' => 1,
+           'created_at'=> date("Y/m/d h:i:s"),
+           'updated_at'=> date("Y/m/d h:i:s"),
         ]);
 
         DB::table('cidades')->insert([
            'nome_cidade' => 'Milagres',
            'cep' => '63250000',
            'estado_id' => 1,
+           'created_at'=> date("Y/m/d h:i:s"),
+           'updated_at'=> date("Y/m/d h:i:s"),
         ]);
 
         DB::table('enderecos')->insert([
@@ -33,6 +41,8 @@ class DatabaseSeeder extends Seeder
            'numero' => 50,
            'bairro' => 'Bela Vista',
            'cidade_id' => 1,
+           'created_at'=> date("Y/m/d h:i:s"),
+           'updated_at'=> date("Y/m/d h:i:s"),
         ]);
 
         DB::table('users')->insert([
@@ -46,7 +56,7 @@ class DatabaseSeeder extends Seeder
           // 'numero_alteracao_senha'=> '0',
           // 'data_alteracao_senha'=> date("Y/m/d"),
           'endereco_id'=> 1,
-          'telefones_id'=> 1,
+          'telefone_id'=> 1,
           'created_at'=> date("Y/m/d h:i:s"),
           'updated_at'=> date("Y/m/d h:i:s"),
         ]);
