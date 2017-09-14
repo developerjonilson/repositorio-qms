@@ -21,8 +21,10 @@ class CreateEnderecosTable extends Migration
             $table->string('numero');
             $table->string('complemento')->nullable();
             $table->string('bairro');
+            //$table->integer('paciente_id')->unsigned();
+            // $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
             $table->integer('cidade_id')->unsigned();
-            $table->foreign('cidade_id')->references('id')->on('cidades');
+            $table->foreign('cidade_id')->references('id')->on('cidades')->onDelete('cascade');
             $table->timestamps();
         });
 

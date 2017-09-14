@@ -42,6 +42,7 @@ Route::get('/operador/update-senha', 'OperadorController@alterarSenha');
 
 
 Route::get('/operador/cadastrar-paciente', 'PacienteController@cadastrarPaciente');
+Route::post('/operador/create-paciente', 'PacienteController@createPaciente');
 Route::get('/operador/buscar-paciente', 'PacienteController@buscarPaciente');
 
 

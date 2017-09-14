@@ -26,10 +26,12 @@ class CreateUsersTable extends Migration
             $table->string('tipo');
             $table->string('numero_alteracao_senha')->default('0');
             $table->date('data_alteracao_senha')->default('2017/09/10');
+            // $table->string('telefone_um')->nullable();
+            // $table->string('telefone_dois')->nullable();
             $table->integer('endereco_id')->unsigned();
-            $table->integer('telefones_id')->unsigned();
-            $table->foreign('endereco_id')->references('id')->on('enderecos');
-            $table->foreign('telefones_id')->references('id')->on('telefones');
+            $table->integer('telefone_id')->unsigned();
+            $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');;
+            $table->foreign('telefone_id')->references('id')->on('telefones')->onDelete('cascade');;
             $table->rememberToken();
             $table->timestamps();
         });

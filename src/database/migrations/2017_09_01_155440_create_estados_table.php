@@ -18,6 +18,8 @@ class CreateEstadosTable extends Migration
 
             $table->increments('id');
             $table->string('nome_estado');
+            // $table->integer('cidade_id')->unsigned();
+            // $table->foreign('cidade_id')->references('id')->on('cidades')->onDelete('cascade');
             $table->timestamps();
         });
     }
