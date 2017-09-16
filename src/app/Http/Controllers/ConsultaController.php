@@ -3,6 +3,13 @@
 namespace qms\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \qms\Paciente;
+use \qms\Endereco;
+use \qms\Cidade;
+use \qms\Estado;
+use \qms\Telefone;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class ConsultaController extends Controller {
 
@@ -15,9 +22,18 @@ class ConsultaController extends Controller {
     return view('consulta.buscar-consulta')->with('rota', $uri);
   }
 
-  public function agendarConsulta(Request $request) {
-    $uri = $request->path();
-    return view('consulta.agendar-consulta')->with('rota', $uri);
+  public function agendarConsulta() {
+    return view('consulta.agendar-consulta');
+  }
+
+  public function agendamentoConsulta(Request $request) {
+    $id_paciente = $request->input('paciente_id');
+
+    //$paciente = DB::table()
+    $paciente = Paciente::where('id', $id_paciente)->first();
+
+    return redirect('operador/agendar-consulta')->with('paciente', $paciente);
+
   }
 
   public function alterarConsulta() {

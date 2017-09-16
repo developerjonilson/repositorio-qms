@@ -89,4 +89,73 @@ class PacienteController extends Controller {
   public function buscarPaciente() {
     return view('paciente.buscar-paciente');
   }
+
+  public function searchPaciente(Request $request) {
+    $numero_cns = $request->numero_cns;
+
+    if ($numero_cns != null) {
+
+      if (strlen($numero_cns) == 15) {
+        $paciente = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
+        //$paciente = DB::table('pacientes')->get();
+
+        // try {
+        //   $paciente = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
+        //   dd($paciente);
+        // } catch (Exception $e) {
+        //   dd($e);
+        // }
+
+        // DB::table('users')
+        // ->join('contacts', function ($join) {
+        //     $join->on('users.id', '=', 'contacts.user_id')
+        //          ->where('contacts.user_id', '>', 5);
+        // })->get();
+
+        // try {
+        //   $paciente = DB::table('pacientes')->join('enderecos', function ($join) {
+        //     $join->on('users.id', '=', 'contacts.user_id')
+        //          ->where('contacts.user_id', '>', 5);
+        // })
+        // ->get();
+        //
+        //
+        //   dd($paciente);
+        // } catch (Exception $e) {
+        //   dd($e);
+        // }
+
+        if ($paciente != null) {
+          //session('paciente', $paciente);
+          //return view('paciente.show-paciente', ['paciente' => $paciente]);
+          $teste = 1000;
+          //return view('paciente.show-paciente')->with('teste', $teste);
+          //return redirect()->action('PacienteController@showPaciente', ['paciente' => $paciente]);
+          //return back()->withInput()->with('teste', $teste);
+          return back()->withInput()->with('paciente', $paciente);
+        } else {
+          //erro: paciente não cadastrado;
+          return back()->withInput()->with('status', '3');
+        }
+        return "deu certo";
+      } else {
+        //erro: tamanho do numero não é igual a 20:
+        return back()->withInput()->with('status', '2');
+      }
+    } else {
+      // erro: todos os campos devem ser preenchidos:
+      return back()->withInput()->with('status', '1');
+    }
+
+
+  }
+
+  public function showPaciente() {
+    //$newPaciente = $paciente;
+    //return view('paciente.show-paciente')->with('paciente', $newPaciente);
+    return view('paciente.show-paciente');
+  }
+
+  
+
 }
