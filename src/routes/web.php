@@ -43,9 +43,13 @@ Route::get('/operador/update-senha', 'OperadorController@alterarSenha');
 
 Route::get('/operador/cadastrar-paciente', 'PacienteController@cadastrarPaciente');
 Route::post('/operador/create-paciente', 'PacienteController@createPaciente');
+
+Route::get('/operador/alterar-paciente', 'PacienteController@alterarPaciente');
+Route::post('/operador/paciente-para-alterar', 'PacienteController@pacienteParaAlterar');
+Route::post('/operador/alterando-paciente', 'PacienteController@alterandoPaciente');
+
 Route::get('/operador/buscar-paciente', 'PacienteController@buscarPaciente');
 Route::post('/operador/search-paciente', 'PacienteController@searchPaciente');
-Route::post('/operador/show-paciente', 'PacienteController@showPaciente');
 
 
 

@@ -97,41 +97,9 @@ class PacienteController extends Controller {
 
       if (strlen($numero_cns) == 15) {
         $paciente = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
-        //$paciente = DB::table('pacientes')->get();
-
-        // try {
-        //   $paciente = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
-        //   dd($paciente);
-        // } catch (Exception $e) {
-        //   dd($e);
-        // }
-
-        // DB::table('users')
-        // ->join('contacts', function ($join) {
-        //     $join->on('users.id', '=', 'contacts.user_id')
-        //          ->where('contacts.user_id', '>', 5);
-        // })->get();
-
-        // try {
-        //   $paciente = DB::table('pacientes')->join('enderecos', function ($join) {
-        //     $join->on('users.id', '=', 'contacts.user_id')
-        //          ->where('contacts.user_id', '>', 5);
-        // })
-        // ->get();
-        //
-        //
-        //   dd($paciente);
-        // } catch (Exception $e) {
-        //   dd($e);
-        // }
 
         if ($paciente != null) {
-          //session('paciente', $paciente);
-          //return view('paciente.show-paciente', ['paciente' => $paciente]);
-          $teste = 1000;
-          //return view('paciente.show-paciente')->with('teste', $teste);
-          //return redirect()->action('PacienteController@showPaciente', ['paciente' => $paciente]);
-          //return back()->withInput()->with('teste', $teste);
+          //deu certo  aqui p paciente é enviado para a view:
           return back()->withInput()->with('paciente', $paciente);
         } else {
           //erro: paciente não cadastrado;
@@ -147,15 +115,23 @@ class PacienteController extends Controller {
       return back()->withInput()->with('status', '1');
     }
 
-
   }
 
-  public function showPaciente() {
-    //$newPaciente = $paciente;
-    //return view('paciente.show-paciente')->with('paciente', $newPaciente);
-    return view('paciente.show-paciente');
+  public function alterarPaciente() {
+    return view('paciente.alterar-paciente');
   }
 
+  public function pacienteParaAlterar(Request $request) {
+    $id_paciente = $request->input('paciente_id');
+
+    $paciente = Paciente::where('id', $id_paciente)->first();
+
+    return redirect('operador/alterar-paciente')->with('paciente', $paciente);
+  }
+
+  public function alterandoPaciente() {
+    return "deu certo!";
+  }
   
 
 }

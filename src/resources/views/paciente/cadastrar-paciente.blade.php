@@ -52,9 +52,6 @@
 					<form class="" action="{{ action('PacienteController@createPaciente') }}" method="post" id="form-create-paciente">
 						{{ csrf_field() }}
 						<div class="row">
-							@if (isset($status))
-								deu certo
-							@endif
 							<hr>
 						</div>
 						<div class="row">

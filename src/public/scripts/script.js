@@ -77,18 +77,26 @@ $(document).ready(function () {
     $('#btn-search-paciente').attr('disabled', 'disabled');
   });
 
-  $('#btn-alterar').on('click', function () {
-    if ($('#nome-paciente').is(":disabled") ) {
-      $('#nome-paciente').removeAttr("disabled");
-      $('#btn-alterar').remove();
-      $('#local-btn-salvar')
-      .append('<button type="submit" class="btn btn-success" id="btn-agendar"><i id="icone_btn_agendar" class="fa fa-check-circle"></i>  Salvar Alterações</button>');
+  // $('#btn-alterar').on('click', function () {
+  //   if ($('#nome-paciente').is(":disabled") ) {
+  //     $('#nome-paciente').removeAttr("disabled");
+  //     $('#btn-alterar').remove();
+  //     $('#local-btn-salvar')
+  //     .append('<button type="submit" class="btn btn-success" id="btn-agendar"><i id="icone_btn_agendar" class="fa fa-check-circle"></i>  Salvar Alterações</button>');
+  //
+  //     $('#local-btn-cancelar')
+  //     .append('<button type="submit" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</button>');
+  //
+  //     $('#btn-agendar').attr('disabled', 'disabled');
+  //   }
+  // });
 
-      $('#local-btn-cancelar')
-      .append('<button type="submit" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</button>');
-
-      $('#btn-agendar').attr('disabled', 'disabled');
-    }
+  $('#form-para-alterar-paciente').submit(function () {
+    $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
+    $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
+    $('#btn-agendar').attr('disabled', 'disabled');
+    $('#btn-search-paciente').attr('disabled', 'disabled');
+    $('#btn-aterar').attr('disabled', 'disabled');
   });
 
   $('#form-para-agendar-consulta').submit(function () {
