@@ -67,7 +67,6 @@
 							<div class="col-md-4 form-group">
 								<label>Sexo:<span class="vermelho">*</span></label>
 								<select class="form-control" name="sexo" id="sexo">
-									<option value="0">Selecione</option>
 									<option value="masculino" selected>Masculino</option>
 									<option value="feminino">Feminino</option>
 								</select>

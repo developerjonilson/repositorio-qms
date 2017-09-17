@@ -35,6 +35,20 @@
 								</div>
 							@endif
 						@endif
+						@if (session('stat'))
+							@if (session('stat') === '1')
+								<div class="alert alert-danger alert-dismissible" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<i class="fa fa-check-circle"></i> Não possivel realizar as alterações nos dados do paciente, tente em instantes!
+								</div>
+							@endif
+							@if (session('stat') === '2')
+								<div class="alert alert-success alert-dismissible" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<i class="fa fa-check-circle"></i> Os dados do paciente foram alterados com sucesso!
+								</div>
+							@endif
+						@endif
 					</div>
 					<div class="row">
 						<div class="col-md-5">
@@ -71,7 +85,7 @@
 								</form>
 							</div>
 							<div class="col-md-4">
-								<form class="" action="{{ action('PacienteController@pacienteParaAlterar') }}" method="post" id="form-para-alterar-paciente">
+								<form class="" action="{{ action('PacienteController@pacienteParaAlterarPost') }}" method="post" id="form-para-alterar-paciente">
 									{{ csrf_field() }}
 									<input type="hidden" name="paciente_id" value="{{ Session::get('paciente')->id }}">
 									<button type="submit" class="btn btn-warning" id="btn-aterar"><i id="icone-btn-alterar" class="fa fa-pencil-square-o"></i>  Alterar dados do paciente </button>
