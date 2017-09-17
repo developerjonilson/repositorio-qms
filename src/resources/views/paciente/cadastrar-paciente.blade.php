@@ -52,9 +52,6 @@
 					<form class="" action="{{ action('PacienteController@createPaciente') }}" method="post" id="form-create-paciente">
 						{{ csrf_field() }}
 						<div class="row">
-							@if (isset($status))
-								deu certo
-							@endif
 							<hr>
 						</div>
 						<div class="row">
@@ -70,7 +67,6 @@
 							<div class="col-md-4 form-group">
 								<label>Sexo:<span class="vermelho">*</span></label>
 								<select class="form-control" name="sexo" id="sexo">
-									<option value="0">Selecione</option>
 									<option value="masculino" selected>Masculino</option>
 									<option value="feminino">Feminino</option>
 								</select>
@@ -81,7 +77,7 @@
 							</div>
 							<div class="col-md-4 form-group">
 								<label>Número do CNS:<span class="vermelho">*</span></label>
-								<input class="form-control" type="text" name="numero_cns" id="cns" value="2154123498909893" placeholder="2000.1234.9890.9893">
+								<input class="form-control" type="text" name="numero_cns" id="numero_cns" value="2154123498909893" placeholder="2000.1234.9890.9893">
 							</div>
 						</div>
 						<div class="row">

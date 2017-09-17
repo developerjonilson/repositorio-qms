@@ -8,22 +8,36 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<h3 class="panel-title">Agendar consulta</h3>
+					<h3 class="panel-title">Agendamento de Consulta Médica</h3>
+				</div>
+				<div class="panel-body">	
+					<div class="row">
+						<hr>
+						@if (Session::has('paciente'))
+							<div class="col-md-8 form-group">
+								<label>Nome do Paciente</label>
+								<input type="text" class="form-control" name="nome_paciente" id="nome_paciente" value="{{ Session::get('paciente')->nome_paciente }}" disabled>
+							</div>
+							<div class="col-md-4 form-group">
+								<label>Número CNS</label>
+								<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="{{ Session::get('paciente')->numero_cns }}" disabled>
+							</div>
+						@else
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								<i class="fa fa-times-circle"></i> Nenhum paciente foi selecionado, selecione o paciente aqui:
+								<a href="/operador/buscar-paciente" class="btn btn-default">Buscar Paciente Agora</a>
+							</div>
+						@endif
+					</div>
+				</div>
+			</div>
+			<!-- END PANEL HEADLINE -->
+			<div class="panel panel-headline">
+				<div class="panel-heading">
+					<h3 class="panel-title">Informações da consulta</h3>
 					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
 				</div>
 				<div class="panel-body">
-					<div class="row">
-						<hr>
-						<div class="col-md-6">
-							<h4>Paciente:</h4><div class="form-control">Carlos Henrique Matias</div>
-						</div>
-						<div class="col-md-3">
-							<h4>CNS:</h4><div class="form-control">1234-1234-1234-1234</div>
-						</div>
-						<div class="col-md-3">
-							<h4>CPF:</h4><div class="form-control">123.456.789-10</div>
-						</div>
-					</div>
 					<div class="row">
 						<hr>
 					</div>
@@ -62,12 +76,11 @@
 					</div><br>
 					<div class="row">
 						<div class="col-md-3">
-							<button type="button" class="btn btn-success"><i class="fa fa-calendar"></i>   Agendar consulta</button>
+							<button type="button" class="btn btn-success"><i class="fa fa-calendar-check-o"></i>   Agendar consulta</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- END PANEL HEADLINE -->
 		</div>
 
 	</div>

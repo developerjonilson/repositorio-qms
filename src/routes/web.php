@@ -43,14 +43,24 @@ Route::get('/operador/update-senha', 'OperadorController@alterarSenha');
 
 Route::get('/operador/cadastrar-paciente', 'PacienteController@cadastrarPaciente');
 Route::post('/operador/create-paciente', 'PacienteController@createPaciente');
+
+Route::get('/operador/alterar-paciente', 'PacienteController@alterarPaciente');
+Route::post('/operador/paciente-para-alterar', 'PacienteController@pacienteParaAlterarPost');
+Route::get('/operador/paciente-para-alterar/{numero_cns}', 'PacienteController@pacienteParaAlterarGet');
+Route::post('/operador/alterando-paciente', 'PacienteController@alterandoPaciente');
+
 Route::get('/operador/buscar-paciente', 'PacienteController@buscarPaciente');
+Route::post('/operador/search-paciente', 'PacienteController@searchPaciente');
 
 
 
 
 // Rotas de consultas:
 Route::get('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
+
 Route::get('/operador/agendar-consulta', 'ConsultaController@agendarConsulta');
+Route::post('/operador/agendamento-consulta', 'ConsultaController@agendamentoConsulta');
+
 Route::get('/operador/alterar-consulta', 'ConsultaController@alterarConsulta');
 Route::get('/operador/relatorio-diario', 'ConsultaController@relatorioDiario');
 Route::get('/operador/relatorio-mensal', 'ConsultaController@relatorioMensal');

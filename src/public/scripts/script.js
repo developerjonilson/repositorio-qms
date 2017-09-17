@@ -57,17 +57,55 @@ $(document).ready(function () {
   $('#form-change-password').submit(function() {
     $('#icone-btn').removeClass('fa-check-circle');
     $('#icone-btn').addClass('fa-spinner fa-spin');
-    $('#enviar').addClass('disabled');
+    $('#enviar').attr('disabled', 'disabled');
   });
 
   $('#form_login').submit(function() {
     $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
-    $('#btn_login').addClass('disabled');
+    $('#btn_login').attr('disabled', 'disabled');
   });
 
   $('#form-create-paciente').submit(function() {
     $('#icone-btn-cadastro-paciente').removeClass('fa-check-circle');
     $('#icone-btn-cadastro-paciente').addClass('fa fa-spinner fa-spin');
-    $('#btn-cadastrar-paciente').addClass('disabled');
+    $('#btn-cadastrar-paciente').attr('disabled', 'disabled');
   });
+
+  $('#search-paciente').submit(function() {
+    $('#icone-btn-search-paciente').removeClass('fa-search');
+    $('#icone-btn-search-paciente').addClass('fa fa-spinner fa-spin');
+    $('#btn-search-paciente').attr('disabled', 'disabled');
+  });
+
+  // $('#btn-alterar').on('click', function () {
+  //   if ($('#nome-paciente').is(":disabled") ) {
+  //     $('#nome-paciente').removeAttr("disabled");
+  //     $('#btn-alterar').remove();
+  //     $('#local-btn-salvar')
+  //     .append('<button type="submit" class="btn btn-success" id="btn-agendar"><i id="icone_btn_agendar" class="fa fa-check-circle"></i>  Salvar Alterações</button>');
+  //
+  //     $('#local-btn-cancelar')
+  //     .append('<button type="submit" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</button>');
+  //
+  //     $('#btn-agendar').attr('disabled', 'disabled');
+  //   }
+  // });
+
+  $('#form-para-alterar-paciente').submit(function () {
+    $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
+    $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
+    $('#btn-agendar').attr('disabled', 'disabled');
+    $('#btn-search-paciente').attr('disabled', 'disabled');
+    $('#btn-aterar').attr('disabled', 'disabled');
+  });
+
+  $('#form-para-agendar-consulta').submit(function () {
+    $('#icone-btn-agendar').removeClass('fa-calendar');
+    $('#icone-btn-agendar').addClass('fa fa-spinner fa-spin');
+    $('#btn-agendar').attr('disabled', 'disabled');
+    $('#btn-search-paciente').attr('disabled', 'disabled');
+    $('#btn-aterar').attr('disabled', 'disabled');
+  });
+
+//  $("#frm").attr("action","alterar.php");
 });
