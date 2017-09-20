@@ -8,8 +8,12 @@ use \qms\Endereco;
 use \qms\Cidade;
 use \qms\Estado;
 use \qms\Telefone;
+use \qms\Local;
+use \qms\Especialidade;
+use \qms\Medico;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Response;
 
 class ConsultaController extends Controller {
 
@@ -26,15 +30,28 @@ class ConsultaController extends Controller {
     return view('consulta.agendar-consulta');
   }
 
-  public function agendamentoConsulta(Request $request) {
+  public function pacienteParaAgendarConsulta(Request $request) {
+    //busca e mostra o paciente_id:
     $id_paciente = $request->input('paciente_id');
-
-    //$paciente = DB::table()
     $paciente = Paciente::where('id', $id_paciente)->first();
 
-    return redirect('operador/agendar-consulta')->with('paciente', $paciente);
+    $especialidades = Especialidade::all();
+    //$especialidades = $especialidadesBanco->toArray();
+
+    //$especialidadesSession->session()->flash('especialidades', $especialidades);
+
+    return redirect('operador/agendar-consulta')
+    ->with('paciente', $paciente)->with('especialidades', $especialidades);
+    //return view('consulta.agendar-consulta', ['paciente'=>$paciente, 'especialidades'=>$especialidades]);
 
   }
+
+  public function getMedicos($idEspecialidade) {
+    //$medicos =
+    return Response::json($medicos);
+  }
+
+
 
   public function alterarConsulta() {
     return view('consulta.alterar-consulta');

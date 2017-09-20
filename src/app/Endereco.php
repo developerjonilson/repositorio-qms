@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use \qms\Cidade;
 use \qms\User;
 use \qms\Paciente;
+use \qms\Medico;
+use \qms\Local;
 
 class Endereco extends Model
 {
@@ -21,6 +23,14 @@ class Endereco extends Model
 
     public function paciente(){
         return $this->belongsTo(Paciente::class);
+    }
+
+    public function medico(){
+        return $this->belongsTo(Medico::class);
+    }
+
+    public function local(){
+        return $this->belongsTo(Local::class);
     }
 
     public function cidade(){

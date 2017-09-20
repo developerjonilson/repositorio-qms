@@ -141,6 +141,7 @@
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/script.js"></script>
 
+	@yield('pos-script')
 </body>
 
 </html>

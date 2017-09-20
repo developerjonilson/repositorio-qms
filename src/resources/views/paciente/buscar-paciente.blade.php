@@ -24,7 +24,7 @@
 							@if (session('status') === '2')
 								<div class="alert alert-danger alert-dismissible" role="alert">
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<i class="fa fa-times-circle"></i> O número do Cartão Nacional da Saúde deve ter 15 digitos!
+									<i class="fa fa-times-circle"></i> O número do Cartão Nacional da Saúde (CNS) deve ter 15 digitos!
 								</div>
 							@endif
 							@if (session('status') === '3')
@@ -57,7 +57,7 @@
 							<form class="" action="{{ action('PacienteController@searchPaciente') }}" method="post" id="search-paciente">
 								{{ csrf_field() }}
 								<div class="input-group">
-									<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="123456789123456">
+									<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="123456789012345">
 									<span class="input-group-btn">
 										<button type="submit" class="btn btn-primary" id="btn-search-paciente"><i class="fa fa-search" id="icone-btn-search-paciente"></i>    Buscar</button>
 									</span>
@@ -78,7 +78,7 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-4">
-								<form class="" action="{{ action('ConsultaController@agendamentoConsulta') }}" method="post" id="form-para-agendar-consulta">
+								<form class="" action="{{ action('ConsultaController@pacienteParaAgendarConsulta') }}" method="post" id="form-para-agendar-consulta">
 									{{ csrf_field() }}
 									<input type="hidden" name="paciente_id" value="{{ Session::get('paciente')->id }}">
 									<button type="submit" class="btn btn-success" id="btn-agendar"><i id="icone-btn-agendar" class="fa fa-calendar"></i>  Agendar consulta para esse paciente </button>

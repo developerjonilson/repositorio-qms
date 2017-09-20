@@ -5,6 +5,8 @@ namespace qms;
 use Illuminate\Database\Eloquent\Model;
 use \qms\User;
 use \qms\Paciente;
+use \qms\Medico;
+use \qms\Local;
 
 class Telefone extends Model
 {
@@ -20,5 +22,13 @@ class Telefone extends Model
 
   public function paciente(){
       return $this->belongsTo(Paciente::class);
+  }
+
+  public function medico(){
+      return $this->belongsTo(Medico::class);
+  }
+
+  public function local(){
+      return $this->belongsTo(Local::class);
   }
 }

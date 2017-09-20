@@ -45,6 +45,12 @@
 										<i class="fa fa-check-circle"></i> Paciente cadastrado com sucesso!
 									</div>
 								@endif
+								@if (session('status') === '6')
+									<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<i class="fa fa-times-circle"></i> O número do Cartão Nacional da Saúde (CNS) deve ter 15 digitos!
+									</div>
+								@endif
 
 							@endif
 						</div>

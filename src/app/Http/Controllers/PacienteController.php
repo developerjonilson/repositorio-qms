@@ -29,10 +29,13 @@ class PacienteController extends Controller {
       $request->numero != null && $request->bairro != null &&
       $request->nome_cidade != null && $request->cep != null &&
       $request->nome_estado != null ) {
-//        return "deu certo!";
+
+        if (strlen($request->numero_cns) != 15) {
+          // erro CNS incorreto tem que ter 15 caracteres;
+          return back()->withInput()->with('status', '6');
+        }
+
         $pacienteBanco = Paciente::where('numero_cns', $request->numero_cns)->first();
-        // $pacienteBanco = null;
-        // $pacienteBanco = DB::table('pacientes')->where('numero_cns', $request->numero_cns)->first();
 
         if ($pacienteBanco != null) {
           // erro CNS já existe no banco de dados;
@@ -98,20 +101,6 @@ class PacienteController extends Controller {
       if (strlen($numero_cns) == 15) {
         $paciente = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
 
-        // try {
-        //   $pacientes = DB::table('pacientes')
-        //       ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id')
-        //       ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
-        //       ->join('estados', 'cidades.estado_id', '=', 'estados.id')
-        //       ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id')
-        //       ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
-        //       ->where('pacientes.numero_cns', '=', $numero_cns)
-        //       ->get();
-        //       dd($pacientes);
-        // } catch (Exception $e) {
-        //   dd($e);
-        // }
-
         if ($paciente != null) {
           //deu certo  aqui p paciente é enviado para a view:
           return back()->withInput()->with('paciente', $paciente);
@@ -121,7 +110,7 @@ class PacienteController extends Controller {
         }
         return "deu certo";
       } else {
-        //erro: tamanho do numero não é igual a 20:
+        //erro: tamanho do numero não é igual a 15:
         return back()->withInput()->with('status', '2');
       }
     } else {
@@ -147,9 +136,7 @@ class PacienteController extends Controller {
         ->where('pacientes.id', '=', $id_paciente)
         ->first();
     $paciente->id = $id_paciente;
-    // return "paciente_id:  ".$paciente->id."--endereco_id:".$paciente->endereco_id.
-    // "--telefone_id:  ".$paciente->telefone_id."--cidade_id: ".$paciente->cidade_id.
-    // "--estado_id:  ".$paciente->estado_id;
+
     return redirect('operador/alterar-paciente')->with('paciente', $paciente);
   }
 
@@ -169,10 +156,6 @@ class PacienteController extends Controller {
 
     return redirect('operador/alterar-paciente')->with('paciente', $paciente)->with('stat', '1');;
   }
-
-  // return "paciente_id:  ".$paciente_id."--endereco_id:".$endereco_id.
-  // "--telefone_id:  ".$telefone_id."--cidade_id: ".$cidade_id.
-  // "--estado_id:  ".$estado_id;
 
   public function alterandoPaciente(Request $request) {
     $paciente_id = $request->input('paciente_id');

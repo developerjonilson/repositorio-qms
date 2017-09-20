@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEstadosTable extends Migration
+class CreateEspecialidadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateEstadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('estados', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-
+        Schema::create('especialidades', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome_estado');
+            $table->string('nome_especialidade');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateEstadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estados');
+        Schema::dropIfExists('especialidades');
     }
 }

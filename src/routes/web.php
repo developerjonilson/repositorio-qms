@@ -59,7 +59,10 @@ Route::post('/operador/search-paciente', 'PacienteController@searchPaciente');
 Route::get('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
 
 Route::get('/operador/agendar-consulta', 'ConsultaController@agendarConsulta');
-Route::post('/operador/agendamento-consulta', 'ConsultaController@agendamentoConsulta');
+Route::post('/operador/paciente-agendar-consulta', 'ConsultaController@pacienteParaAgendarConsulta');
+Route::post('/operador/medicos-por-especialidade', 'ConsultaController@medicosPorEspecialidade');
+Route::post('/operador/get-medicos', 'ConsultaController@getMedicos');
+
 
 Route::get('/operador/alterar-consulta', 'ConsultaController@alterarConsulta');
 Route::get('/operador/relatorio-diario', 'ConsultaController@relatorioDiario');
