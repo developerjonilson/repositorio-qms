@@ -1,10 +1,10 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \qms\Estado;
-use \qms\Endereco;
+use \qms\Models\Estado;
+use \qms\Models\Endereco;
 
 class Cidade extends Model
 {

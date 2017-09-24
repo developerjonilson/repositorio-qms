@@ -3,11 +3,11 @@
 namespace qms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \qms\Paciente;
-use \qms\Endereco;
-use \qms\Cidade;
-use \qms\Estado;
-use \qms\Telefone;
+use \qms\Models\Paciente;
+use \qms\Models\Endereco;
+use \qms\Models\Cidade;
+use \qms\Models\Estado;
+use \qms\Models\Telefone;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 

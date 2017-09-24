@@ -1,10 +1,11 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \qms\Endereco;
-use \qms\Telefone;
+use \qms\Models\Endereco;
+use \qms\Models\Telefone;
+use \qms\Models\Consulta;
 
 class Paciente extends Model
 {
@@ -19,5 +20,9 @@ class Paciente extends Model
 
   public function telefone(){
      return $this->hasOne(Telefone::class);
+  }
+
+  public function consulta(){
+    return $this->belongsTo(Consulta::class);
   }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \qms\Cidade;
+use \qms\Models\Cidade;
+use \qms\Models\Paciente;
+use \qms\Models\Medico;
+use \qms\Models\Local;
 use \qms\User;
-use \qms\Paciente;
-use \qms\Medico;
-use \qms\Local;
 
 class Endereco extends Model
 {

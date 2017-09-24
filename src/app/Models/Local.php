@@ -1,9 +1,12 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \qms\Endereco;
+use \qms\Models\Endereco;
+use \qms\Models\Telefone;
+use \qms\Models\Consulta;
+use \qms\Models\Periodo;
 
 class Local extends Model
 {
@@ -17,6 +20,14 @@ class Local extends Model
 
   public function telefone(){
      return $this->hasOne(Telefone::class);
+  }
+
+  public function consulta(){
+    return $this->belongsTo(Consulta::class);
+  }
+
+  public function periodo(){
+    return $this->belongsTo(Periodo::class);
   }
 
 }

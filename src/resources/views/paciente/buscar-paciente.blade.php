@@ -121,23 +121,17 @@
 						</div>
 						<hr>
 						<div class="row">
-							<div class="col-md-3"  id="local-btn-salvar">
+							<div class="col-md-3 col-xs-12 col-sm-12"  id="local-btn-salvar">
 
 							</div>
-
-
-
 							<form class="" action="{{ action('PacienteController@searchPaciente') }}" method="post" id="cancelar-alteracao-paciente">
 								{{ csrf_field() }}
 								<input type="hidden" name="numero_cns" id="numero_cns" value="{{ Session::get('paciente')->numero_cns }}">
-								<div class="col-md-3" id="local-btn-cancelar">
+								<div class="col-md-3  col-xs-12 col-sm-12" id="local-btn-cancelar">
 
 								</div>
 							</form>
-
-							</div>
-
-
+						</div>
 					</div>
 				</div>
 			@endif

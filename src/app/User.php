@@ -4,8 +4,8 @@ namespace qms;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use \qms\Endereco;
-use \qms\Telefone;
+use \qms\Models\Endereco;
+use \qms\Models\Telefone;
 
 class User extends Authenticatable
 {
