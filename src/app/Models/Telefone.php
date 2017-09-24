@@ -1,10 +1,12 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use \qms\Models\Paciente;
+use \qms\Models\Medico;
+use \qms\Models\Local;
 use \qms\User;
-use \qms\Paciente;
 
 class Telefone extends Model
 {
@@ -20,5 +22,13 @@ class Telefone extends Model
 
   public function paciente(){
       return $this->belongsTo(Paciente::class);
+  }
+
+  public function medico(){
+      return $this->belongsTo(Medico::class);
+  }
+
+  public function local(){
+      return $this->belongsTo(Local::class);
   }
 }

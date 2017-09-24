@@ -77,20 +77,6 @@ $(document).ready(function () {
     $('#btn-search-paciente').attr('disabled', 'disabled');
   });
 
-  // $('#btn-alterar').on('click', function () {
-  //   if ($('#nome-paciente').is(":disabled") ) {
-  //     $('#nome-paciente').removeAttr("disabled");
-  //     $('#btn-alterar').remove();
-  //     $('#local-btn-salvar')
-  //     .append('<button type="submit" class="btn btn-success" id="btn-agendar"><i id="icone_btn_agendar" class="fa fa-check-circle"></i>  Salvar Alterações</button>');
-  //
-  //     $('#local-btn-cancelar')
-  //     .append('<button type="submit" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</button>');
-  //
-  //     $('#btn-agendar').attr('disabled', 'disabled');
-  //   }
-  // });
-
   $('#form-para-alterar-paciente').submit(function () {
     $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
     $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
@@ -107,5 +93,113 @@ $(document).ready(function () {
     $('#btn-aterar').attr('disabled', 'disabled');
   });
 
-//  $("#frm").attr("action","alterar.php");
+  // função para buscar os valores dos selected de medicos por especialidade:
+  $('#especialidade').change(function () {
+    var idEspecialidade = $(this).val();
+
+    $.get('/operador/get-medicos/' + idEspecialidade, function (medicos) {
+      $('#medico').empty();
+      $('#medico').append('<option value="" disabled selected>Selecione...</option>');
+      $.each(medicos, function (key, medico) {
+        $('#medico').append('<option value="'+medico.id+'">'+medico.nome_medico+'</option>');
+      });
+      $('#medico').prop("disabled", false);
+    });
+  });
+
+  //função para buscar os valores dos selected de data por medicos e especialidade:
+  $('#medico').change(function () {
+    var idEspecialidade = $('#especialidade').val();
+    var idMedico = $(this).val();
+
+    $.get('/operador/especialidade/'+idEspecialidade+'/medico/'+idMedico, function (calendarios) {
+      $('#periodo').empty();
+      $('#vagas').attr('value', '');
+      $('#local_id').attr('value', '');
+      $('#local_nome_fantasia').attr('value', '');
+      $('#data_consulta').empty();
+      $('#data_consulta').append('<option value="" disabled selected>Selecione...</option>');
+      $.each(calendarios, function (key, calendario) {
+        //$('#data_consulta').append('<option value="'+calendario.id+'"> <?php date("d/m/Y", strtotime('+calendario.data+')) ?> </option>');
+        $('#data_consulta').append('<option value="'+calendario.id+'">'+calendario.data+'</option>');
+      });
+      $('#data_consulta').prop("disabled", false);
+    });
+  });
+
+  $('#data_consulta').change(function () {
+    var idCaleandario = $(this).val();
+
+    $.get('/operador/periodos/'+idCaleandario, function (periodos) {
+      $('#periodo').empty();
+      $('#vagas').attr('value', '');
+      $('#local_id').attr('value', '');
+      $('#local_nome_fantasia').attr('value', '');
+      $('#periodo').append('<option value="" disabled selected>Selecione...</option>');
+      $.each(periodos, function (key, periodo) {
+        $('#periodo').append('<option value="'+periodo.id+'">'+periodo.nome+'</option>');
+      });
+      $('#periodo').prop("disabled", false);
+    });
+  });
+
+
+  $('#periodo').change(function () {
+    var idPeriodo = $(this).val();
+    $.get('/operador/vagas-disponiveis/'+idPeriodo, function (vagas) {
+      $('#vagas').attr('value', vagas.vagas_disponiveis);
+    });
+
+    $.get('/operador/local/'+idPeriodo, function (local) {
+      $('#local_id').attr('value', local.id);
+      $('#local_nome_fantasia').attr('value', local.nome_fantasia);
+    });
+  });
+
+  $('#botao_agendar').on('click', function () {
+
+  });
+
+  $("#form-agendar-consulta").validate({
+        // Define as regras
+        rules: {
+            especialidade: {
+                // campo especialidade será obrigatório (required)
+                required: true
+            },
+            medico: {
+                // campo medico será obrigatório (required)
+                required: true
+            },
+            data_consulta: {
+                // campo data_consulta será obrigatório (required)
+                required: true
+            },
+            periodo: {
+                // campo periodo será obrigatório (required)
+                required: true
+            },
+        },
+        // Define as mensagens de erro para cada regra
+        messages: {
+            especialidade: {
+                required: "Você tem que selecionar uma especialidade antes!"
+            },
+            medico: {
+                required: "Você tem que selecionar um medico antes!"
+            },
+            data_consulta: {
+                required: "Você tem que selecionar uma data antes!"
+            },
+            periodo: {
+                required: "Você tem que selecionar um periodo antes!"
+            },
+        }
+    });
+
+
+
+
+
+
 });

@@ -58,8 +58,17 @@ Route::post('/operador/search-paciente', 'PacienteController@searchPaciente');
 // Rotas de consultas:
 Route::get('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
 
-Route::get('/operador/agendar-consulta', 'ConsultaController@agendarConsulta');
-Route::post('/operador/agendamento-consulta', 'ConsultaController@agendamentoConsulta');
+Route::get('/operador/agendar-consulta/{idPaciente?}', 'ConsultaController@agendarConsulta');
+Route::post('/operador/paciente-agendar-consulta', 'ConsultaController@pacienteParaAgendarConsulta');
+Route::post('/operador/medicos-por-especialidade', 'ConsultaController@medicosPorEspecialidade');
+Route::get('/operador/get-medicos/{idEspecialidade}', 'ConsultaController@getMedicos');
+Route::get('/operador/especialidade/{idEspecialidade}/medico/{idMedico}', 'ConsultaController@getDataAtendimento');
+Route::get('/operador/periodos/{idCaleandario}', 'ConsultaController@getPeriodos');
+Route::get('/operador/vagas-disponiveis/{idPeriodo}', 'ConsultaController@getVagas');
+Route::get('/operador/local/{idPeriodo}', 'ConsultaController@getLocal');
+Route::post('/operador/agendando-consulta/', 'ConsultaController@agendandoConsulta');
+Route::get('/operador/agendamento-sucesso/{id?}', 'ConsultaController@sucessoAgendamentoConsulta');
+
 
 Route::get('/operador/alterar-consulta', 'ConsultaController@alterarConsulta');
 Route::get('/operador/relatorio-diario', 'ConsultaController@relatorioDiario');

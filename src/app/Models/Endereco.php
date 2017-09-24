@@ -1,11 +1,13 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \qms\Cidade;
+use \qms\Models\Cidade;
+use \qms\Models\Paciente;
+use \qms\Models\Medico;
+use \qms\Models\Local;
 use \qms\User;
-use \qms\Paciente;
 
 class Endereco extends Model
 {
@@ -21,6 +23,14 @@ class Endereco extends Model
 
     public function paciente(){
         return $this->belongsTo(Paciente::class);
+    }
+
+    public function medico(){
+        return $this->belongsTo(Medico::class);
+    }
+
+    public function local(){
+        return $this->belongsTo(Local::class);
     }
 
     public function cidade(){

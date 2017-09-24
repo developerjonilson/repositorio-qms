@@ -46,6 +46,8 @@
 	<script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 	<script src="/vend/chartist/js/chartist.min.js"></script>
 	<script src="/scripts/klorofil-common.js"></script>
+	<script src="/scripts/jquery.validate.js"></script>
+	<script src="/scripts/additional-methods.js"></script>
 	<script src="/scripts/script.js"></script>
 </body>
 

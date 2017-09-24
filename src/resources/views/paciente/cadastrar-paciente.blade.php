@@ -45,6 +45,12 @@
 										<i class="fa fa-check-circle"></i> Paciente cadastrado com sucesso!
 									</div>
 								@endif
+								@if (session('status') === '6')
+									<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<i class="fa fa-times-circle"></i> O número do Cartão Nacional da Saúde (CNS) deve ter 15 digitos!
+									</div>
+								@endif
 
 							@endif
 						</div>
@@ -67,8 +73,8 @@
 							<div class="col-md-4 form-group">
 								<label>Sexo:<span class="vermelho">*</span></label>
 								<select class="form-control" name="sexo" id="sexo">
-									<option value="masculino" selected>Masculino</option>
-									<option value="feminino">Feminino</option>
+									<option value="Masculino">Masculino</option>
+									<option value="Feminino" selected>Feminino</option>
 								</select>
 							</div>
 							<div class="col-md-4 form-group">
@@ -77,7 +83,7 @@
 							</div>
 							<div class="col-md-4 form-group">
 								<label>Número do CNS:<span class="vermelho">*</span></label>
-								<input class="form-control" type="text" name="numero_cns" id="numero_cns" value="2154123498909893" placeholder="2000.1234.9890.9893">
+								<input class="form-control" type="text" name="numero_cns" id="numero_cns" value="123456789012345" placeholder="2000.1234.9890.9893">
 							</div>
 						</div>
 						<div class="row">

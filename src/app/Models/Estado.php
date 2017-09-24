@@ -1,9 +1,9 @@
 <?php
 
-namespace qms;
+namespace qms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \qms\Cidade;
+use \qms\Models\Cidade;
 
 class Estado extends Model
 {

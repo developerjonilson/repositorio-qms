@@ -37,10 +37,10 @@
 				</div>
 				<div class="col-md-3">
 					<div class="metric">
-						<span class="icon"><i class="fa fa-calendar-check-o"></i></span>
+						<span class="icon"><i class="fa fa-medkit"></i></span>
 						<p>
 							<span class="number">10</span>
-							<span class="title">Calendários</span>
+							<span class="title">Especialidades</span>
 						</p>
 					</div>
 				</div>
