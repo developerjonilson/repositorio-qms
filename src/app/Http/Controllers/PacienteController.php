@@ -35,11 +35,29 @@ class PacienteController extends Controller {
           return back()->withInput()->with('status', '6');
         }
 
-        $pacienteBanco = Paciente::where('numero_cns', $request->numero_cns)->first();
+        $pacienteBancoCns = Paciente::where('numero_cns', $request->numero_cns)->first();
 
-        if ($pacienteBanco != null) {
+        if ($pacienteBancoCns != null) {
           // erro CNS já existe no banco de dados;
           return back()->withInput()->with('status', '2');
+        }
+
+        if ($request->cpf != null) {
+          $pacienteBancoCpf = Paciente::where('cpf', $request->cpf)->first();
+
+          if ($pacienteBancoCpf != null) {
+            // erro CNS já existe no banco de dados;
+            return back()->withInput()->with('status', '7');
+          }
+        }
+
+        if ($request->rg != null) {
+          $pacienteBancoRg = Paciente::where('rg', $request->rg)->first();
+
+          if ($pacienteBancoRg != null) {
+            // erro CNS já existe no banco de dados;
+            return back()->withInput()->with('status', '8');
+          }
         }
 
         $dataAtual = date('Y-m-d');
@@ -72,7 +90,7 @@ class PacienteController extends Controller {
                                         'cidade_id' => $endereco->cidade_id, ]);
         $paciente->endereco_id = $enderecoCreate->id;
 
-        $pacienteNome = $paciente->nome_paciente;
+        //$pacienteNome = $paciente->nome_paciente;
 
         if ($paciente->save()) {
           //tudo feito com sucesso;
@@ -185,6 +203,9 @@ class PacienteController extends Controller {
               $paciente->sexo = $request->sexo;
               $paciente->data_nascimento = $request->data_nascimento;
               $paciente->numero_cns = $request->numero_cns;
+              $paciente->cpf = $request->cpf;
+              $paciente->rg = $request->rg;
+
               $paciente->nome_mae = $request->nome_mae;
               $paciente->nome_pai = $request->nome_pai;
 

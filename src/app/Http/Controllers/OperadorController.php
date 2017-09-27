@@ -9,6 +9,13 @@ use Hash;
 use Auth;
 use Validator;
 use \qms\User;
+use \qms\Models\Paciente;
+use \qms\Models\Especialidade;
+use \qms\Models\Medico;
+use \qms\Models\Consulta;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Response;
 //use \qms\Http\Requests\AlterarSenhaRequest;
 
 class OperadorController extends Controller {
@@ -18,7 +25,16 @@ class OperadorController extends Controller {
   }
 
   public function index() {
-    return view('operador.index');
+    $total_pacientes = DB::table('pacientes')->count();
+    $total_consultas = DB::table('consultas')->count();
+    $total_especialidades = DB::table('especialidades')->count();
+    $total_medicos = DB::table('medicos')->count();
+
+    return view('operador.index', ['pacientes' => $total_pacientes,
+                                  'consultas' => $total_consultas,
+                                  'especialidades' => $total_especialidades,
+                                  'medicos' => $total_medicos]);
+    return view('');
   }
 
   //aagora funções do usuario logado:
