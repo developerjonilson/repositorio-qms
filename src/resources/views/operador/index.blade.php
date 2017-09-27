@@ -21,7 +21,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-users"></i></span>
 						<p>
-							<span class="number">12</span>
+							<span class="number">{{$pacientes}}</span>
 							<span class="title">Pacientes</span>
 						</p>
 					</div>
@@ -30,7 +30,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-stethoscope 5x"></i></span>
 						<p>
-							<span class="number">20</span>
+							<span class="number">{{$consultas}}</span>
 							<span class="title">Consultas</span>
 						</p>
 					</div>
@@ -39,7 +39,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-medkit"></i></span>
 						<p>
-							<span class="number">10</span>
+							<span class="number">{{$especialidades}}</span>
 							<span class="title">Especialidades</span>
 						</p>
 					</div>
@@ -48,7 +48,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-user-md"></i></span>
 						<p>
-							<span class="number">10</span>
+							<span class="number">{{$medicos}}</span>
 							<span class="title">Médicos</span>
 						</p>
 					</div>

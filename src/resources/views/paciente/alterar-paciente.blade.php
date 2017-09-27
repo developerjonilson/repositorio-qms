@@ -69,6 +69,31 @@
 										</div>
 									</div>
 									<div class="row">
+										@if ( Session::get('paciente')->cpf != null)
+											<div class="col-md-6 form-group">
+												<label>CPF (Opcional):</label>
+												<input class="form-control" type="text" name="cpf" id="cpf" value="{{ Session::get('paciente')->cpf }}" readonly>
+											</div>
+										@else
+											<div class="col-md-6 form-group">
+												<label>CPF (Opcional):</label>
+												<input class="form-control" type="text" name="cpf" id="cpf" placeholder="000.123.890-98">
+											</div>
+										@endif
+										@if (Session::get('paciente')->rg != null)
+											<div class="col-md-6 form-group">
+												<label>RG (Opcional):</label>
+												<input class="form-control" type="text" name="rg" id="rg" value="{{ Session::get('paciente')->rg }}" readonly>
+											</div>
+										@else
+											<div class="col-md-6 form-group">
+												<label>RG (Opcional):</label>
+												<input class="form-control" type="text" name="rg" id="rg" placeholder="12345678901">
+											</div>
+										@endif
+
+									</div>
+									<div class="row">
 										<div class="col-md-6 form-group">
 											<label>Nome da Mãe:<span class="vermelho">*</span></label>
 											<input class="form-control" type="text" name="nome_mae" id="nome-mae" value="{{ Session::get('paciente')->nome_mae }}">

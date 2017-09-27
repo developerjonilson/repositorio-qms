@@ -21,6 +21,8 @@ class CreatePacientesTable extends Migration
             $table->string('sexo');
             $table->date('data_nascimento');
             $table->string('numero_cns')->unique();
+            $table->string('cpf')->nullable();
+            $table->string('rg')->nullable();
             $table->string('nome_mae');
             $table->string('nome_pai')->nullable();
             $table->integer('endereco_id')->unsigned();

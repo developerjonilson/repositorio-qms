@@ -51,6 +51,18 @@
 										<i class="fa fa-times-circle"></i> O número do Cartão Nacional da Saúde (CNS) deve ter 15 digitos!
 									</div>
 								@endif
+								@if (session('status') === '7')
+									<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<i class="fa fa-times-circle"></i> Não é possível realizar o cadastrado, pois esse número de <b>CPF</b> já foi registrado no sistema!
+									</div>
+								@endif
+								@if (session('status') === '8')
+									<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<i class="fa fa-times-circle"></i> Não é possível realizar o cadastrado, pois esse número de <b>RG</b> já foi registrado no sistema!
+									</div>
+								@endif
 
 							@endif
 						</div>
@@ -64,6 +76,8 @@
 							<div class="col-md-12">
 								<h4>Informações Pessoais</h4>
 							</div>
+						</div>
+						<div class="row">
 							<div class="col-md-12 form-group">
 								<label>Nome do paciente:<span class="vermelho">*</span></label>
 								<input class="form-control" type="text" name="nome_paciente" id="nome-paciente" value="Ana das Neves Silva" placeholder="Paulo da Costa Silva">
@@ -84,6 +98,16 @@
 							<div class="col-md-4 form-group">
 								<label>Número do CNS:<span class="vermelho">*</span></label>
 								<input class="form-control" type="text" name="numero_cns" id="numero_cns" value="123456789012345" placeholder="2000.1234.9890.9893">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label>CPF (Opcional):</label>
+								<input class="form-control" type="text" name="cpf" id="cpf" value="00012389098" placeholder="000.123.890-98">
+							</div>
+							<div class="col-md-6 form-group">
+								<label>RG (Opcional):</label>
+								<input class="form-control" type="text" name="rg" id="rg" value="12345678901" placeholder="12345678901">
 							</div>
 						</div>
 						<div class="row">
