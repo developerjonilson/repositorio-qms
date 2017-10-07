@@ -56,8 +56,6 @@ Route::post('/operador/search-paciente', 'PacienteController@searchPaciente');
 
 
 // Rotas de consultas:
-Route::get('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
-
 Route::get('/operador/agendar-consulta/{idPaciente?}', 'ConsultaController@agendarConsulta');
 Route::post('/operador/paciente-agendar-consulta', 'ConsultaController@pacienteParaAgendarConsulta');
 Route::post('/operador/medicos-por-especialidade', 'ConsultaController@medicosPorEspecialidade');
@@ -69,12 +67,17 @@ Route::get('/operador/local/{idPeriodo}', 'ConsultaController@getLocal');
 Route::post('/operador/agendando-consulta/', 'ConsultaController@agendandoConsulta');
 Route::get('/operador/agendamento-sucesso/{id?}', 'ConsultaController@sucessoAgendamentoConsulta');
 
+Route::get('/operador/buscar-consulta/{numero_cns?}', 'ConsultaController@buscarConsulta');
+Route::post('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
+Route::get('/operador/buscar-uma-consulta/{id}', 'ConsultaController@buscarUmaConsulta');
+Route::get('/operador/buscar-uma-consulta-dois/{id}', 'ConsultaController@buscarUmaConsultaDois');
+Route::get('/operador/listagem-consultas', 'ConsultaController@listagemConsultas');
+Route::post('/operador/filtrar-consultas', 'ConsultaController@filtrarConsultas');
+Route::get('/operador/consultas/gerar-pdf/{codigo?}', 'ConsultaController@gerarPdf');
+
+
 
 Route::get('/operador/alterar-consulta', 'ConsultaController@alterarConsulta');
-Route::get('/operador/relatorio-diario', 'ConsultaController@relatorioDiario');
-Route::get('/operador/relatorio-mensal', 'ConsultaController@relatorioMensal');
-Route::get('/operador/relatorio-personalizado', 'ConsultaController@relatorioPersonalizado');
-
 
 //Rotas do manual do sistema:
 Route::get('/operador/manual', 'OperadorController@manualOperador');

@@ -73,10 +73,10 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{ action('OperadorController@index') }}" id="home" class=""><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
+						<li><a href="{{ action('OperadorController@index') }}" id="home" class=""><i class="fa fa-home"></i> <span>Home</span></a></li>
 
 						<li>
-							<a href="#subPaciente" id="pacientes" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a href="#subPaciente" id="pacientes" data-toggle="collapse" class="collapsed"><i class="fa fa-users"></i> <span>Pacientes</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPaciente" class="collapse">
 								<ul class="nav">
 									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="" id="menu_cadastrar_paciente">Cadastrar Paciente</a></li>
@@ -90,21 +90,13 @@
 							<div id="subConsulta" class="collapse">
 								<ul class="nav">
 									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="" id="menu_agendar_consulta">Agendar Consulta Médica</a></li>
-									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="" id="menu_pesquisar_consulta">Pesquisar Consultas</a></li>
+									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="" id="menu_pesquisar_consulta">Pesquisar Consultas Por CNS</a></li>
 								</ul>
 							</div>
 						</li>
 
-						<li>
-							<a href="#subRelatorio" id="relatorios" data-toggle="collapse" class="collapsed"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subRelatorio" class="collapse">
-								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@relatorioDiario') }}" class="" id="menu_relatorio_diario">Diário</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioMensal') }}" class="" id="menu_relatorio_mensal">Mensal</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioPersonalizado') }}" class="" id="menu_relatorio_personalizado">Personalizado</a></li>
-								</ul>
-							</div>
-						</li>
+						<li><a href="{{ action('ConsultaController@listagemConsultas') }}" id="menu_listagem" class=""><i class="fa fa-list-ol"></i> <span>Listagem de Consultas</span></a></li>
+
 					</ul>
 				</nav>
 			</div>
@@ -141,6 +133,10 @@
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
+	<script src="/scripts/moment.js"></script>
+	<script src="/scripts/moment-with-locales.js"></script>
+	{{-- <script src="/scripts/validation.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script> --}}
 	<script src="/scripts/script.js"></script>
 
 	@yield('pos-script')

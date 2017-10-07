@@ -31,23 +31,9 @@ $(document).ready(function () {
           } //fim do 'if' para verificar se o pathname é agendar ou pesquisar consulta
 
         } else {
-          if (pathname == '/operador/relatorio-diario' || pathname == '/operador/relatorio-diario/' ||
-          pathname == '/operador/relatorio-mensal' || pathname == '/operador/relatorio-mensal/' ||
-          pathname == '/operador/relatorio-personalizado' || pathname == '/operador/relatorio-personalizado/') {
-            $('#relatorios').removeClass('collapsed');
-            $('#relatorios').addClass('active');
-            $('#subRelatorio').addClass('in');
-            if (pathname == '/operador/relatorio-diario' || pathname == '/operador/relatorio-diario/') {
-              $('#menu_relatorio_diario').addClass('active');
-            } else {
-              if (pathname == '/operador/relatorio-mensal' || pathname == '/operador/relatorio-mensal/') {
-                $('#menu_relatorio_mensal').addClass('active');
-              } else {
-                $('#menu_relatorio_personalizado').addClass('active');
-              }
-            }
-          } //fim do 'if' que verifica se é relatio diario, mensal ou personalizado
-
+          if (pathname == '/operador/listagem-consultas' || pathname == '/operador/listagem-consultas/') {
+            $('#menu_listagem').addClass('active');
+          }
         }
       }
     }// fim no primeiro 'if' para saber se esta na pagina inicial de operador
@@ -119,9 +105,11 @@ $(document).ready(function () {
       $('#local_nome_fantasia').attr('value', '');
       $('#data_consulta').empty();
       $('#data_consulta').append('<option value="" disabled selected>Selecione...</option>');
+
       $.each(calendarios, function (key, calendario) {
         //$('#data_consulta').append('<option value="'+calendario.id+'"> <?php date("d/m/Y", strtotime('+calendario.data+')) ?> </option>');
-        $('#data_consulta').append('<option value="'+calendario.id+'">'+calendario.data+'</option>');
+        var data = moment(calendario.data).format('DD/MM/YYYY');
+        $('#data_consulta').append('<option value="'+calendario.id+'"><time>'+data+'</time></option>');
       });
       $('#data_consulta').prop("disabled", false);
     });
@@ -197,9 +185,34 @@ $(document).ready(function () {
         }
     });
 
+    // $('#ver').click(function () {
+    //   // var id = $(this).val();
+    //   var id = $('#idConsulta').val();
+    //   alert('deu certo:   ID: '+id);
+    //   $('#nome_paciente').prop('value', id);
+    // });
 
-
-
-
+    // $('#cpf').mask('000.000.000-00'),
+    // $('#telefone-um').mask("(00) 0000-00009");
+    // $('#telefone-dois').mask("(00) 0000-00009");
+    // $('#numero_cns').mask("000.0000.0000.0000");
+    // $('#cep').mask("00000-000");
+    //
+    // $('#btn-cadastrar-paciente').click(function(){
+    // $('#cpf').unmask();
+    // $('#telefone-um').unmask();
+    // $('#telefone-dois').unmask();
+    // $('#cep').unmask();
+    // $("#numero_cns").unmask();
+    // });
+    //
+    // $('#btn-search-paciente').click(function(){
+    // $('#numero_cns').unmask();
+    // });
+    //
+    // $('#btn-cadastrar-paciente').click(function(){
+    // $('#numero_cns').unmask();
+    // $('#cpf').unmask();
+    // });
 
 });

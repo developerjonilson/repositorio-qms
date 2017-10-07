@@ -61,15 +61,12 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-4">
-								<form class="" action="#" method="post" id="">
-									{{ csrf_field() }}
-									<input type="hidden" name="paciente_id" value="">
-									<button type="submit" class="btn btn-success" id="btn-agendar">
-										<i id="icone-btn-agendar" class="fa fa-print"></i>  Gerar PDF
-									</button>
-								</form>
+								<a href="/operador/buscar-paciente" class="btn btn-primary"><i class="fa fa-reply"></i>  Voltar</a>
 							</div>
 							<div class="col-md-4">
+								<a href="/operador/consultas/gerar-pdf/{{$consulta->codigo_consulta}}" class="btn btn-success btn-xs" target='_blank'><i class="lnr lnr-printer"></i>   Gerar PDF</a>
+							</div>
+							{{-- <div class="col-md-4">
 								<form class="" action="#" method="post" id="">
 									{{ csrf_field() }}
 									<input type="hidden" name="paciente_id" value="">
@@ -77,7 +74,7 @@
 										<i id="icone-btn-alterar" class="fa fa-pencil-square-o"></i>  Alterar informações
 									</button>
 								</form>
-							</div>
+							</div> --}}
 						</div>
 						@else
 							<div class="row">

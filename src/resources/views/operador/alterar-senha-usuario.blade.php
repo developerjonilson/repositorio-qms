@@ -44,7 +44,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Senha atual:<span class="vermelho">*</span></label>
-									<input class="form-control campo" type="password" name="senha_atual" id="senha_atual" placeholder="******" required>
+									<input class="form-control campo" type="password" name="senha_atual" id="senha_atual" placeholder="******" required autofocus>
 								</div>
 							</div>
 						</div>

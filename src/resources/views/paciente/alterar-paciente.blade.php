@@ -48,8 +48,8 @@
 											<label>Sexo:<span class="vermelho">*</span></label>
 											@if (Session::get('paciente')->sexo === 'masculino')
 												<select class="form-control" name="sexo" id="sexo" >
-													<option value="masculino" selected>masculino</option>
-													<option value="feminino">feminino</option>
+													<option value="masculino" selected>Masculino</option>
+													<option value="feminino">Feminino</option>
 												</select>
 											@else
 												<select class="form-control" name="sexo" id="sexo" >

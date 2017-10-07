@@ -30,7 +30,7 @@
 							@if (session('status') === '3')
 								<div class="alert alert-danger alert-dismissible" role="alert">
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<i class="fa fa-times-circle"></i> Paciente não cadastro no sistema, se desejar cadastrá-lo agora clique:
+									<i class="fa fa-times-circle"></i> Paciente não cadastro no sistema, se desejar cadastrá-lo pressione o botão:
 									<a href="/operador/cadastrar-paciente" class="btn btn-default">Cadastrar Paciente Agora</a>
 								</div>
 							@endif
@@ -57,7 +57,7 @@
 							<form class="" action="{{ action('PacienteController@searchPaciente') }}" method="post" id="search-paciente">
 								{{ csrf_field() }}
 								<div class="input-group">
-									<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="123456789012345">
+									<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="013456789012345">
 									<span class="input-group-btn">
 										<button type="submit" class="btn btn-primary" id="btn-search-paciente"><i class="fa fa-search" id="icone-btn-search-paciente"></i>    Buscar</button>
 									</span>

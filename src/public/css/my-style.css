@@ -9,3 +9,7 @@
 label.error {
   color: red;
 }
+
+#navigation {
+  text-align: center;
+}

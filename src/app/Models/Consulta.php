@@ -13,7 +13,8 @@ use \qms\Models\Local;
 class Consulta extends Model
 {
   protected $fillable = [
-    'calendario_id', 'periodo_id', 'paciente_id', 'especilidade_id', 'medico_id',  'local_id',
+    'codigo_consulta', 'calendario_id', 'periodo_id', 'paciente_id',
+    'especilidade_id', 'medico_id',  'local_id',
   ];
   public function calendario(){
     return $this->hasOne(Calendario::class);
