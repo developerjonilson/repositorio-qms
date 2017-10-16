@@ -19,6 +19,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Pagination\Paginator;
 use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class ConsultaController extends Controller {
 
@@ -189,13 +191,6 @@ class ConsultaController extends Controller {
                                                       ->where('medico_id', $id_medico)
                                                       ->where('local_id', $id_local)
                                                       ->get()->first();
-                    // $consultaSalva = DB::table('consultas')->where('calendario_id', 1)
-                    //                                   ->where('periodo_id', 1)
-                    //                                   ->where('paciente_id', 1)
-                    //                                   ->where('especialidade_id', 2)
-                    //                                   ->where('medico_id', 1)
-                    //                                   ->where('local_id', 2)
-                    //                                   ->get()->first();
 
                     return redirect()->action('ConsultaController@sucessoAgendamentoConsulta', $consultaSalva->id);
                   } else {
@@ -259,8 +254,6 @@ class ConsultaController extends Controller {
   }
 
   public function listagemConsultas(Request $request) {
-    // $request->all();
-    // dd($request);
     if ($request->session()->has('consultas') && $request->session()->has('especialidades')) {
       $consultas = $request->session()->get('consultas');
       $especialidades = $request->session()->get('especialidades');
@@ -276,7 +269,6 @@ class ConsultaController extends Controller {
           ->orderBy('consultas.created_at', 'desc')
           ->paginate($this->totalPage);
 
-      //dd($consultas);
       $especialidades = Especialidade::all();
 
       $consultas->withPath('/operador/listagem-consultas');
@@ -286,9 +278,6 @@ class ConsultaController extends Controller {
 
   public function buscarConsulta(Request $request) {
     $numero_cns = $request->numero_cns;
-
-    // if ($request->session()->has('erro')) {
-    //   $erro = $request->session()->get('erro');
 
     if ($numero_cns != null) {
       $request->session()->flash('numero_cns', $numero_cns);
@@ -311,7 +300,6 @@ class ConsultaController extends Controller {
     } else {
       if ($request->session()->has('numero_cns')) {
         $numero_cns = $request->session()->get('numero_cns');
-
 
         $paciente = Paciente::where('numero_cns', $numero_cns)->get()->first();
 
@@ -348,27 +336,7 @@ class ConsultaController extends Controller {
     return view('consulta.ver-consulta', ['consulta' => $consulta]);
   }
 
-  // public function listagemConsultasPorCns(Request $request) {
-  //   $numero_cns = $request->numero_cns;
-  //
-  //   $paciente = Paciente::where('numero_cns', $numero_cns)->get()->first();
-  //
-  //   $consultas = DB::table('consultas')
-  //       ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-  //       ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-  //       ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-  //       ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-  //       ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-  //       ->where('pacientes.numero_cns', '=', $numero_cns)
-  //       ->orderBy('consultas.created_at', 'desc')
-  //       ->paginate(2);
-  //
-  //   $consultas->withPath('/operador/buscar-consulta/listagem-consultas');
-  //   return view('consulta.buscar-consulta', ['consultas' => $consultas], ['paciente' => $paciente]);
-  // }
-
   public function buscarUmaConsultaDois(Request $request, $idConsulta) {
-    // dd($request->session());
     $consulta = DB::table('consultas')
         ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
         ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
@@ -381,28 +349,36 @@ class ConsultaController extends Controller {
     return view('consulta.ver-consulta2', ['consulta' => $consulta]);
   }
 
-  public function filtrarConsultas(Request $request) {
-    $idEspecialidade = $request->especialidade;
-    $data = $request->data;
-    $consultas = DB::table('consultas')
-        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-        ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-        ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-        ->where('consultas.especialidade_id', '=', $idEspecialidade)
-        ->where('calendarios.data', '=', $data)
-        ->orderBy('calendarios.data', 'desc')
-        ->paginate($this->totalPage);
+  public function filtrarConsultas($especialidade, $data) {
+    // if ($request->session()->has('consultas') && $request->session()->has('especialidades')) {
+    //   $consultas = $request->session()->get('consultas');
+    //   $especialidades = $request->session()->get('especialidades');
+    //   // $request->session()->reflash();
+    //   $consultas->withPath('/operador/filtrar-consultas');
+    //   return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
+    // } else {
+      // $idEspecialidade = $request->especialidade;
+      // $data = $request->data;
 
-    $especialidades = Especialidade::all();
-    //$request->session()->put();
-    // $request->session()->flash('consultas', $consultas);
-    // $request->session()->flash('especialidades', $especialidades);
+      $consultas = DB::table('consultas')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->where('consultas.especialidade_id', '=', $especialidade)
+          ->where('calendarios.data', '=', $data)
+          ->orderBy('calendarios.data', 'desc')
+          ->paginate($this->totalPage);
 
-    // $request->session()->reflash();
-    $consultas->withPath('/operador/listagem-consultas/resultado');
-    return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
+      $especialidades = Especialidade::all();
+
+      // $request->session()->flash('consultas', $consultas);
+      // $request->session()->flash('especialidades', $especialidades);
+
+      $consultas->withPath('/operador/filtrar-consultas');
+      return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
+    // }
 
   }
 
@@ -424,12 +400,7 @@ class ConsultaController extends Controller {
       $view = view('consulta.consulta-pdf', compact('consulta'));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
-      // return $pdf->stream('/Documentos/consulta.pdf');
-      // return $pdf->download('consulta.consulta-pdf');
       return $pdf->stream('consulta');
-
-
-      // dd($consulta);
 
     }
   }

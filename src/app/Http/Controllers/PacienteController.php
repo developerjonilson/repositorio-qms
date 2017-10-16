@@ -10,6 +10,7 @@ use \qms\Models\Estado;
 use \qms\Models\Telefone;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Response;
 
 class PacienteController extends Controller {
   public function __construct() {
@@ -22,7 +23,6 @@ class PacienteController extends Controller {
   }
 
   public function createPaciente(Request $request) {
-
     if ($request->nome_paciente != null && $request->sexo != null &&
       $request->data_nascimento != null && $request->numero_cns != null &&
       $request->nome_mae != null && $request->rua != null &&
@@ -31,15 +31,16 @@ class PacienteController extends Controller {
       $request->nome_estado != null ) {
 
         if (strlen($request->numero_cns) != 15) {
-          // erro CNS incorreto tem que ter 15 caracteres;
-          return back()->withInput()->with('status', '6');
+          $resposta = 6;
+          return Response::json($resposta);
         }
 
         $pacienteBancoCns = Paciente::where('numero_cns', $request->numero_cns)->first();
 
         if ($pacienteBancoCns != null) {
           // erro CNS já existe no banco de dados;
-          return back()->withInput()->with('status', '2');
+          $resposta = 2;
+          return Response::json($resposta);
         }
 
         if ($request->cpf != null) {
@@ -47,7 +48,8 @@ class PacienteController extends Controller {
 
           if ($pacienteBancoCpf != null) {
             // erro CNS já existe no banco de dados;
-            return back()->withInput()->with('status', '7');
+            $resposta = 7;
+            return Response::json($resposta);
           }
         }
 
@@ -56,7 +58,8 @@ class PacienteController extends Controller {
 
           if ($pacienteBancoRg != null) {
             // erro CNS já existe no banco de dados;
-            return back()->withInput()->with('status', '8');
+            $resposta = 8;
+            return Response::json($resposta);
           }
         }
 
@@ -64,45 +67,66 @@ class PacienteController extends Controller {
         $dataNasc = $request->data_nascimento;
         if ($dataNasc >= $dataAtual) {
           // erro data invalida, a data tem que ser menor ou igual em relacao a dataAtual;
-          return back()->withInput()->with('status', '3');
+          $resposta = 3;
+          return Response::json($resposta);
         }
 
         //parte que vai gravar no banco de dados:
         $telefone = Telefone::create($request->all());
-        $paciente = new Paciente($request->all());
+        $paciente = new Paciente();
+        $paciente->nome_paciente = strtoupper($request->nome_paciente);
+        $paciente->sexo = strtoupper($request->sexo);
+        $paciente->data_nascimento = $request->data_nascimento;
+        $paciente->numero_cns = $request->numero_cns;
+        $paciente->cpf = $request->cpf;
+        $paciente->rg = $request->rg;
+        $paciente->nome_mae = strtoupper($request->nome_mae);
+        $paciente->nome_pai = strtoupper($request->nome_pai);
+        // $paciente = new Paciente($request->all());
         $paciente->telefone_id = $telefone->id;
+
+        // return $paciente;
 
         $estado = Estado::create($request->all());
         $cidade = new Cidade($request->all());
         $cidade->estado_id = $estado->id;
 
-        $cidadeCreate = Cidade::create(['nome_cidade' => $cidade->nome_cidade,
+        // $cidadeCreate = Cidade::create(['nome_cidade' => $cidade->nome_cidade,
+        //                                 'cep' => $cidade->cep,
+        //                                 'estado_id' => $cidade->estado_id, ]);
+        $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
                                         'cep' => $cidade->cep,
                                         'estado_id' => $cidade->estado_id, ]);
         $endereco = new Endereco($request->all());
 
         $endereco->cidade_id = $cidadeCreate->id;
 
-        $enderecoCreate = Endereco::create(['rua' => $endereco->rua,
+        // $enderecoCreate = Endereco::create(['rua' => $endereco->rua,
+        //                                 'numero' => $endereco->numero,
+        //                                 'complemento' => $endereco->complemento,
+        //                                 'bairro' => $endereco->bairro,
+        //                                 'cidade_id' => $endereco->cidade_id, ]);
+        $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
                                         'numero' => $endereco->numero,
-                                        'complemento' => $endereco->complemento,
-                                        'bairro' => $endereco->bairro,
+                                        'complemento' => strtoupper($endereco->complemento),
+                                        'bairro' => strtoupper($endereco->bairro),
                                         'cidade_id' => $endereco->cidade_id, ]);
         $paciente->endereco_id = $enderecoCreate->id;
 
-        //$pacienteNome = $paciente->nome_paciente;
-
         if ($paciente->save()) {
           //tudo feito com sucesso;
-          return back()->withInput()->with('status', '5');
+          $resposta = 5;
+          return Response::json($resposta);
         } else {
           // erro ao salvar no banco de dados;
-          return back()->withInput()->with('status', '4');
+          $resposta = 4;
+          return Response::json($resposta);
         }
 
     } else {
       // erro: todos os campos devem ser preenchidos:
-      return back()->withInput()->with('status', '1');
+      $resposta = 1;
+      return Response::json($resposta);
     }
 
   }
@@ -158,7 +182,9 @@ class PacienteController extends Controller {
     return redirect('operador/alterar-paciente')->with('paciente', $paciente);
   }
 
-  public function pacienteParaAlterarGet($numero_cns) {
+  public function pacienteParaAlterarGet(Request $request, $numero_cns) {
+    $status = $request->session()->get('stat');
+
     $paciente = DB::table('pacientes')
         ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id')
         ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
@@ -172,7 +198,7 @@ class PacienteController extends Controller {
 
     $paciente->id = $paciente_id->id;
 
-    return redirect('operador/alterar-paciente')->with('paciente', $paciente)->with('stat', '1');;
+    return redirect('operador/alterar-paciente')->with('paciente', $paciente)->with('stat', $status);
   }
 
   public function alterandoPaciente(Request $request) {
@@ -196,28 +222,58 @@ class PacienteController extends Controller {
         $estado = Estado::find($estado_id);
         $telefone = Telefone::find($telefone_id);
 
+        if ($request->cpf != null) {
+          if ($paciente->cpf != null) {
+            if ($paciente->cpf != $request->cpf) {
+              $request->session()->flash('stat', '3');
+              return redirect()->action('PacienteController@pacienteParaAlterarGet', $numero_cns);
+            }
+          } else {
+            $cpfBanco = Paciente::where('cpf', $request->cpf)->get()->first();
+            if ($cpfBanco != null) {
+              $request->session()->flash('stat', '3');
+              return redirect()->action('PacienteController@pacienteParaAlterarGet', $numero_cns);
+            }
+          }
+        }
+
+        if ($request->rg != null) {
+          if ($paciente->rg != null) {
+            if ($paciente->rg != $request->rg) {
+              $request->session()->flash('stat', '4');
+              return redirect()->action('PacienteController@pacienteParaAlterarGet', $numero_cns);
+            }
+          } else {
+            $rgBanco = Paciente::where('rg', $request->rg)->get()->first();
+            if ($rgBanco != null) {
+              $request->session()->flash('stat', '4');
+              return redirect()->action('PacienteController@pacienteParaAlterarGet', $numero_cns);
+            }
+          }
+        }
+
         if ($paciente != null && $endereco != null && $cidade != null &&
             $estado != null && $telefone != null) {
 
-              $paciente->nome_paciente = $request->nome_paciente;
-              $paciente->sexo = $request->sexo;
-              $paciente->data_nascimento = $request->data_nascimento;
+              $paciente->nome_paciente = strtoupper($request->nome_paciente);
+              $paciente->sexo = strtoupper($request->sexo);
+              $paciente->data_nascimento = strtoupper($request->data_nascimento);
               $paciente->numero_cns = $request->numero_cns;
               $paciente->cpf = $request->cpf;
               $paciente->rg = $request->rg;
 
-              $paciente->nome_mae = $request->nome_mae;
-              $paciente->nome_pai = $request->nome_pai;
+              $paciente->nome_mae = strtoupper($request->nome_mae);
+              $paciente->nome_pai = strtoupper($request->nome_pai);
 
-              $endereco->rua = $request->rua;
-              $endereco->numero = $request->numero;
-              $endereco->bairro = $request->bairro;
-              $endereco->complemento = $request->complemento;
+              $endereco->rua = strtoupper($request->rua);
+              $endereco->numero = strtoupper($request->numero);
+              $endereco->bairro = strtoupper($request->bairro);
+              $endereco->complemento = strtoupper($request->complemento);
 
-              $cidade->nome_cidade = $request->nome_cidade;
+              $cidade->nome_cidade = strtoupper($request->nome_cidade);
               $cidade->cep = $request->cep;
 
-              $estado->nome_estado = $request->nome_estado;
+              $estado->nome_estado = strtoupper($request->nome_estado);
 
               $telefone->telefone_um = $request->telefone_um;
               $telefone->telefone_dois = $request->telefone_dois;

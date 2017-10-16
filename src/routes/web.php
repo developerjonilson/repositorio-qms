@@ -72,7 +72,7 @@ Route::post('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
 Route::get('/operador/buscar-uma-consulta/{id}', 'ConsultaController@buscarUmaConsulta');
 Route::get('/operador/buscar-uma-consulta-dois/{id}', 'ConsultaController@buscarUmaConsultaDois');
 Route::get('/operador/listagem-consultas', 'ConsultaController@listagemConsultas');
-Route::post('/operador/filtrar-consultas', 'ConsultaController@filtrarConsultas');
+Route::get('/operador/filtrar-consultas', 'ConsultaController@filtrarConsultas');
 Route::get('/operador/consultas/gerar-pdf/{codigo?}', 'ConsultaController@gerarPdf');
 
 

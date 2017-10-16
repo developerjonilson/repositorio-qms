@@ -57,7 +57,7 @@
 								<a href="/operador/listagem-consultas" class="btn btn-primary"><i class="fa fa-reply"></i>  Voltar</a>
 							</div>
 							<div class="col-md-2">
-								<a href="/operador/consultas/gerar-pdf/{{$consulta->codigo_consulta}}" class="btn btn-success btn-xs" target='_blank'><i class="lnr lnr-printer"></i>   Gerar PDF</a>
+								<a href="/operador/consultas/gerar-pdf/{{$consulta->codigo_consulta}}" class="btn btn-success btn-xs" target='_blank' id="btn_gerar_pdf"><i class="lnr lnr-printer"></i>   Gerar PDF</a>
 							</div>
 						</div>
 						@else

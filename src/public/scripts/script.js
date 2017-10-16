@@ -51,33 +51,33 @@ $(document).ready(function () {
     $('#btn_login').attr('disabled', 'disabled');
   });
 
-  $('#form-create-paciente').submit(function() {
-    $('#icone-btn-cadastro-paciente').removeClass('fa-check-circle');
-    $('#icone-btn-cadastro-paciente').addClass('fa fa-spinner fa-spin');
-    $('#btn-cadastrar-paciente').attr('disabled', 'disabled');
-  });
+  // $('#form-create-paciente').submit(function() {
+    // $('#icone-btn-cadastro-paciente').removeClass('fa-check-circle');
+    // $('#icone-btn-cadastro-paciente').addClass('fa fa-spinner fa-spin');
+    // $('#btn-cadastrar-paciente').attr('disabled', 'disabled');
+  // });
 
-  $('#search-paciente').submit(function() {
-    $('#icone-btn-search-paciente').removeClass('fa-search');
-    $('#icone-btn-search-paciente').addClass('fa fa-spinner fa-spin');
-    $('#btn-search-paciente').attr('disabled', 'disabled');
-  });
+  // $('#search-paciente').submit(function() {
+  //   $('#icone-btn-search-paciente').removeClass('fa-search');
+  //   $('#icone-btn-search-paciente').addClass('fa fa-spinner fa-spin');
+  //   $('#btn-search-paciente').attr('disabled', 'disabled');
+  // });
 
-  $('#form-para-alterar-paciente').submit(function () {
-    $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
-    $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
-    $('#btn-agendar').attr('disabled', 'disabled');
-    $('#btn-search-paciente').attr('disabled', 'disabled');
-    $('#btn-aterar').attr('disabled', 'disabled');
-  });
+  // $('#form-para-alterar-paciente').submit(function () {
+  //   $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
+  //   $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
+  //   $('#btn-agendar').attr('disabled', 'disabled');
+  //   $('#btn-search-paciente').attr('disabled', 'disabled');
+  //   $('#btn-aterar').attr('disabled', 'disabled');
+  // });
 
-  $('#form-para-agendar-consulta').submit(function () {
-    $('#icone-btn-agendar').removeClass('fa-calendar');
-    $('#icone-btn-agendar').addClass('fa fa-spinner fa-spin');
-    $('#btn-agendar').attr('disabled', 'disabled');
-    $('#btn-search-paciente').attr('disabled', 'disabled');
-    $('#btn-aterar').attr('disabled', 'disabled');
-  });
+  // $('#form-para-agendar-consulta').submit(function () {
+  //   $('#icone-btn-agendar').removeClass('fa-calendar');
+  //   $('#icone-btn-agendar').addClass('fa fa-spinner fa-spin');
+  //   $('#btn-agendar').attr('disabled', 'disabled');
+  //   $('#btn-search-paciente').attr('disabled', 'disabled');
+  //   $('#btn-aterar').attr('disabled', 'disabled');
+  // });
 
   // função para buscar os valores dos selected de medicos por especialidade:
   $('#especialidade').change(function () {
@@ -144,75 +144,11 @@ $(document).ready(function () {
     });
   });
 
-  $('#botao_agendar').on('click', function () {
+// DIV loading no carregamento da pagina:
+  $('.loading').fadeOut(700).addClass('hidden');
 
+  $( "#btn-test").click(function() {
+    $('.loading').fadeIn(700).removeClass('hidden');
   });
-
-  $("#form-agendar-consulta").validate({
-        // Define as regras
-        rules: {
-            especialidade: {
-                // campo especialidade será obrigatório (required)
-                required: true
-            },
-            medico: {
-                // campo medico será obrigatório (required)
-                required: true
-            },
-            data_consulta: {
-                // campo data_consulta será obrigatório (required)
-                required: true
-            },
-            periodo: {
-                // campo periodo será obrigatório (required)
-                required: true
-            },
-        },
-        // Define as mensagens de erro para cada regra
-        messages: {
-            especialidade: {
-                required: "Você tem que selecionar uma especialidade antes!"
-            },
-            medico: {
-                required: "Você tem que selecionar um medico antes!"
-            },
-            data_consulta: {
-                required: "Você tem que selecionar uma data antes!"
-            },
-            periodo: {
-                required: "Você tem que selecionar um periodo antes!"
-            },
-        }
-    });
-
-    // $('#ver').click(function () {
-    //   // var id = $(this).val();
-    //   var id = $('#idConsulta').val();
-    //   alert('deu certo:   ID: '+id);
-    //   $('#nome_paciente').prop('value', id);
-    // });
-
-    // $('#cpf').mask('000.000.000-00'),
-    // $('#telefone-um').mask("(00) 0000-00009");
-    // $('#telefone-dois').mask("(00) 0000-00009");
-    // $('#numero_cns').mask("000.0000.0000.0000");
-    // $('#cep').mask("00000-000");
-    //
-    // $('#btn-cadastrar-paciente').click(function(){
-    // $('#cpf').unmask();
-    // $('#telefone-um').unmask();
-    // $('#telefone-dois').unmask();
-    // $('#cep').unmask();
-    // $("#numero_cns").unmask();
-    // });
-    //
-    // $('#btn-search-paciente').click(function(){
-    // $('#numero_cns').unmask();
-    // });
-    //
-    // $('#btn-cadastrar-paciente').click(function(){
-    // $('#numero_cns').unmask();
-    // $('#cpf').unmask();
-    // });
 
 });
