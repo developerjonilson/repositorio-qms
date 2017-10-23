@@ -100,9 +100,8 @@ $(document).ready(function(){
       }
     );
 
-//function from submit form:
     function postFormCreatePaciente(form) {
-        $('.loading').fadeIn('fast').removeClass('hidden').delay(10000);
+        $('.loading').fadeIn('fast').removeClass('hidden');
 
         $('#cpf').unmask();
         $('#cep').unmask();
@@ -110,86 +109,7 @@ $(document).ready(function(){
         $('#telefone_um').unmask();
         $('#telefone_dois').unmask();
 
-        $.post('/operador/create-paciente', $(form).serialize(), function (resposta) {
-          $('#status').empty();
-          if (resposta === 1) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> Por favor preencha todos os campos corretamente!\
-              </div>'
-            );
-          }
-          if (resposta === 2) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> Não é possível realizar o cadastrado, pois esse número de CNS já foi registrado no sistema!\
-              </div>'
-            );
-          }
-          if (resposta === 3) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> Data de Nascimento do paciente Inválida!\
-              </div>'
-            );
-          }
-          if (resposta === 4) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> Erro insperado, tente mais tarde!\
-              </div>'
-            );
-          }
-          if (resposta === 5) {
-            $('#status').append(
-              '<div class="alert alert-success alert-dismissible" role="alert" id="status_5">\
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                <i class="fa fa-check-circle"></i> Paciente cadastrado com sucesso!\
-              </div>'
-            );
-            $('#form-create-paciente')[0].reset();
-          }
-          if (resposta === 6) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> O número do Cartão Nacional da Saúde (CNS) deve ter 15 digitos!\
-              </div>'
-            );
-          }
-          if (resposta === 7) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> Não é possível realizar o cadastrado, pois esse número de <b>CPF</b> já foi registrado no sistema!\
-              </div>'
-            );
-          }
-          if (resposta === 8) {
-            $('#status').append(
-              '<div class="alert alert-danger alert-dismissible" role="alert">\
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-              <i class="fa fa-times-circle"></i> Não é possível realizar o cadastrado, pois esse número de <b>RG</b> já foi registrado no sistema!\
-              </div>'
-            );
-          }
-
-          $('#cpf').mask('000.000.000-00'),
-          $('#rg').mask('000000000000000'),
-          $('#numero_cns').mask("000.0000.0000.0000");
-          $('#cep').mask("00000-000");
-          $('#telefone_um').mask("(00) 00000-0009");
-          $('#telefone_dois').mask("(00) 00000-0009");
-
-          $('html,body').scrollTop(0);
-          $('.loading').delay(5000).fadeOut(700).addClass('hidden');
-
-        });
-        return false;
+        form.submit();
 
     };
 
@@ -222,7 +142,7 @@ $(document).ready(function(){
                 },
               numero: {
                    required: true,
-                 digits: true
+                   digits: true
                 },
               bairro: {
                    required: true
@@ -370,11 +290,122 @@ $(document).ready(function(){
               },
           },
           submitHandler: function (form) {
-            // $('#search-paciente').trigger('submit');
             $('.loading').fadeIn('fast').removeClass('hidden').delay(10000);
             form.submit();
           },
       });
+
+  $("#form-filtro").validate({
+        // Define as regras
+        rules: {
+            especialidade: {
+                // campo especialidade será obrigatório (required)
+                required: true
+            },
+            medico: {
+                // campo medico será obrigatório (required)
+                required: true
+            },
+            data_consulta: {
+                // campo data_consulta será obrigatório (required)
+                required: true
+            },
+            periodo: {
+                // campo periodo será obrigatório (required)
+                required: true
+            },
+        },
+        // Define as mensagens de erro para cada regra
+        messages: {
+            especialidade: {
+                required: "Você tem que selecionar uma especialidade antes!"
+            },
+            medico: {
+                required: "Você tem que selecionar um medico antes!"
+            },
+            data_consulta: {
+                required: "Você tem que selecionar uma data antes!"
+            },
+            periodo: {
+                required: "Você tem que selecionar um periodo antes!"
+            },
+        },
+        submitHandler: function (form) {
+          $('.loading').fadeIn('fast').removeClass('hidden').delay(10000);
+          form.submit();
+        },
+    });
+
+  $('#btn-edit-profile').click(function () {
+    $('.loading').fadeIn('fast').removeClass('hidden').delay(10000);
+    $(this).addClass('hidden');
+    $('#riquired-fields').removeClass('hidden');
+    $('.riquired-fields').removeClass('hidden');
+
+    $('#telefone_um').prop("disabled", false);
+    $('#telefone_dois').prop("disabled", false);
+    $('#rua').prop("disabled", false);
+    $('#numero').prop("disabled", false);
+    $('#bairro').prop("disabled", false);
+    $('#complemento').prop("disabled", false);
+    $('#cidade').prop("disabled", false);
+    $('#estado').prop("disabled", false);
+
+    $('#buttons-edit').removeClass('hidden');
+    $('.loading').delay(5000).fadeOut(700).addClass('hidden');
+  });
+
+  $('#edit-profile').validate({
+        rules: {
+            telefone_um: {
+                required: true
+            },
+            rua: {
+                required: true
+            },
+            numero: {
+                required: true,
+                digits: true
+            },
+            bairro: {
+                required: true
+            },
+            cidade: {
+                required: true
+            },
+            estado: {
+                required: true
+            },
+        },
+        // Define as mensagens de erro para cada regra
+        messages: {
+            telefone_um: {
+                required: "Este campo é obrigatório!"
+            },
+            rua: {
+                required: "Este campo é obrigatório!"
+            },
+            numero: {
+                required: "Este campo é obrigatório!",
+                digits:"Este campo só podem conter numeros!"
+            },
+            bairro: {
+                required: "Este campo é obrigatório!"
+            },
+            cidade: {
+                required: "Este campo é obrigatório!"
+            },
+            estado: {
+                required: "Este campo é obrigatório!"
+            },
+        },
+        submitHandler: function (form) {
+          $('.loading').fadeIn('fast').removeClass('hidden').delay(10000);
+          $('#telefone_um').unmask();
+          $('#telefone_dois').unmask();
+          form.submit();
+        },
+    });
 
   });
 

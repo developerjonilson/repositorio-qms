@@ -11,15 +11,29 @@ use \qms\Models\Telefone;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Pagination\Paginator;
 
 class PacienteController extends Controller {
+
+  private $totalPage = 3;
+
   public function __construct() {
       $this->middleware('auth');
       $this->middleware('\qms\Http\Middleware\AutorizacaoMiddlewareOperador::class');
   }
 
-  public function cadastrarPaciente() {
-    return view('paciente.cadastrar-paciente');
+  public function cadastrarPaciente(Request $request) {
+    if ($request->session()->has('resposta')) {
+      $resposta = $request->session()->get('resposta');
+      $request->session()->forget('resposta');
+      // dd($request);
+      $request->session()->reflash();
+
+      return view('paciente.cadastrar-paciente', ['resposta' => $resposta]);
+    } else {
+      return view('paciente.cadastrar-paciente');
+    }
+
   }
 
   public function createPaciente(Request $request) {
@@ -32,7 +46,8 @@ class PacienteController extends Controller {
 
         if (strlen($request->numero_cns) != 15) {
           $resposta = 6;
-          return Response::json($resposta);
+          return back()->withInput()->with('resposta', $resposta);
+          // return Response::json($resposta);
         }
 
         $pacienteBancoCns = Paciente::where('numero_cns', $request->numero_cns)->first();
@@ -40,7 +55,9 @@ class PacienteController extends Controller {
         if ($pacienteBancoCns != null) {
           // erro CNS já existe no banco de dados;
           $resposta = 2;
-          return Response::json($resposta);
+          return back()->withInput()->with('resposta', $resposta);
+          // return redirect()->action('PacienteController@cadastrarPaciente')->with('resposta', $resposta);
+          // return Response::json($resposta);
         }
 
         if ($request->cpf != null) {
@@ -49,7 +66,8 @@ class PacienteController extends Controller {
           if ($pacienteBancoCpf != null) {
             // erro CNS já existe no banco de dados;
             $resposta = 7;
-            return Response::json($resposta);
+            return back()->withInput()->with('resposta', $resposta);
+            // return Response::json($resposta);
           }
         }
 
@@ -59,7 +77,8 @@ class PacienteController extends Controller {
           if ($pacienteBancoRg != null) {
             // erro CNS já existe no banco de dados;
             $resposta = 8;
-            return Response::json($resposta);
+            return back()->withInput()->with('resposta', $resposta);
+            // return Response::json($resposta);
           }
         }
 
@@ -68,7 +87,8 @@ class PacienteController extends Controller {
         if ($dataNasc >= $dataAtual) {
           // erro data invalida, a data tem que ser menor ou igual em relacao a dataAtual;
           $resposta = 3;
-          return Response::json($resposta);
+          return back()->withInput()->with('resposta', $resposta);
+          // return Response::json($resposta);
         }
 
         //parte que vai gravar no banco de dados:
@@ -91,9 +111,6 @@ class PacienteController extends Controller {
         $cidade = new Cidade($request->all());
         $cidade->estado_id = $estado->id;
 
-        // $cidadeCreate = Cidade::create(['nome_cidade' => $cidade->nome_cidade,
-        //                                 'cep' => $cidade->cep,
-        //                                 'estado_id' => $cidade->estado_id, ]);
         $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
                                         'cep' => $cidade->cep,
                                         'estado_id' => $cidade->estado_id, ]);
@@ -101,11 +118,6 @@ class PacienteController extends Controller {
 
         $endereco->cidade_id = $cidadeCreate->id;
 
-        // $enderecoCreate = Endereco::create(['rua' => $endereco->rua,
-        //                                 'numero' => $endereco->numero,
-        //                                 'complemento' => $endereco->complemento,
-        //                                 'bairro' => $endereco->bairro,
-        //                                 'cidade_id' => $endereco->cidade_id, ]);
         $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
                                         'numero' => $endereco->numero,
                                         'complemento' => strtoupper($endereco->complemento),
@@ -115,49 +127,130 @@ class PacienteController extends Controller {
 
         if ($paciente->save()) {
           //tudo feito com sucesso;
-          $resposta = 5;
-          return Response::json($resposta);
+          $sucesso = '1';
+          $idPaciente = $paciente->id;
+          $request->session()->flash('sucesso', $sucesso);
+          $request->session()->flash('idPaciente', $idPaciente);
+
+          return redirect()->action('ConsultaController@agendarConsulta')->with(compact('sucesso', 'idPaciente'));
         } else {
           // erro ao salvar no banco de dados;
           $resposta = 4;
-          return Response::json($resposta);
+          return back()->withInput()->with('resposta', $resposta);
+          // return Response::json($resposta);
         }
 
     } else {
       // erro: todos os campos devem ser preenchidos:
       $resposta = 1;
-      return Response::json($resposta);
+      return back()->withInput()->with('resposta', $resposta);
+      // return Response::json($resposta);
     }
 
   }
 
-  public function buscarPaciente() {
-    return view('paciente.buscar-paciente');
+  public function pesquisarPacientes(Request $request) {
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      $pacientes = DB::table('pacientes')
+          ->orderBy('pacientes.created_at', 'desc')
+          ->paginate($this->totalPage);
+
+      return view('paciente.pesquisar-pacientes')->with(compact('erro', 'pacientes'));
+    }
+
+    $pacientes = DB::table('pacientes')
+        ->orderBy('pacientes.created_at', 'desc')
+        ->paginate($this->totalPage);
+
+    return view('paciente.pesquisar-pacientes')->with(compact('pacientes'));
   }
+  
 
-  public function searchPaciente(Request $request) {
-    $numero_cns = $request->numero_cns;
+  public function filtrarPacientes(Request $request) {
+    if ($request->session()->has('data_nascimento')) {
+      $data_nascimento = $request->session()->get('data_nascimento');
 
-    if ($numero_cns != null) {
+      $pacientes = DB::table('pacientes')->where('data_nascimento', '=', $data_nascimento)
+                                         ->orderBy('pacientes.created_at', 'desc')
+                                         ->paginate($this->totalPage);
 
-      if (strlen($numero_cns) == 15) {
-        $paciente = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
-
-        if ($paciente != null) {
-          //deu certo  aqui p paciente é enviado para a view:
-          return back()->withInput()->with('paciente', $paciente);
-        } else {
-          //erro: paciente não cadastrado;
-          return back()->withInput()->with('status', '3');
-        }
-        return "deu certo";
-      } else {
-        //erro: tamanho do numero não é igual a 15:
-        return back()->withInput()->with('status', '2');
-      }
+      $request->session()->reflash();
+      $pacientes->withPath('/operador/filtrar-pacientes');
+      return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
+      // return redirect()->action('PacienteController@pesquisarPacientes')->with('pacientes', $pacientes);
     } else {
-      // erro: todos os campos devem ser preenchidos:
-      return back()->withInput()->with('status', '1');
+      $type = $request->search_type;
+      if ($type == 1) {
+        $numero_cns = $request->numero_cns;
+        if ($numero_cns != null) {
+          if (strlen($numero_cns) == 15) {
+            $paciente = Paciente::where('numero_cns', $numero_cns)->first();
+            if ($paciente == null) {
+              $request->session()->flash('erro', 2);
+              return redirect()->action('PacienteController@pesquisarPacientes');
+            } else {
+              return view('paciente.filtragem-pacientes')->with('paciente', $paciente);
+              // return redirect()->action('PacienteController@pesquisarPacientes')->with('paciente', $paciente);
+            }
+          } else {
+            //tamanho incorreto:
+            $request->session()->flash('erro', 1);
+            return redirect()->action('PacienteController@pesquisarPacientes');
+          }
+        } else {
+          //campo null
+          $request->session()->flash('erro', 1);
+          return redirect()->action('PacienteController@pesquisarPacientes');
+        }
+      } else {
+        if ($type == 2) {
+          $cpf = $request->cpf;
+
+          if ($cpf != null) {
+            if (strlen($cpf) == 11) {
+              $paciente = Paciente::where('cpf', $cpf)->first();
+
+              if ($paciente == null) {
+                $request->session()->flash('erro', 2);
+                return redirect()->action('PacienteController@pesquisarPacientes');
+              } else {
+                return view('paciente.filtragem-pacientes')->with('paciente', $paciente);
+                // return redirect()->action('PacienteController@pesquisarPacientes')->with('paciente', $paciente);
+              }
+            } else {
+              //tamanho incorreto:
+              $request->session()->flash('erro', 1);
+              return redirect()->action('PacienteController@pesquisarPacientes');
+            }
+          } else {
+            //campo null
+            $request->session()->flash('erro', 1);
+            return redirect()->action('PacienteController@pesquisarPacientes');
+          }
+
+        } else {
+          if ($type == 3) {
+            $data_nascimento = $request->data_nascimento;
+            if ($data_nascimento != null) {
+              $pacientes = DB::table('pacientes')->where('data_nascimento', '=', $data_nascimento)
+                                                 ->orderBy('pacientes.created_at', 'desc')
+                                                 ->paginate($this->totalPage);
+
+              $request->session()->flash('data_nascimento', $data_nascimento);
+
+              $pacientes->withPath('/operador/filtrar-pacientes');
+              return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
+              // return redirect()->action('PacienteController@pesquisarPacientes')->with('pacientes', $pacientes);
+            } else {
+              //campo null
+              $request->session()->flash('erro', 1);
+              return redirect()->action('PacienteController@pesquisarPacientes');
+            }
+          }
+        }
+      }
+
     }
 
   }
@@ -280,14 +373,18 @@ class PacienteController extends Controller {
 
               if ($paciente->save() && $endereco->save() && $cidade->save()
                   && $estado->save() && $telefone->save()) {
-                return redirect()->action('PacienteController@buscarPaciente')->with('stat', '2');
+                $erro = 3;
+                return redirect()->action('PacienteController@pesquisarPacientes')->with('erro', $erro);
               } else {
-                return redirect()->action('PacienteController@buscarPaciente')->with('stat', '1');
+                $erro = '2';
+                return redirect()->action('PacienteController@pesquisarPacientes')->with('erro', $erro);
               }
 
         } else {
           //erro na busca no banco de dados:
-          return redirect()->action('PacienteController@buscarPaciente')->with('stat', '1');
+          $erro = '2';
+          return redirect()->action('PacienteController@pesquisarPacientes')->with('erro', $erro);
+
         }
 
     } else {

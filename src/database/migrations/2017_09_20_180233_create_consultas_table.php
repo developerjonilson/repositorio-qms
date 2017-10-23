@@ -17,6 +17,8 @@ class CreateConsultasTable extends Migration
             $table->increments('id');
 
             $table->integer('codigo_consulta');
+            $val = 0;
+            $table->integer('system_status')->default($val);
 
             $table->integer('calendario_id')->unsigned();
             $table->foreign('calendario_id')->references('id')->on('calendarios');

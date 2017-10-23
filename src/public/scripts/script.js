@@ -1,44 +1,101 @@
 $(document).ready(function () {
 
   $(window).on('load', function() {
-    var pathname = window.location.pathname;
+    let pathname = window.location.pathname.split('/')
+    // console.log(pathname)
+    if(pathname[1]==='operador') {
+      $('#home').addClass('active')
 
-    if (pathname == '/operador' || pathname == '/operador/') {
-      $('#home').addClass('active');
-    } else {
-      if (pathname == '/operador/cadastrar-paciente' || pathname == '/operador/cadastrar-paciente/' ||
-          pathname == '/operador/buscar-paciente' || pathname == '/operador/buscar-paciente/') {
+      let action = pathname[2].split('-')
+      // console.log(action[0], action[1])
+      if(action[1] ==='paciente' || action[1] ==='pacientes') {
+        $('#home').removeClass('active')
         $('#pacientes').removeClass('collapsed');
         $('#pacientes').addClass('active');
         $('#subPaciente').addClass('in');
-        if (pathname == '/operador/cadastrar-paciente' || pathname == '/operador/cadastrar-paciente/') {
-          $('#menu_cadastrar_paciente').addClass('active');
-        } else {
-          $('#menu_pesquisar_paciente').addClass('active');
-        } //fim do 'if' para verificar se o pathname é cadastrar ou persquisar paciente
-
+        if (action[0] ==='cadastrar') {
+          $('#menu_cadastrar_paciente').addClass('active')
+        }
+        if (action[0] ==='pesquisar') {
+          $('#menu_pesquisar_paciente').addClass('active')
+        }
+        if (action[0] ==='alterar') {
+          $('#menu_alterar_paciente').removeClass('hidden')
+          $('#menu_alterar_paciente').addClass('active')
+        }
       } else {
-        // começo do 'if' para verificar se é agendar ou pesquisar uma consulta
-        if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/' ||
-        pathname == '/operador/buscar-consulta' || pathname == '/operador/buscar-consulta/') {
+        if (action[1] ==='consulta' || action[1] ==='consultas') {
           $('#consultas').removeClass('collapsed');
           $('#consultas').addClass('active');
           $('#subConsulta').addClass('in');
-          if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/') {
+          if (action[0] ==='agendar') {
+            $('#menu_agendar_consulta').removeClass('hidden');
             $('#menu_agendar_consulta').addClass('active');
-          } else {
+          }
+          if (action[0] ==='buscar') {
             $('#menu_pesquisar_consulta').addClass('active');
-          } //fim do 'if' para verificar se o pathname é agendar ou pesquisar consulta
-
-        } else {
-          if (pathname == '/operador/listagem-consultas' || pathname == '/operador/listagem-consultas/') {
-            $('#menu_listagem').addClass('active');
+          }
+          if (action[0] ==='listagem') {
+            $('#menu_lista_consulta').addClass('active');
           }
         }
       }
-    }// fim no primeiro 'if' para saber se esta na pagina inicial de operador
+    } else {
+      //$('#home').addClass('active')
+      //colocar outros usuarios
+    }
+  })
 
-  });
+
+
+    //
+    // if (pathname[1] == 'operador') {
+    //   // $('#home').addClass('active');
+    // } else {
+    //   if (pathname[2] == '/operador/cadastrar-paciente' || pathname[2] == '/operador/cadastrar-paciente/' ||
+    //       pathname[2] == '/operador/pesquisar-pacientes' || pathname[2] == '/operador/pesquisar-pacientes/' || //) {
+    //       pathname[2] == '/operador/alterar-paciente' || pathname[2] == '/operador/alterar-paciente/') {
+    //     $('#pacientes').removeClass('collapsed');
+    //     $('#pacientes').addClass('active');
+    //     $('#subPaciente').addClass('in');
+    //     if (pathname == '/operador/cadastrar-paciente' || pathname == '/operador/cadastrar-paciente/') {
+    //       $('#menu_cadastrar_paciente').addClass('active');
+    //     } else {
+    //       if (pathname == '/operador/pesquisar-pacientes' || pathname == '/operador/pesquisar-pacientes/') {
+    //         $('#menu_pesquisar_paciente').addClass('active');
+    //       } else {
+    //         $('#menu_alterar_paciente').removeClass('hidden');
+    //         $('#menu_alterar_paciente').addClass('active');
+    //       }
+    //     } //fim do 'if' para verificar se o pathname é cadastrar ou persquisar paciente
+    //
+    //   } else {
+    //     // começo do 'if' para verificar se é agendar ou pesquisar uma consulta
+    //     if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/' ||
+    //     pathname == '/operador/buscar-consulta' || pathname == '/operador/buscar-consulta/') {
+    //     //pathname == '/operador/listagem-consultas' || pathname == '/operador/listagem-consultas/') {
+    //       $('#consultas').removeClass('collapsed');
+    //       $('#consultas').addClass('active');
+    //       $('#subConsulta').addClass('in');
+    //       if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/') {
+    //         $('#menu_agendar_consulta').removeClass('hidden');
+    //         $('#menu_agendar_consulta').addClass('active');
+    //       } else {
+    //         // if (pathname == '/operador/buscar-paciente' || pathname == '/operador/buscar-paciente/') {
+    //         //   $('#menu_pesquisar_consulta').addClass('active');
+    //         // } else {
+    //         //   $('#menu_listagem_consulta').addClass('active');
+    //         // }
+    //         $('#menu_pesquisar_consulta').addClass('active');
+    //       } //fim do 'if' para verificar se o pathname é agendar ou pesquisar consulta
+    //
+    //     } else {
+    //       if (pathname == '/operador/listagem-consultas' || pathname == '/operador/listagem-consultas/') {
+    //         $('#menu_listagem').addClass('active');
+    //       }
+    //     }
+    //   }
+    // }// fim no primeiro 'if' para saber se esta na pagina inicial de operador
 
   $('#form-change-password').submit(function() {
     $('#icone-btn').removeClass('fa-check-circle');
@@ -50,34 +107,6 @@ $(document).ready(function () {
     $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
     $('#btn_login').attr('disabled', 'disabled');
   });
-
-  // $('#form-create-paciente').submit(function() {
-    // $('#icone-btn-cadastro-paciente').removeClass('fa-check-circle');
-    // $('#icone-btn-cadastro-paciente').addClass('fa fa-spinner fa-spin');
-    // $('#btn-cadastrar-paciente').attr('disabled', 'disabled');
-  // });
-
-  // $('#search-paciente').submit(function() {
-  //   $('#icone-btn-search-paciente').removeClass('fa-search');
-  //   $('#icone-btn-search-paciente').addClass('fa fa-spinner fa-spin');
-  //   $('#btn-search-paciente').attr('disabled', 'disabled');
-  // });
-
-  // $('#form-para-alterar-paciente').submit(function () {
-  //   $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
-  //   $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
-  //   $('#btn-agendar').attr('disabled', 'disabled');
-  //   $('#btn-search-paciente').attr('disabled', 'disabled');
-  //   $('#btn-aterar').attr('disabled', 'disabled');
-  // });
-
-  // $('#form-para-agendar-consulta').submit(function () {
-  //   $('#icone-btn-agendar').removeClass('fa-calendar');
-  //   $('#icone-btn-agendar').addClass('fa fa-spinner fa-spin');
-  //   $('#btn-agendar').attr('disabled', 'disabled');
-  //   $('#btn-search-paciente').attr('disabled', 'disabled');
-  //   $('#btn-aterar').attr('disabled', 'disabled');
-  // });
 
   // função para buscar os valores dos selected de medicos por especialidade:
   $('#especialidade').change(function () {
@@ -149,6 +178,37 @@ $(document).ready(function () {
 
   $( "#btn-test").click(function() {
     $('.loading').fadeIn(700).removeClass('hidden');
+  });
+
+  $('#search_type').change(function () {
+    var option = $(this).val();
+
+    if (option == 1) {
+      $('.fields_filtrar').val('');
+
+      $('#div_number_cpf').addClass('hidden');
+      $('#div_date_nasc').addClass('hidden');
+      $('#div_number_cns').removeClass('hidden');
+    } else {
+      if (option == 2) {
+        $('.fields_filtrar').val('');
+
+        $('#div_number_cns').addClass('hidden');
+        $('#div_date_nasc').addClass('hidden');
+        $('#div_number_cpf').removeClass('hidden');
+      } else {
+        $('.fields_filtrar').val('');
+
+        $('#div_number_cns').addClass('hidden');
+        $('#div_number_cpf').addClass('hidden');
+        $('#div_date_nasc').removeClass('hidden');
+      }
+    }
+  });
+
+  $('#form_filtro-paciente').submit(function () {
+    $('#numero_cns').unmask();
+    $('#cpf').unmask();
   });
 
 });

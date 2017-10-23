@@ -33,6 +33,7 @@ Route::get('/administrador/alterar-dados', 'AdministradorController@alterarUsuar
 Route::get('/operador', 'OperadorController@index');
 
 Route::get('/operador/perfil', 'OperadorController@perfil');
+Route::post('/operador/alterar-perfil', 'OperadorController@alterProfile');
 Route::get('/operador/alterar-dados', 'OperadorController@alterarUsuario');
 Route::get('/operador/alterar-senha', 'OperadorController@alterarSenha');
 Route::post('/operador/update-senha', 'OperadorController@updateSenha');
@@ -43,15 +44,13 @@ Route::get('/operador/update-senha', 'OperadorController@alterarSenha');
 
 Route::get('/operador/cadastrar-paciente', 'PacienteController@cadastrarPaciente');
 Route::post('/operador/create-paciente', 'PacienteController@createPaciente');
+Route::get('/operador/pesquisar-pacientes', 'PacienteController@pesquisarPacientes');
+Route::get('/operador/filtrar-pacientes', 'PacienteController@filtrarPacientes');
 
 Route::get('/operador/alterar-paciente', 'PacienteController@alterarPaciente');
 Route::post('/operador/paciente-para-alterar', 'PacienteController@pacienteParaAlterarPost');
 Route::get('/operador/paciente-para-alterar/{numero_cns}', 'PacienteController@pacienteParaAlterarGet');
 Route::post('/operador/alterando-paciente', 'PacienteController@alterandoPaciente');
-
-Route::get('/operador/buscar-paciente', 'PacienteController@buscarPaciente');
-Route::post('/operador/search-paciente', 'PacienteController@searchPaciente');
-
 
 
 
@@ -66,11 +65,10 @@ Route::get('/operador/vagas-disponiveis/{idPeriodo}', 'ConsultaController@getVag
 Route::get('/operador/local/{idPeriodo}', 'ConsultaController@getLocal');
 Route::post('/operador/agendando-consulta/', 'ConsultaController@agendandoConsulta');
 Route::get('/operador/agendamento-sucesso/{id?}', 'ConsultaController@sucessoAgendamentoConsulta');
+Route::post('/operador/cancelar-agendamento-consulta', 'ConsultaController@cancelarAgendamentoConsulta');
 
-Route::get('/operador/buscar-consulta/{numero_cns?}', 'ConsultaController@buscarConsulta');
-Route::post('/operador/buscar-consulta', 'ConsultaController@buscarConsulta');
-Route::get('/operador/buscar-uma-consulta/{id}', 'ConsultaController@buscarUmaConsulta');
-Route::get('/operador/buscar-uma-consulta-dois/{id}', 'ConsultaController@buscarUmaConsultaDois');
+
+Route::get('/operador/ver-consulta/{id}', 'ConsultaController@verConsulta');
 Route::get('/operador/listagem-consultas', 'ConsultaController@listagemConsultas');
 Route::get('/operador/filtrar-consultas', 'ConsultaController@filtrarConsultas');
 Route::get('/operador/consultas/gerar-pdf/{codigo?}', 'ConsultaController@gerarPdf');

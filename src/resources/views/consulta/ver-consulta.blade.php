@@ -7,6 +7,8 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
+					<a href="/operador/listagem-consultas" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					<hr>
 					<h3 class="panel-title">Visualização de Consulta Agendada</h3>
 				</div>
 				<div class="panel-body">
@@ -54,10 +56,18 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-2">
-								<a href="/operador/buscar-consulta/{{$consulta->numero_cns}}" class="btn btn-primary"><i class="fa fa-reply"></i>  Voltar</a>
+								<a href="/operador/consultas/gerar-pdf/{{$consulta->codigo_consulta}}" class="btn btn-success" target='_blank' id="btn_gerar_pdf"><i class="lnr lnr-printer"></i>   Gerar PDF</a>
 							</div>
+							<span class="col-md-1"></span>
 							<div class="col-md-2">
-								<a href="/operador/consultas/gerar-pdf/{{$consulta->codigo_consulta}}" class="btn btn-success btn-xs" target='_blank' id="btn_gerar_pdf"><i class="lnr lnr-printer"></i>   Gerar PDF</a>
+								<form class="" action="{{action('ConsultaController@cancelarAgendamentoConsulta')}}" method="post" name="form-cancelamento" id="form-cancelamento">
+									{{ csrf_field() }}
+									<input type="hidden" name="id_consulta" id="id_consulta" value="{{$consulta->codigo_consulta}}">
+
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+									  <i class="fa fa-times"></i>   Cancelar Agendamento de Consulta
+									</button>
+								</form>
 							</div>
 						</div>
 						@else
@@ -76,5 +86,24 @@
 		</div>
 	</div>
 
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Confirmar Cancelamento de Agendamento</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Você tem certeza que deseja cancelar esse agendamento de consulta?</p>
+	      </div>
+	      <div class="modal-footer">
+					<button type="submit" form="form-cancelamento" class="btn btn-success"><i class="fa fa-check-circle"></i>  Confirmar Cancelamento</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 @endsection

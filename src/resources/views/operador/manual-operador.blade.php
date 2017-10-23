@@ -13,8 +13,10 @@
 					<hr>
 				</div>
 				<div class="panel-body">
-					<div class="row">
-						PDF fica aqui!
+					<div class="container">
+						<div class="row">
+							PDF fica aqui!
+						</div>
 					</div>
 				</div>
 			</div>

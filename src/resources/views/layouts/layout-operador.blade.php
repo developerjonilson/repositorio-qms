@@ -50,7 +50,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="index.html"><img src="/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a href="/operador"><img src="/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -99,7 +99,8 @@
 							<div id="subPaciente" class="collapse">
 								<ul class="nav">
 									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="" id="menu_cadastrar_paciente">Cadastrar Paciente</a></li>
-									<li><a href="{{ action('PacienteController@buscarPaciente') }}" class="" id="menu_pesquisar_paciente">Pesquisar Paciente</a></li>
+									<li><a href="{{ action('PacienteController@pesquisarPacientes') }}" class="" id="menu_pesquisar_paciente">Pesquisar Pacientes</a></li>
+									<li><a href="{{ action('PacienteController@alterarPaciente') }}" class="hidden" id="menu_alterar_paciente">Alterar Paciente</a></li>
 								</ul>
 							</div>
 						</li>
@@ -108,13 +109,24 @@
 							<a href="#subConsulta" id="consultas" data-toggle="collapse" class="collapsed"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subConsulta" class="collapse">
 								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="" id="menu_agendar_consulta">Agendar Consulta Médica</a></li>
-									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="" id="menu_pesquisar_consulta">Pesquisar Consultas Por CNS</a></li>
+									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="hidden" id="menu_agendar_consulta">Agendar Consulta Médica</a></li>
+									<li><a href="{{ action('ConsultaController@listagemConsultas') }}" class="" id="menu_lista_consulta" >Listar Consultas</a></li>
 								</ul>
 							</div>
 						</li>
 
-						<li><a href="{{ action('ConsultaController@listagemConsultas') }}" id="menu_listagem" class=""><i class="fa fa-list-ol"></i> <span>Listagem de Consultas</span></a></li>
+						{{-- <li><a href="{{ action('ConsultaController@listagemConsultas') }}" id="menu_listagem" class=""><i class="fa fa-list-ol"></i> <span>Listagem de Consultas</span></a></li> --}}
+
+						<li>
+								<a href="{{ route('logout') }}"	onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
+										<i class="lnr lnr-exit"></i> <span>Sair</span>
+								</a>
+
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										{{ csrf_field() }}
+								</form>
+						</li>
 
 					</ul>
 				</nav>

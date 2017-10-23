@@ -26,6 +26,7 @@ class ConsultaController extends Controller {
 
   private $medicoModel;
   private $totalPage = 2;
+  private $statusAtivo = 'desativado';
 
   public function __construct() {
       $this->middleware('auth');
@@ -33,21 +34,30 @@ class ConsultaController extends Controller {
 
   public function agendarConsulta(Request $request, $idPaciente = null) {
 
-    if ($request->session()->has('erro')) {
-      $erro = $request->session()->get('erro');
-      //return $erro;
-      if ($idPaciente != null) {
-        $paciente = Paciente::where('id', $idPaciente)->first();
-        $especialidades = Especialidade::all();
-        return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades, 'erro' => $erro]);
-      }
+    if ($request->session()->has('sucesso')) {
+      $sucesso = $request->session()->get('sucesso');
+      $idPaciente = $request->session()->get('idPaciente');
+
+      $paciente = Paciente::where('id', $idPaciente)->first();
+      $especialidades = Especialidade::all();
+      return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades, 'sucesso' => $sucesso]);
     } else {
-      if ($idPaciente != null) {
-        $paciente = Paciente::where('id', $idPaciente)->first();
-        $especialidades = Especialidade::all();
-        return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades]);
+      if ($request->session()->has('erro')) {
+        $erro = $request->session()->get('erro');
+        //return $erro;
+        if ($idPaciente != null) {
+          $paciente = Paciente::where('id', $idPaciente)->first();
+          $especialidades = Especialidade::all();
+          return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades, 'erro' => $erro]);
+        }
       } else {
-        return view('consulta.agendar-consulta');
+        if ($idPaciente != null) {
+          $paciente = Paciente::where('id', $idPaciente)->first();
+          $especialidades = Especialidade::all();
+          return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades]);
+        } else {
+          return view('consulta.agendar-consulta');
+        }
       }
     }
 
@@ -78,7 +88,7 @@ class ConsultaController extends Controller {
                             ->where('medico_id', '=', $idMedico)
                             ->where('data', '>=', $dataAtual)
                             ->get();
-    //dd($calendarios);
+
     return Response::json($calendarios);
   }
 
@@ -86,13 +96,13 @@ class ConsultaController extends Controller {
     $periodos = DB::table('periodos')
                             ->where('calendario_id', '=', $idCaleandario)
                             ->get();
-    //dd($periodos);
+
     return Response::json($periodos);
   }
 
   public function getVagas($idPeriodo) {
     $vagas = Periodo::where('id', $idPeriodo)->get()->first();
-    //dd($vagas);
+
     return Response::json($vagas);
   }
 
@@ -105,8 +115,7 @@ class ConsultaController extends Controller {
   }
 
   public function agendandoConsulta(Request $request) {
-  //  $variaveis = $request->all();
-//    dd($variaveis);
+
     $id_data_consulta = $request->input('data_consulta');
     $id_periodo = $request->input('periodo');
     $id_paciente = $request->input('paciente_id');
@@ -167,7 +176,7 @@ class ConsultaController extends Controller {
                   $codigo = $ConsultasAgendadasBanco->count();
                   $codigoProximaConsulta = 0;
                   if ($codigo == 0) {
-                    $codigoProximaConsulta = 20171;
+                    $codigoProximaConsulta = 171;
                   } else {
                     $ultimoCodigo = $ConsultasAgendadasBanco->last();
                     $codigoProximaConsulta = $ultimoCodigo->codigo_consulta + 1;
@@ -248,11 +257,6 @@ class ConsultaController extends Controller {
 
   }
 
-
-  public function alterarConsulta() {
-    return view('consulta.alterar-consulta');
-  }
-
   public function listagemConsultas(Request $request) {
     if ($request->session()->has('consultas') && $request->session()->has('especialidades')) {
       $consultas = $request->session()->get('consultas');
@@ -266,6 +270,7 @@ class ConsultaController extends Controller {
           ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
           ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
           ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->where('consultas.system_status', 0)
           ->orderBy('consultas.created_at', 'desc')
           ->paginate($this->totalPage);
 
@@ -276,54 +281,7 @@ class ConsultaController extends Controller {
     }
   }
 
-  public function buscarConsulta(Request $request) {
-    $numero_cns = $request->numero_cns;
-
-    if ($numero_cns != null) {
-      $request->session()->flash('numero_cns', $numero_cns);
-
-      $paciente = Paciente::where('numero_cns', $numero_cns)->get()->first();
-
-      $consultas = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-          ->where('pacientes.numero_cns', '=', $numero_cns)
-          ->orderBy('consultas.created_at', 'desc')
-          ->paginate($this->totalPage);
-
-      $consultas->withPath('/operador/buscar-consulta');
-      return view('consulta.buscar-consulta', ['consultas' => $consultas], ['paciente' => $paciente]);
-
-    } else {
-      if ($request->session()->has('numero_cns')) {
-        $numero_cns = $request->session()->get('numero_cns');
-
-        $paciente = Paciente::where('numero_cns', $numero_cns)->get()->first();
-
-        $consultas = DB::table('consultas')
-            ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-            ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-            ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-            ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-            ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-            ->where('pacientes.numero_cns', '=', $numero_cns)
-            ->orderBy('consultas.created_at', 'desc')
-            ->paginate($this->totalPage);
-        $request->session()->reflash();
-        $consultas->withPath('/operador/buscar-consulta');
-        return view('consulta.buscar-consulta', ['consultas' => $consultas], ['paciente' => $paciente]);
-      } else {
-        return view('consulta.buscar-consulta');
-      }
-    }
-
-
-  }
-
-  public function buscarUmaConsulta(Request $request, $idConsulta) {
+  public function verConsulta(Request $request, $idConsulta) {
     $consulta = DB::table('consultas')
         ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
         ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
@@ -336,50 +294,98 @@ class ConsultaController extends Controller {
     return view('consulta.ver-consulta', ['consulta' => $consulta]);
   }
 
-  public function buscarUmaConsultaDois(Request $request, $idConsulta) {
-    $consulta = DB::table('consultas')
-        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-        ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-        ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-        ->join('locals', 'consultas.local_id', '=', 'locals.id')
-        ->where('consultas.codigo_consulta', '=', $idConsulta)->get()->first();
-    $request->session()->reflash();
-    return view('consulta.ver-consulta2', ['consulta' => $consulta]);
-  }
+  public function filtrarConsultas(Request $request) {
+    if ($request->session()->has('id_data_consulta') && $request->session()->has('id_periodo')
+        && $request->session()->has('id_especialidade') && $request->session()->has('id_medico')) {
 
-  public function filtrarConsultas($especialidade, $data) {
-    // if ($request->session()->has('consultas') && $request->session()->has('especialidades')) {
-    //   $consultas = $request->session()->get('consultas');
-    //   $especialidades = $request->session()->get('especialidades');
-    //   // $request->session()->reflash();
-    //   $consultas->withPath('/operador/filtrar-consultas');
-    //   return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
-    // } else {
-      // $idEspecialidade = $request->especialidade;
-      // $data = $request->data;
+      $id_data_consulta = $request->session()->get('id_data_consulta');
+      $id_periodo = $request->session()->get('id_periodo');
+      $id_especialidade = $request->session()->get('id_especialidade');
+      $id_medico = $request->session()->get('id_medico');
 
-      $consultas = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-          ->where('consultas.especialidade_id', '=', $especialidade)
-          ->where('calendarios.data', '=', $data)
-          ->orderBy('calendarios.data', 'desc')
-          ->paginate($this->totalPage);
+      $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+                                         ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+                                         ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+                                         ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+                                         ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+                                         ->where('consultas.calendario_id', '=', $id_data_consulta)
+                                         ->where('consultas.periodo_id', '=', $id_periodo)
+                                         ->where('consultas.especialidade_id', '=', $id_especialidade)
+                                         ->where('consultas.medico_id', '=', $id_medico)
+                                         ->where('consultas.system_status', 0)
+                                         ->orderBy('calendarios.data', 'desc')
+                                         ->paginate($this->totalPage);
 
-      $especialidades = Especialidade::all();
-
-      // $request->session()->flash('consultas', $consultas);
-      // $request->session()->flash('especialidades', $especialidades);
-
+      $request->session()->reflash();
       $consultas->withPath('/operador/filtrar-consultas');
-      return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
-    // }
+      return view('consulta.filtragem-consultas', ['consultas' => $consultas]);
 
+    } else {
+      if (isset($request->numero_cns)) {
+        $numero_cns = $request->numero_cns;
+        $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+                                           ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+                                           ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+                                           ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+                                           ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+                                           ->where('pacientes.numero_cns', '=', $numero_cns)
+                                           ->where('consultas.system_status', 0)
+                                           ->orderBy('calendarios.data', 'desc')
+                                           ->paginate($this->totalPage);
+
+        $request->session()->flash('numero_cns', $numero_cns);
+        $consultas->withPath('/operador/filtrar-consultas');
+        return view('consulta.filtragem-consultas', ['consultas' => $consultas]);
+
+      } else {
+        if ($request->session()->has('numero_cns')) {
+          $numero_cns = $request->session()->get('numero_cns');
+
+          $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+                                             ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+                                             ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+                                             ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+                                             ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+                                             ->where('pacientes.numero_cns', '=', $numero_cns)
+                                             ->where('consultas.system_status', 0)
+                                             ->orderBy('calendarios.data', 'desc')
+                                             ->paginate($this->totalPage);
+
+          $request->session()->reflash();
+          $consultas->withPath('/operador/filtrar-consultas');
+          return view('consulta.filtragem-consultas', ['consultas' => $consultas]);
+
+        } else {
+          $id_data_consulta = $request->data_consulta;
+          $id_periodo = $request->periodo;
+          $id_especialidade = $request->especialidade;
+          $id_medico =  $request->medico;
+
+          $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+                                             ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+                                             ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+                                             ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+                                             ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+                                             ->where('consultas.calendario_id', '=', $id_data_consulta)
+                                             ->where('consultas.periodo_id', '=', $id_periodo)
+                                             ->where('consultas.especialidade_id', '=', $id_especialidade)
+                                             ->where('consultas.medico_id', '=', $id_medico)
+                                             ->where('consultas.system_status', 0)
+                                             ->orderBy('calendarios.data', 'desc')
+                                             ->paginate($this->totalPage);
+
+          $request->session()->flash('id_data_consulta', $id_data_consulta);
+          $request->session()->flash('id_periodo', $id_periodo);
+          $request->session()->flash('id_especialidade', $id_especialidade);
+          $request->session()->flash('id_medico', $id_medico);
+
+          $consultas->withPath('/operador/filtrar-consultas');
+          return view('consulta.filtragem-consultas', ['consultas' => $consultas]);
+        }
+
+      }
+
+    }
   }
 
   public function gerarPdf(Request $request, $codigo = null) {
@@ -403,6 +409,10 @@ class ConsultaController extends Controller {
       return $pdf->stream('consulta');
 
     }
+  }
+
+  public function cancelarAgendamentoConsulta(Request $request) {
+    dd($request->all());
   }
 
 }

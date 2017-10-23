@@ -8,7 +8,9 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<h3 class="panel-title">Alterar Dados do Pacientes</h3>
+					<a href="/operador/pesquisar-pacientes" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					<hr>
+					<h3 class="panel-title">Alterar Dados do Paciente</h3>
 					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>
 				</div>
 				<div class="panel-body">
@@ -186,8 +188,9 @@
 												<i id="icone_btn_agendar" class="fa fa-check-circle"></i>  Salvar Alterações
 											</button>
 										</div>
+										<span class="col-md-1"></span>
 										<div class="col-md-3">
-											<a href="{{ action('PacienteController@buscarPaciente') }}" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</a>
+											<a href="{{ action('PacienteController@pesquisarPacientes') }}" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</a>
 										</div>
 									</div>
 								</div>
@@ -195,7 +198,7 @@
 							@else
 								<div class="alert alert-danger alert-dismissible" role="alert">
 									<i class="fa fa-times-circle"></i> Nenhum paciente foi selecionado para alterar seus dados cadastrados, selecione o paciente aqui:
-									<a href="/operador/buscar-paciente" class="btn btn-default">Buscar Paciente Agora</a>
+									<a href="/operador/pesquisar-pacientes" class="btn btn-default">Buscar Paciente Agora</a>
 								</div>
 							@endif
 

@@ -21,7 +21,7 @@
 								@if ($erro === '2')
 									<div class="alert alert-danger alert-dismissible" role="alert">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<i class="fa fa-times-circle"></i> Já foi agendada uma consulta para esse paciente nesse mesmo dia e periodo!
+										<i class="fa fa-times-circle"></i> Já foi agendada uma consulta para esse paciente nesse mesmo dia e período!
 									</div>
 								@else
 									@if ($erro === '3')
@@ -37,6 +37,12 @@
 									@endif
 								@endif
 							@endif
+						@endisset
+						@isset($sucesso)
+							<div class="alert alert-success alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<i class="fa fa-check-circle"></i> Paciente cadastrado com sucesso, agora você já pode agendar a consulta!
+							</div>
 						@endisset
 					</div>
 					<div class="row">
@@ -63,7 +69,7 @@
 							@else
 								<div class="alert alert-danger alert-dismissible" role="alert">
 									<i class="fa fa-times-circle"></i> Nenhum paciente foi selecionado, selecione o paciente aqui:
-									<a href="/operador/buscar-paciente" class="btn btn-default"><i class="fa fa-search"></i> Buscar Paciente Agora</a>
+									<a href="/operador/pesquisar-pacientes" class="btn btn-default"><i class="fa fa-search"></i> Buscar Paciente Agora</a>
 								</div>
 							@endif
 						@endif
@@ -135,7 +141,7 @@
 									<button type="submit" class="btn btn-success" ><i id="icone_btn_agendar" class="fa fa-calendar-check-o"></i>  Agendar consulta</button>
 								</div>
 								<div class="col-md-3  col-xs-12 col-sm-12">
-									<a href="{{ action('PacienteController@buscarPaciente') }}" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</a>
+									<a href="{{ action('PacienteController@pesquisarPacientes') }}" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</a>
 								</div>
 							</div>
 						</form>
@@ -206,8 +212,9 @@
 									<div class="col-md-3 col-xs-12 col-sm-12">
 										<button type="submit" class="btn btn-success" ><i id="icone_btn_agendar" class="fa fa-calendar-check-o"></i>  Agendar consulta</button>
 									</div>
+									<span class="col-md-1"></span>
 									<div class="col-md-3  col-xs-12 col-sm-12">
-										<a href="{{ action('PacienteController@buscarPaciente') }}" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</a>
+										<a href="{{ action('PacienteController@pesquisarPacientes') }}" class="btn btn-danger" id="btn-cancelar"><i id="icone-btn-cancelar" class="fa fa-times"></i>  Cancelar</a>
 									</div>
 								</div>
 							</form>

@@ -74,19 +74,19 @@
 				<table border="1px">
 					<tr>
 						<td><b>Especialidade</b></td>
-						<td>{{$consulta->nome_especialidade}}</td>
+						<td><label>{{$consulta->nome_especialidade}}</label></td>
 					</tr>
 					<tr>
-						<td><b>Medico</b></td>
-						<td>{{$consulta->numero_crm}} - {{$consulta->nome_medico}}</td>
+						<td><b>Médico</b></td>
+						<td><label>{{$consulta->numero_crm}} - {{$consulta->nome_medico}}</label></td>
 					</tr>
 					<tr>
 						<td><b>Data da consulta</b></td>
-						<td>{{ date('d/m/Y', strtotime($consulta->data)) }}</td>
+						<td><label>{{ date('d/m/Y', strtotime($consulta->data)) }}</label></td>
 					</tr>
 					<tr>
 						<td><b>Periodo / Horário</b></td>
-						<td>{{ $consulta->nome }}</td>
+						<td><label>{{ $consulta->nome }}</label></td>
 					</tr>
 				</table>
 			</div>
@@ -98,7 +98,7 @@
 			<table border="1px">
 				<tr>
 					<td><b>Local</b></td>
-					<td>{{ $consulta->nome_fantasia}}</td>
+					<td><label>{{ $consulta->nome_fantasia}}</label></td>
 				</tr>
 			</table>
 		</div>
@@ -106,7 +106,8 @@
 		<div class="footer">
 			<hr>
 			<div class="text-center">
-				QMS - Query System Management   -   {{date('d/m/Y')}}
+				{{date_default_timezone_set('America/Fortaleza')}}
+				QMS - Query System Management   -   {{date('H:i:s  -  d/m/Y')}}
 			</div>
 		</div>
 
