@@ -276,8 +276,22 @@ class ConsultaController extends Controller {
 
       $especialidades = Especialidade::all();
 
-      $consultas->withPath('/operador/listagem-consultas');
-      return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
+      if ($request->session()->has('erro')) {
+        $erro = $request->session()->get('erro');
+        // dd($erro);
+        $consultas->withPath('/operador/listagem-consultas');
+        return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades], ['erro' => $erro]);
+      } else {
+        if ($request->session()->has('sucesso')) {
+          $sucesso = $request->session()->get('sucesso');
+          // dd($sucesso);
+          $consultas->withPath('/operador/listagem-consultas');
+          return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades], ['sucesso' => $sucesso]);
+        } else {
+          $consultas->withPath('/operador/listagem-consultas');
+          return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
+        }
+      }
     }
   }
 
@@ -412,7 +426,38 @@ class ConsultaController extends Controller {
   }
 
   public function cancelarAgendamentoConsulta(Request $request) {
-    dd($request->all());
+    // dd($request->all());
+    if ($request->id_consulta != null) {
+      $codigo = $request->id_consulta;
+
+      $consulta = DB::table('consultas')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->join('locals', 'consultas.local_id', '=', 'locals.id')
+          ->where('consultas.codigo_consulta', '=', $codigo)
+          ->get()
+          ->first();
+
+    //  $consulta->system_status = 1;
+
+      // if ($consulta->save()) {
+      if (true) {
+        // $request->session()->flash('sucesso', 'Agendamento cancelado com sucesso!');
+        return redirect()->action('ConsultaController@listagemConsultas')->with('sucesso', 'Agendamento cancelado com sucesso!');
+      } else {
+        // $request->session()->flash('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
+        return redirect()->action('ConsultaController@listagemConsultas')->with('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
+      }
+    } else {
+      // $request->session()->flash('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
+      // return redirect()->action('ConsultaController@listagemConsultas');
+      return redirect()->action('ConsultaController@listagemConsultas')->with('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
+    }
+
+
   }
 
 }

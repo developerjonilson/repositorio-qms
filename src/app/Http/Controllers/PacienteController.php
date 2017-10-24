@@ -150,6 +150,12 @@ class PacienteController extends Controller {
   }
 
   public function pesquisarPacientes(Request $request) {
+    if ($request->session()->has('dateless')) {
+      $dateless = $request->session()->get('dateless');
+
+      return view('paciente.filtragem-pacientes')->with('dateless', $dateless);
+    }
+
     if ($request->session()->has('erro')) {
       $erro = $request->session()->get('erro');
       $pacientes = DB::table('pacientes')
@@ -165,7 +171,7 @@ class PacienteController extends Controller {
 
     return view('paciente.pesquisar-pacientes')->with(compact('pacientes'));
   }
-  
+
 
   public function filtrarPacientes(Request $request) {
     if ($request->session()->has('data_nascimento')) {
@@ -187,7 +193,8 @@ class PacienteController extends Controller {
           if (strlen($numero_cns) == 15) {
             $paciente = Paciente::where('numero_cns', $numero_cns)->first();
             if ($paciente == null) {
-              $request->session()->flash('erro', 2);
+              // $request->session()->flash('erro', 2);
+              $request->session()->flash('dateless', 1);
               return redirect()->action('PacienteController@pesquisarPacientes');
             } else {
               return view('paciente.filtragem-pacientes')->with('paciente', $paciente);
@@ -195,12 +202,14 @@ class PacienteController extends Controller {
             }
           } else {
             //tamanho incorreto:
-            $request->session()->flash('erro', 1);
+            // $request->session()->flash('erro', 1);
+            $request->session()->flash('dateless', 1);
             return redirect()->action('PacienteController@pesquisarPacientes');
           }
         } else {
           //campo null
-          $request->session()->flash('erro', 1);
+          // $request->session()->flash('erro', 1);
+          $request->session()->flash('dateless', 1);
           return redirect()->action('PacienteController@pesquisarPacientes');
         }
       } else {
@@ -212,7 +221,8 @@ class PacienteController extends Controller {
               $paciente = Paciente::where('cpf', $cpf)->first();
 
               if ($paciente == null) {
-                $request->session()->flash('erro', 2);
+                // $request->session()->flash('erro', 2);
+                $request->session()->flash('dateless', 1);
                 return redirect()->action('PacienteController@pesquisarPacientes');
               } else {
                 return view('paciente.filtragem-pacientes')->with('paciente', $paciente);
@@ -220,12 +230,14 @@ class PacienteController extends Controller {
               }
             } else {
               //tamanho incorreto:
-              $request->session()->flash('erro', 1);
+              // $request->session()->flash('erro', 1);
+              $request->session()->flash('dateless', 1);
               return redirect()->action('PacienteController@pesquisarPacientes');
             }
           } else {
             //campo null
-            $request->session()->flash('erro', 1);
+            // $request->session()->flash('erro', 1);
+            $request->session()->flash('dateless', 1);
             return redirect()->action('PacienteController@pesquisarPacientes');
           }
 
@@ -244,7 +256,8 @@ class PacienteController extends Controller {
               // return redirect()->action('PacienteController@pesquisarPacientes')->with('pacientes', $pacientes);
             } else {
               //campo null
-              $request->session()->flash('erro', 1);
+              // $request->session()->flash('erro', 1);
+              $request->session()->flash('dateless', 1);
               return redirect()->action('PacienteController@pesquisarPacientes');
             }
           }
@@ -253,6 +266,25 @@ class PacienteController extends Controller {
 
     }
 
+  }
+
+  public function verPaciente($idPaciente) {
+    if ($idPaciente != null) {
+      $paciente = DB::table('pacientes')
+          ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id')
+          ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
+          ->join('estados', 'cidades.estado_id', '=', 'estados.id')
+          ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id')
+          ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+          ->where('pacientes.id', '=', $idPaciente)
+          ->first();
+
+      $paciente->id = $idPaciente;
+      // dd($paciente);
+      return view('paciente.ver-paciente')->with('paciente', $paciente);
+    } else {
+      return view('paciente.ver-paciente');
+    }
   }
 
   public function alterarPaciente() {

@@ -7,7 +7,7 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<a href="/operador/listagem-consultas" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					<a href="/operador/listagem-consultas" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar (Listar Consultas)</a>
 					<hr>
 					<h3 class="panel-title">Visualização de Consulta Agendada</h3>
 				</div>
@@ -47,7 +47,7 @@
 						<div class="row">
 							<div class="col-md-6 form-group">
 								<label>Data da consulta:</label>
-								<input type="text" class="form-control" name="data_consulta" id="data_consulta" value="{{ $calendario->data }}" disabled>
+								<input type="text" class="form-control" name="data_consulta" id="data_consulta" value="{{ date('d/m/Y', strtotime($calendario->data)) }}" disabled>
 							</div>
 							<div class="col-md-6 form-group">
 								<label>Periodo:</label>

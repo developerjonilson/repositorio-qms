@@ -27,7 +27,6 @@
 
 <body>
 	<div class="loading">
-	{{-- <div class="loading"> --}}
 		<div class="sk-fading-circle">
       <div class="sk-circle1 sk-circle"></div>
       <div class="sk-circle2 sk-circle"></div>
@@ -114,8 +113,6 @@
 								</ul>
 							</div>
 						</li>
-
-						{{-- <li><a href="{{ action('ConsultaController@listagemConsultas') }}" id="menu_listagem" class=""><i class="fa fa-list-ol"></i> <span>Listagem de Consultas</span></a></li> --}}
 
 						<li>
 								<a href="{{ route('logout') }}"	onclick="event.preventDefault();

@@ -8,7 +8,11 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<a href="/operador/pesquisar-pacientes" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					@if (Session::has('paciente'))
+						<a href="/operador/ver-paciente/{{ Session::get('paciente')->id }}" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					@else
+						<a href="/operador/pesquisar-pacientes" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					@endif
 					<hr>
 					<h3 class="panel-title">Alterar Dados do Paciente</h3>
 					<p class="panel-subtitle"><span class="vermelho">(*) Campos Obrigatórios</span></p>

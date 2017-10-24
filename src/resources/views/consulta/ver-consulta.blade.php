@@ -7,7 +7,7 @@
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
-					<a href="/operador/listagem-consultas" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+					<a href="/operador/listagem-consultas" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar (Listar Consultas)</a>
 					<hr>
 					<h3 class="panel-title">Visualização de Consulta Agendada</h3>
 				</div>

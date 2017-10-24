@@ -18,8 +18,15 @@
 							@if ($erro === 3)
 								<div class="alert alert-success alert-dismissible" role="alert">
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<i class="fa fa-times-circle"></i> Paciente alterado com sucesso!
+									<i class="fa fa-check-circle"></i> Paciente alterado com sucesso!
 								</div>
+							@else
+								@if ($erro === 2)
+									<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<i class="fa fa-times-circle"></i> Nenhum registro encontrado!
+									</div>
+								@endif
 							@endif
 						@endif
 					@endif
@@ -104,22 +111,17 @@
 												<td>{{ date('d/m/Y', strtotime($paciente->data_nascimento)) }}</td>
 												<td>{{ $paciente->cpf }}</td>
 												<td>{{ $paciente->nome_mae }}</td>
-												<td width="40">
+												<td width="30">
+													<div class="col-md-12">
+													<a href="/operador/ver-paciente/{{ $paciente->id }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
+													</div>
+													<span class="col-md-1"></span>
 													<div class="col-md-12">
 														<form class="" action="{{ action('ConsultaController@pacienteParaAgendarConsulta') }}" method="post" id="form-para-agendar-consulta">
 															{{ csrf_field() }}
 															<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
 															<button type="submit" class="btn btn-success btn-xs btn-block" id="btn-agendar"><i id="icone-btn-agendar" class="fa fa-calendar"></i>  Agendar consulta </button>
 														</form>
-													</div>
-													<span class="col-md-1"></span>
-													<div class="col-md-12">
-														<form class="" action="{{ action('PacienteController@pacienteParaAlterarPost') }}" method="post" id="form-para-alterar-paciente">
-															{{ csrf_field() }}
-															<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
-															<button type="submit" class="btn btn-warning btn-xs btn-block" id="btn-aterar"><i id="icone-btn-alterar" class="fa fa-pencil-square-o"></i>  Alterar Dados</button>
-														</form>
-													</div>
 												</td>
 											</tr>
 										@endforeach

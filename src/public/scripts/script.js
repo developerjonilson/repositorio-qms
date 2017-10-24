@@ -7,6 +7,11 @@ $(document).ready(function () {
       $('#home').addClass('active')
 
       let action = pathname[2].split('-')
+
+      if (action[0]==='update' || action[0]==='perfil') {
+        $('#home').removeClass('active');
+      }
+
       // console.log(action[0], action[1])
       if(action[1] ==='paciente' || action[1] ==='pacientes') {
         $('#home').removeClass('active')
@@ -25,6 +30,7 @@ $(document).ready(function () {
         }
       } else {
         if (action[1] ==='consulta' || action[1] ==='consultas') {
+          $('#home').removeClass('active')
           $('#consultas').removeClass('collapsed');
           $('#consultas').addClass('active');
           $('#subConsulta').addClass('in');
@@ -38,64 +44,21 @@ $(document).ready(function () {
           if (action[0] ==='listagem') {
             $('#menu_lista_consulta').addClass('active');
           }
+        } else {
+          if (action[1] ==='sucesso') {
+            $('#home').removeClass('active')
+            $('#consultas').removeClass('collapsed');
+            $('#consultas').addClass('active');
+            $('#subConsulta').addClass('in');
+          }
         }
       }
     } else {
+
       //$('#home').addClass('active')
       //colocar outros usuarios
     }
   })
-
-
-
-    //
-    // if (pathname[1] == 'operador') {
-    //   // $('#home').addClass('active');
-    // } else {
-    //   if (pathname[2] == '/operador/cadastrar-paciente' || pathname[2] == '/operador/cadastrar-paciente/' ||
-    //       pathname[2] == '/operador/pesquisar-pacientes' || pathname[2] == '/operador/pesquisar-pacientes/' || //) {
-    //       pathname[2] == '/operador/alterar-paciente' || pathname[2] == '/operador/alterar-paciente/') {
-    //     $('#pacientes').removeClass('collapsed');
-    //     $('#pacientes').addClass('active');
-    //     $('#subPaciente').addClass('in');
-    //     if (pathname == '/operador/cadastrar-paciente' || pathname == '/operador/cadastrar-paciente/') {
-    //       $('#menu_cadastrar_paciente').addClass('active');
-    //     } else {
-    //       if (pathname == '/operador/pesquisar-pacientes' || pathname == '/operador/pesquisar-pacientes/') {
-    //         $('#menu_pesquisar_paciente').addClass('active');
-    //       } else {
-    //         $('#menu_alterar_paciente').removeClass('hidden');
-    //         $('#menu_alterar_paciente').addClass('active');
-    //       }
-    //     } //fim do 'if' para verificar se o pathname é cadastrar ou persquisar paciente
-    //
-    //   } else {
-    //     // começo do 'if' para verificar se é agendar ou pesquisar uma consulta
-    //     if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/' ||
-    //     pathname == '/operador/buscar-consulta' || pathname == '/operador/buscar-consulta/') {
-    //     //pathname == '/operador/listagem-consultas' || pathname == '/operador/listagem-consultas/') {
-    //       $('#consultas').removeClass('collapsed');
-    //       $('#consultas').addClass('active');
-    //       $('#subConsulta').addClass('in');
-    //       if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/') {
-    //         $('#menu_agendar_consulta').removeClass('hidden');
-    //         $('#menu_agendar_consulta').addClass('active');
-    //       } else {
-    //         // if (pathname == '/operador/buscar-paciente' || pathname == '/operador/buscar-paciente/') {
-    //         //   $('#menu_pesquisar_consulta').addClass('active');
-    //         // } else {
-    //         //   $('#menu_listagem_consulta').addClass('active');
-    //         // }
-    //         $('#menu_pesquisar_consulta').addClass('active');
-    //       } //fim do 'if' para verificar se o pathname é agendar ou pesquisar consulta
-    //
-    //     } else {
-    //       if (pathname == '/operador/listagem-consultas' || pathname == '/operador/listagem-consultas/') {
-    //         $('#menu_listagem').addClass('active');
-    //       }
-    //     }
-    //   }
-    // }// fim no primeiro 'if' para saber se esta na pagina inicial de operador
 
   $('#form-change-password').submit(function() {
     $('#icone-btn').removeClass('fa-check-circle');
@@ -175,10 +138,7 @@ $(document).ready(function () {
 
 // DIV loading no carregamento da pagina:
   $('.loading').fadeOut(700).addClass('hidden');
-
-  $( "#btn-test").click(function() {
-    $('.loading').fadeIn(700).removeClass('hidden');
-  });
+  
 
   $('#search_type').change(function () {
     var option = $(this).val();

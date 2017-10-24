@@ -11,7 +11,7 @@
 					<br>
 
 					<hr>
-					<h3 class="panel-title">Resultado</h3>
+					<h3 class="panel-title">Resultado da Pesquisa de Consultas</h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">

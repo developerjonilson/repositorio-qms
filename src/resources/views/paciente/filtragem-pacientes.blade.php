@@ -8,7 +8,7 @@
 				<div class="panel-heading">
 					<a href="/operador/pesquisar-pacientes" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
 					<hr>
-					<h3 class="panel-title">Pacientes</h3>
+					<h3 class="panel-title">Resultado da Pesquisa de Pacientes</h3>
 					<hr>
 				</div>
 				<div class="panel-body">
@@ -33,31 +33,21 @@
 										<td>{{ date('d/m/Y', strtotime($paciente->data_nascimento)) }}</td>
 										<td>{{ $paciente->cpf }}</td>
 										<td>{{ $paciente->nome_mae }}</td>
-										<td width="40">
+										<td width="30">
+											<div class="col-md-12">
+											<a href="/operador/ver-paciente/{{ $paciente->id }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
+											</div>
+											<span class="col-md-1"></span>
 											<div class="col-md-12">
 												<form class="" action="{{ action('ConsultaController@pacienteParaAgendarConsulta') }}" method="post" id="form-para-agendar-consulta">
 													{{ csrf_field() }}
 													<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
 													<button type="submit" class="btn btn-success btn-xs btn-block" id="btn-agendar"><i id="icone-btn-agendar" class="fa fa-calendar"></i>  Agendar consulta </button>
 												</form>
-											</div>
-											<span class="col-md-1"></span>
-											<div class="col-md-12">
-												<form class="" action="{{ action('PacienteController@pacienteParaAlterarPost') }}" method="post" id="form-para-alterar-paciente">
-													{{ csrf_field() }}
-													<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
-													<button type="submit" class="btn btn-warning btn-xs btn-block" id="btn-aterar"><i id="icone-btn-alterar" class="fa fa-pencil-square-o"></i>  Alterar Dados</button>
-												</form>
-											</div>
 										</td>
 									</tr>
 								@else
 									@if (isset($pacientes))
-										{{-- @if ($pacientes->total() < 1)
-											<tr>
-												<td colspan="6">Nenhum registro encontrado!</td>
-											</tr>
-										@else --}}
 											@foreach ($pacientes as $paciente)
 												<tr>
 													<td>{{ $paciente->numero_cns }}</td>
@@ -65,30 +55,26 @@
 													<td>{{ date('d/m/Y', strtotime($paciente->data_nascimento)) }}</td>
 													<td>{{ $paciente->cpf }}</td>
 													<td>{{ $paciente->nome_mae }}</td>
-													<td width="40">
+													<td width="30">
+														<div class="col-md-12">
+														<a href="/operador/ver-paciente/{{ $paciente->id }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
+														</div>
+														<span class="col-md-1"></span>
 														<div class="col-md-12">
 															<form class="" action="{{ action('ConsultaController@pacienteParaAgendarConsulta') }}" method="post" id="form-para-agendar-consulta">
 																{{ csrf_field() }}
 																<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
 																<button type="submit" class="btn btn-success btn-xs btn-block" id="btn-agendar"><i id="icone-btn-agendar" class="fa fa-calendar"></i>  Agendar consulta </button>
 															</form>
-														</div>
-														<span class="col-md-1"></span>
-														<div class="col-md-12">
-															<form class="" action="{{ action('PacienteController@pacienteParaAlterarPost') }}" method="post" id="form-para-alterar-paciente">
-																{{ csrf_field() }}
-																<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
-																<button type="submit" class="btn btn-warning btn-xs btn-block" id="btn-aterar"><i id="icone-btn-alterar" class="fa fa-pencil-square-o"></i>  Alterar Dados</button>
-															</form>
-														</div>
 													</td>
 												</tr>
 											@endforeach
-										{{-- @endif --}}
 									@else
-										<tr>
-											<td colspan="6">Nenhum registro encontrado!</td>
-										</tr>
+										@if (isset($dateless))
+											<tr>
+												<td colspan="6">Nenhum registro encontrado!</td>
+											</tr>
+										@endif
 									@endif
 								@endif
 							</tbody>

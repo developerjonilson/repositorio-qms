@@ -51,7 +51,7 @@ Route::get('/operador/alterar-paciente', 'PacienteController@alterarPaciente');
 Route::post('/operador/paciente-para-alterar', 'PacienteController@pacienteParaAlterarPost');
 Route::get('/operador/paciente-para-alterar/{numero_cns}', 'PacienteController@pacienteParaAlterarGet');
 Route::post('/operador/alterando-paciente', 'PacienteController@alterandoPaciente');
-
+Route::get('/operador/ver-paciente/{id}', 'PacienteController@verPaciente');
 
 
 // Rotas de consultas:
