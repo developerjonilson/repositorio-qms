@@ -28,7 +28,7 @@
 						@if ($errors->has('password'))
 							<div class="alert alert-danger alert-dismissible" role="alert">
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<i class="fa fa-times-circle"></i> Senha atual incorreta ou as novas senhas não coincidem!
+								<i class="fa fa-times-circle"></i> Senha atual incorreta ou as senhas não coincidem!
 							</div>
 		        @endif
 						@if ($errors->has('less-password'))
@@ -44,7 +44,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Senha atual:<span class="vermelho">*</span></label>
-									<input class="form-control campo" type="password" name="senha_atual" id="senha_atual" placeholder="******" required>
+									<input class="form-control campo" type="password" name="senha_atual" id="senha_atual" placeholder="******" required autofocus>
 								</div>
 							</div>
 						</div>

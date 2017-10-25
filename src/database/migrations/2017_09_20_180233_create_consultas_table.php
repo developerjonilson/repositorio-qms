@@ -16,6 +16,10 @@ class CreateConsultasTable extends Migration
         Schema::create('consultas', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('codigo_consulta');
+            $val = 0;
+            $table->integer('system_status')->default($val);
+
             $table->integer('calendario_id')->unsigned();
             $table->foreign('calendario_id')->references('id')->on('calendarios');
 
@@ -33,7 +37,7 @@ class CreateConsultasTable extends Migration
 
             $table->integer('local_id')->unsigned();
             $table->foreign('local_id')->references('id')->on('locals');
-            
+
             $table->timestamps();
         });
     }

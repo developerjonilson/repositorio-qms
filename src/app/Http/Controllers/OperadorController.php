@@ -9,6 +9,10 @@ use Hash;
 use Auth;
 use Validator;
 use \qms\User;
+use \qms\Models\Endereco;
+use \qms\Models\Cidade;
+use \qms\Models\Estado;
+use \qms\Models\Telefone;
 use \qms\Models\Paciente;
 use \qms\Models\Especialidade;
 use \qms\Models\Medico;
@@ -34,12 +38,60 @@ class OperadorController extends Controller {
                                   'consultas' => $total_consultas,
                                   'especialidades' => $total_especialidades,
                                   'medicos' => $total_medicos]);
-    return view('');
   }
 
   //aagora funções do usuario logado:
-  public function perfil() {
-    return view('operador.perfil-usuario');
+  public function perfil(Request $request) {
+    $status = null;
+    if ($request->session()->has('status')) {
+      $status = $request->session()->get('status');
+    }
+
+    $endereco = Endereco::find(Auth::user()->endereco_id);
+    $telefone = Telefone::find(Auth::user()->telefone_id);
+    $cidade = Cidade::find($endereco->cidade_id);
+    $estado = Estado::find($cidade->estado_id);
+
+    return view('operador.perfil-usuario')->with(compact('endereco', 'telefone', 'cidade', 'estado', 'status'));
+  }
+
+  public function alterProfile(Request $request) {
+    $endereco_id = $request->endereco_id;
+    $telefone_id = $request->telefone_id;
+    $telefone_um = $request->telefone_um;
+    $telefone_dois = $request->telefone_dois;
+    $rua = strtoupper($request->rua);
+    $numero = $request->numero;
+    $bairro = strtoupper($request->bairro);
+    $complemento = strtoupper($request->complemento);
+    $nome_cidade = strtoupper($request->cidade);
+    $nome_estado = strtoupper($request->estado);
+
+    $endereco = Endereco::find($endereco_id);
+    $telefone = Telefone::find($telefone_id);
+    $cidade = Cidade::find($endereco->cidade_id);
+    $estado = Estado::find($cidade->estado_id);
+
+    $telefone->telefone_um = $telefone_um;
+    $telefone->telefone_dois = $telefone_dois;
+
+    $endereco->rua = $rua;
+    $endereco->numero = $numero;
+    $endereco->bairro = $bairro;
+    $endereco->complemento = $complemento;
+
+    $cidade->nome_cidade = $nome_cidade;
+
+    $estado->nome_estado = $nome_estado;
+
+    if ($endereco->save() && $cidade->save() && $estado->save() && $telefone->save()) {
+      $status = 1;
+      return redirect()->action('OperadorController@perfil')->with('status', $status);
+    } else {
+      $status = 2;
+    return redirect()->action('OperadorController@perfil')->with('status', $status);
+    }
+
   }
 
   public function alterarUsuario() {

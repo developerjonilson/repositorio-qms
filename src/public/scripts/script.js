@@ -1,58 +1,64 @@
 $(document).ready(function () {
 
   $(window).on('load', function() {
-    var pathname = window.location.pathname;
+    let pathname = window.location.pathname.split('/')
+    // console.log(pathname)
+    if(pathname[1]==='operador') {
+      $('#home').addClass('active')
 
-    if (pathname == '/operador' || pathname == '/operador/') {
-      $('#home').addClass('active');
-    } else {
-      if (pathname == '/operador/cadastrar-paciente' || pathname == '/operador/cadastrar-paciente/' ||
-          pathname == '/operador/buscar-paciente' || pathname == '/operador/buscar-paciente/') {
+      let action = pathname[2].split('-')
+
+      if (action[0]==='update' || action[0]==='perfil') {
+        $('#home').removeClass('active');
+      }
+
+      // console.log(action[0], action[1])
+      if(action[1] ==='paciente' || action[1] ==='pacientes') {
+        $('#home').removeClass('active')
         $('#pacientes').removeClass('collapsed');
         $('#pacientes').addClass('active');
         $('#subPaciente').addClass('in');
-        if (pathname == '/operador/cadastrar-paciente' || pathname == '/operador/cadastrar-paciente/') {
-          $('#menu_cadastrar_paciente').addClass('active');
-        } else {
-          $('#menu_pesquisar_paciente').addClass('active');
-        } //fim do 'if' para verificar se o pathname é cadastrar ou persquisar paciente
-
+        if (action[0] ==='cadastrar') {
+          $('#menu_cadastrar_paciente').addClass('active')
+        }
+        if (action[0] ==='pesquisar') {
+          $('#menu_pesquisar_paciente').addClass('active')
+        }
+        if (action[0] ==='alterar') {
+          $('#menu_alterar_paciente').removeClass('hidden')
+          $('#menu_alterar_paciente').addClass('active')
+        }
       } else {
-        // começo do 'if' para verificar se é agendar ou pesquisar uma consulta
-        if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/' ||
-        pathname == '/operador/buscar-consulta' || pathname == '/operador/buscar-consulta/') {
+        if (action[1] ==='consulta' || action[1] ==='consultas') {
+          $('#home').removeClass('active')
           $('#consultas').removeClass('collapsed');
           $('#consultas').addClass('active');
           $('#subConsulta').addClass('in');
-          if (pathname == '/operador/agendar-consulta' || pathname == '/operador/agendar-consulta/') {
+          if (action[0] ==='agendar') {
+            $('#menu_agendar_consulta').removeClass('hidden');
             $('#menu_agendar_consulta').addClass('active');
-          } else {
+          }
+          if (action[0] ==='buscar') {
             $('#menu_pesquisar_consulta').addClass('active');
-          } //fim do 'if' para verificar se o pathname é agendar ou pesquisar consulta
-
+          }
+          if (action[0] ==='listagem') {
+            $('#menu_lista_consulta').addClass('active');
+          }
         } else {
-          if (pathname == '/operador/relatorio-diario' || pathname == '/operador/relatorio-diario/' ||
-          pathname == '/operador/relatorio-mensal' || pathname == '/operador/relatorio-mensal/' ||
-          pathname == '/operador/relatorio-personalizado' || pathname == '/operador/relatorio-personalizado/') {
-            $('#relatorios').removeClass('collapsed');
-            $('#relatorios').addClass('active');
-            $('#subRelatorio').addClass('in');
-            if (pathname == '/operador/relatorio-diario' || pathname == '/operador/relatorio-diario/') {
-              $('#menu_relatorio_diario').addClass('active');
-            } else {
-              if (pathname == '/operador/relatorio-mensal' || pathname == '/operador/relatorio-mensal/') {
-                $('#menu_relatorio_mensal').addClass('active');
-              } else {
-                $('#menu_relatorio_personalizado').addClass('active');
-              }
-            }
-          } //fim do 'if' que verifica se é relatio diario, mensal ou personalizado
-
+          if (action[1] ==='sucesso') {
+            $('#home').removeClass('active')
+            $('#consultas').removeClass('collapsed');
+            $('#consultas').addClass('active');
+            $('#subConsulta').addClass('in');
+          }
         }
       }
-    }// fim no primeiro 'if' para saber se esta na pagina inicial de operador
+    } else {
 
-  });
+      //$('#home').addClass('active')
+      //colocar outros usuarios
+    }
+  })
 
   $('#form-change-password').submit(function() {
     $('#icone-btn').removeClass('fa-check-circle');
@@ -63,34 +69,6 @@ $(document).ready(function () {
   $('#form_login').submit(function() {
     $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
     $('#btn_login').attr('disabled', 'disabled');
-  });
-
-  $('#form-create-paciente').submit(function() {
-    $('#icone-btn-cadastro-paciente').removeClass('fa-check-circle');
-    $('#icone-btn-cadastro-paciente').addClass('fa fa-spinner fa-spin');
-    $('#btn-cadastrar-paciente').attr('disabled', 'disabled');
-  });
-
-  $('#search-paciente').submit(function() {
-    $('#icone-btn-search-paciente').removeClass('fa-search');
-    $('#icone-btn-search-paciente').addClass('fa fa-spinner fa-spin');
-    $('#btn-search-paciente').attr('disabled', 'disabled');
-  });
-
-  $('#form-para-alterar-paciente').submit(function () {
-    $('#icone-btn-alterar').removeClass('fa-pencil-square-o');
-    $('#icone-btn-alterar').addClass('fa fa-spinner fa-spin');
-    $('#btn-agendar').attr('disabled', 'disabled');
-    $('#btn-search-paciente').attr('disabled', 'disabled');
-    $('#btn-aterar').attr('disabled', 'disabled');
-  });
-
-  $('#form-para-agendar-consulta').submit(function () {
-    $('#icone-btn-agendar').removeClass('fa-calendar');
-    $('#icone-btn-agendar').addClass('fa fa-spinner fa-spin');
-    $('#btn-agendar').attr('disabled', 'disabled');
-    $('#btn-search-paciente').attr('disabled', 'disabled');
-    $('#btn-aterar').attr('disabled', 'disabled');
   });
 
   // função para buscar os valores dos selected de medicos por especialidade:
@@ -119,9 +97,11 @@ $(document).ready(function () {
       $('#local_nome_fantasia').attr('value', '');
       $('#data_consulta').empty();
       $('#data_consulta').append('<option value="" disabled selected>Selecione...</option>');
+
       $.each(calendarios, function (key, calendario) {
         //$('#data_consulta').append('<option value="'+calendario.id+'"> <?php date("d/m/Y", strtotime('+calendario.data+')) ?> </option>');
-        $('#data_consulta').append('<option value="'+calendario.id+'">'+calendario.data+'</option>');
+        var data = moment(calendario.data).format('DD/MM/YYYY');
+        $('#data_consulta').append('<option value="'+calendario.id+'"><time>'+data+'</time></option>');
       });
       $('#data_consulta').prop("disabled", false);
     });
@@ -156,50 +136,39 @@ $(document).ready(function () {
     });
   });
 
-  $('#botao_agendar').on('click', function () {
+// DIV loading no carregamento da pagina:
+  $('.loading').fadeOut(700).addClass('hidden');
+  
 
+  $('#search_type').change(function () {
+    var option = $(this).val();
+
+    if (option == 1) {
+      $('.fields_filtrar').val('');
+
+      $('#div_number_cpf').addClass('hidden');
+      $('#div_date_nasc').addClass('hidden');
+      $('#div_number_cns').removeClass('hidden');
+    } else {
+      if (option == 2) {
+        $('.fields_filtrar').val('');
+
+        $('#div_number_cns').addClass('hidden');
+        $('#div_date_nasc').addClass('hidden');
+        $('#div_number_cpf').removeClass('hidden');
+      } else {
+        $('.fields_filtrar').val('');
+
+        $('#div_number_cns').addClass('hidden');
+        $('#div_number_cpf').addClass('hidden');
+        $('#div_date_nasc').removeClass('hidden');
+      }
+    }
   });
 
-  $("#form-agendar-consulta").validate({
-        // Define as regras
-        rules: {
-            especialidade: {
-                // campo especialidade será obrigatório (required)
-                required: true
-            },
-            medico: {
-                // campo medico será obrigatório (required)
-                required: true
-            },
-            data_consulta: {
-                // campo data_consulta será obrigatório (required)
-                required: true
-            },
-            periodo: {
-                // campo periodo será obrigatório (required)
-                required: true
-            },
-        },
-        // Define as mensagens de erro para cada regra
-        messages: {
-            especialidade: {
-                required: "Você tem que selecionar uma especialidade antes!"
-            },
-            medico: {
-                required: "Você tem que selecionar um medico antes!"
-            },
-            data_consulta: {
-                required: "Você tem que selecionar uma data antes!"
-            },
-            periodo: {
-                required: "Você tem que selecionar um periodo antes!"
-            },
-        }
-    });
-
-
-
-
-
+  $('#form_filtro-paciente').submit(function () {
+    $('#numero_cns').unmask();
+    $('#cpf').unmask();
+  });
 
 });

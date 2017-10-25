@@ -26,12 +26,30 @@
 </head>
 
 <body>
+	<div class="loading">
+		<div class="sk-fading-circle">
+      <div class="sk-circle1 sk-circle"></div>
+      <div class="sk-circle2 sk-circle"></div>
+      <div class="sk-circle3 sk-circle"></div>
+      <div class="sk-circle4 sk-circle"></div>
+      <div class="sk-circle5 sk-circle"></div>
+      <div class="sk-circle6 sk-circle"></div>
+      <div class="sk-circle7 sk-circle"></div>
+      <div class="sk-circle8 sk-circle"></div>
+      <div class="sk-circle9 sk-circle"></div>
+      <div class="sk-circle10 sk-circle"></div>
+      <div class="sk-circle11 sk-circle"></div>
+      <div class="sk-circle12 sk-circle"></div>
+    </div>
+	</div>
+
+
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="index.html"><img src="/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a href="/operador"><img src="/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -73,14 +91,15 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{ action('OperadorController@index') }}" id="home" class=""><i class="lnr lnr-home"></i> <span>Painel de Controle</span></a></li>
+						<li><a href="{{ action('OperadorController@index') }}" id="home" class=""><i class="fa fa-home"></i> <span>Home</span></a></li>
 
 						<li>
-							<a href="#subPaciente" id="pacientes" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Paciente</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a href="#subPaciente" id="pacientes" data-toggle="collapse" class="collapsed"><i class="fa fa-users"></i> <span>Pacientes</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPaciente" class="collapse">
 								<ul class="nav">
 									<li><a href="{{ action('PacienteController@cadastrarPaciente') }}" class="" id="menu_cadastrar_paciente">Cadastrar Paciente</a></li>
-									<li><a href="{{ action('PacienteController@buscarPaciente') }}" class="" id="menu_pesquisar_paciente">Pesquisar Paciente</a></li>
+									<li><a href="{{ action('PacienteController@pesquisarPacientes') }}" class="" id="menu_pesquisar_paciente">Pesquisar Pacientes</a></li>
+									<li><a href="{{ action('PacienteController@alterarPaciente') }}" class="hidden" id="menu_alterar_paciente">Alterar Paciente</a></li>
 								</ul>
 							</div>
 						</li>
@@ -89,22 +108,23 @@
 							<a href="#subConsulta" id="consultas" data-toggle="collapse" class="collapsed"><i class="fa fa-stethoscope"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subConsulta" class="collapse">
 								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="" id="menu_agendar_consulta">Agendar Consulta Médica</a></li>
-									<li><a href="{{ action('ConsultaController@buscarConsulta') }}" class="" id="menu_pesquisar_consulta">Pesquisar Consultas</a></li>
+									<li><a href="{{ action('ConsultaController@agendarConsulta') }}" class="hidden" id="menu_agendar_consulta">Agendar Consulta Médica</a></li>
+									<li><a href="{{ action('ConsultaController@listagemConsultas') }}" class="" id="menu_lista_consulta" >Listar Consultas</a></li>
 								</ul>
 							</div>
 						</li>
 
 						<li>
-							<a href="#subRelatorio" id="relatorios" data-toggle="collapse" class="collapsed"><i class="lnr lnr-list"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subRelatorio" class="collapse">
-								<ul class="nav">
-									<li><a href="{{ action('ConsultaController@relatorioDiario') }}" class="" id="menu_relatorio_diario">Diário</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioMensal') }}" class="" id="menu_relatorio_mensal">Mensal</a></li>
-									<li><a href="{{ action('ConsultaController@relatorioPersonalizado') }}" class="" id="menu_relatorio_personalizado">Personalizado</a></li>
-								</ul>
-							</div>
+								<a href="{{ route('logout') }}"	onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
+										<i class="lnr lnr-exit"></i> <span>Sair</span>
+								</a>
+
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										{{ csrf_field() }}
+								</form>
 						</li>
+
 					</ul>
 				</nav>
 			</div>
@@ -141,6 +161,10 @@
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
+	<script src="/scripts/moment.js"></script>
+	<script src="/scripts/moment-with-locales.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/script.js"></script>
 
 	@yield('pos-script')
