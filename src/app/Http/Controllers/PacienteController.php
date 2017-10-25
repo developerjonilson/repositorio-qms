@@ -184,7 +184,6 @@ class PacienteController extends Controller {
       $request->session()->reflash();
       $pacientes->withPath('/operador/filtrar-pacientes');
       return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
-      // return redirect()->action('PacienteController@pesquisarPacientes')->with('pacientes', $pacientes);
     } else {
       $type = $request->search_type;
       if ($type == 1) {
@@ -193,22 +192,18 @@ class PacienteController extends Controller {
           if (strlen($numero_cns) == 15) {
             $paciente = Paciente::where('numero_cns', $numero_cns)->first();
             if ($paciente == null) {
-              // $request->session()->flash('erro', 2);
               $request->session()->flash('dateless', 1);
               return redirect()->action('PacienteController@pesquisarPacientes');
             } else {
               return view('paciente.filtragem-pacientes')->with('paciente', $paciente);
-              // return redirect()->action('PacienteController@pesquisarPacientes')->with('paciente', $paciente);
             }
           } else {
             //tamanho incorreto:
-            // $request->session()->flash('erro', 1);
             $request->session()->flash('dateless', 1);
             return redirect()->action('PacienteController@pesquisarPacientes');
           }
         } else {
           //campo null
-          // $request->session()->flash('erro', 1);
           $request->session()->flash('dateless', 1);
           return redirect()->action('PacienteController@pesquisarPacientes');
         }
@@ -221,22 +216,18 @@ class PacienteController extends Controller {
               $paciente = Paciente::where('cpf', $cpf)->first();
 
               if ($paciente == null) {
-                // $request->session()->flash('erro', 2);
                 $request->session()->flash('dateless', 1);
                 return redirect()->action('PacienteController@pesquisarPacientes');
               } else {
                 return view('paciente.filtragem-pacientes')->with('paciente', $paciente);
-                // return redirect()->action('PacienteController@pesquisarPacientes')->with('paciente', $paciente);
               }
             } else {
               //tamanho incorreto:
-              // $request->session()->flash('erro', 1);
               $request->session()->flash('dateless', 1);
               return redirect()->action('PacienteController@pesquisarPacientes');
             }
           } else {
             //campo null
-            // $request->session()->flash('erro', 1);
             $request->session()->flash('dateless', 1);
             return redirect()->action('PacienteController@pesquisarPacientes');
           }
@@ -250,13 +241,19 @@ class PacienteController extends Controller {
                                                  ->paginate($this->totalPage);
 
               $request->session()->flash('data_nascimento', $data_nascimento);
+              if ($pacientes->total() < 1) {
+                $request->session()->flash('dateless', 1);
+                return redirect()->action('PacienteController@pesquisarPacientes');
+                // return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
+              } else {
+                $pacientes->withPath('/operador/filtrar-pacientes');
+                return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
+              }
 
-              $pacientes->withPath('/operador/filtrar-pacientes');
-              return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
-              // return redirect()->action('PacienteController@pesquisarPacientes')->with('pacientes', $pacientes);
+              // $pacientes->withPath('/operador/filtrar-pacientes');
+              // return view('paciente.filtragem-pacientes')->with('pacientes', $pacientes);
             } else {
               //campo null
-              // $request->session()->flash('erro', 1);
               $request->session()->flash('dateless', 1);
               return redirect()->action('PacienteController@pesquisarPacientes');
             }

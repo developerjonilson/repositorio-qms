@@ -25,8 +25,9 @@ use Dompdf\Options;
 class ConsultaController extends Controller {
 
   private $medicoModel;
-  private $totalPage = 2;
-  private $statusAtivo = 'desativado';
+  private $totalPage = 4;
+  private $ativado = 0;
+  private $desativado = 1;
 
   public function __construct() {
       $this->middleware('auth');
@@ -134,6 +135,7 @@ class ConsultaController extends Controller {
                                                    ->where('especialidade_id', '=', $id_especialidade)
                                                    ->where('medico_id', '=', $id_medico)
                                                    ->where('local_id', '=', $id_local)
+                                                   ->where('system_status', '=', $this->ativado)
                                                    ->get()->first();
 
             if ($consultaBanco != null) {
@@ -144,14 +146,15 @@ class ConsultaController extends Controller {
               $periodo = Periodo::where('id', $id_periodo)->get()->first();
 
               $consultaMesmoPeriodo = DB::table('consultas')
-                  ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-                  ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-                  ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-                      ->select('consultas.*', 'periodos.*', 'pacientes.*')
-                          ->where('calendarios.data', '=', $calendario->data)
-                          ->where('periodos.nome', '=', $periodo->nome)
-                          ->where('pacientes.id', '=', $id_paciente)
-                              ->first();
+                                        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+                                        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+                                        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+                                        ->select('consultas.*', 'periodos.*', 'pacientes.*')
+                                        ->where('calendarios.data', '=', $calendario->data)
+                                        ->where('periodos.nome', '=', $periodo->nome)
+                                        ->where('pacientes.id', '=', $id_paciente)
+                                        ->where('consultas.system_status', '=', $this->ativado)
+                                        ->first();
 
               if ($consultaMesmoPeriodo != null) {
                 //erro : o paciente já tem alguma consulta agendada para esse dia e esse periodo:
@@ -199,6 +202,7 @@ class ConsultaController extends Controller {
                                                       ->where('especialidade_id', $id_especialidade)
                                                       ->where('medico_id', $id_medico)
                                                       ->where('local_id', $id_local)
+                                                      ->where('consultas.system_status', '=', $this->ativado)
                                                       ->get()->first();
 
                     return redirect()->action('ConsultaController@sucessoAgendamentoConsulta', $consultaSalva->id);
@@ -258,6 +262,40 @@ class ConsultaController extends Controller {
   }
 
   public function listagemConsultas(Request $request) {
+    if ($request->session()->has('falha')) {
+      $falha = $request->session()->get('falha');
+
+      $consultas = DB::table('consultas')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->where('consultas.system_status', '=', $this->ativado)
+          ->orderBy('consultas.created_at', 'desc')
+          ->paginate($this->totalPage);
+
+      $especialidades = Especialidade::all();
+      return view('consulta.listagem-consultas', compact('consultas', 'especialidades', 'falha'));
+    }
+
+    if ($request->session()->has('sucesso')) {
+      $sucesso = $request->session()->get('sucesso');
+
+      $consultas = DB::table('consultas')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->where('consultas.system_status', '=', $this->ativado)
+          ->orderBy('consultas.created_at', 'desc')
+          ->paginate($this->totalPage);
+
+      $especialidades = Especialidade::all();
+      return view('consulta.listagem-consultas', compact('consultas', 'especialidades', 'sucesso'));
+    }
+
     if ($request->session()->has('consultas') && $request->session()->has('especialidades')) {
       $consultas = $request->session()->get('consultas');
       $especialidades = $request->session()->get('especialidades');
@@ -270,7 +308,7 @@ class ConsultaController extends Controller {
           ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
           ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
           ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-          ->where('consultas.system_status', 0)
+          ->where('consultas.system_status', '=', $this->ativado)
           ->orderBy('consultas.created_at', 'desc')
           ->paginate($this->totalPage);
 
@@ -278,13 +316,11 @@ class ConsultaController extends Controller {
 
       if ($request->session()->has('erro')) {
         $erro = $request->session()->get('erro');
-        // dd($erro);
         $consultas->withPath('/operador/listagem-consultas');
         return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades], ['erro' => $erro]);
       } else {
         if ($request->session()->has('sucesso')) {
           $sucesso = $request->session()->get('sucesso');
-          // dd($sucesso);
           $consultas->withPath('/operador/listagem-consultas');
           return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades], ['sucesso' => $sucesso]);
         } else {
@@ -326,7 +362,7 @@ class ConsultaController extends Controller {
                                          ->where('consultas.periodo_id', '=', $id_periodo)
                                          ->where('consultas.especialidade_id', '=', $id_especialidade)
                                          ->where('consultas.medico_id', '=', $id_medico)
-                                         ->where('consultas.system_status', 0)
+                                         ->where('consultas.system_status', '=', $this->ativado)
                                          ->orderBy('calendarios.data', 'desc')
                                          ->paginate($this->totalPage);
 
@@ -343,7 +379,7 @@ class ConsultaController extends Controller {
                                            ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
                                            ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
                                            ->where('pacientes.numero_cns', '=', $numero_cns)
-                                           ->where('consultas.system_status', 0)
+                                           ->where('consultas.system_status', '=', $this->ativado)
                                            ->orderBy('calendarios.data', 'desc')
                                            ->paginate($this->totalPage);
 
@@ -361,7 +397,7 @@ class ConsultaController extends Controller {
                                              ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
                                              ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
                                              ->where('pacientes.numero_cns', '=', $numero_cns)
-                                             ->where('consultas.system_status', 0)
+                                             ->where('consultas.system_status', '=', $this->ativado)
                                              ->orderBy('calendarios.data', 'desc')
                                              ->paginate($this->totalPage);
 
@@ -384,7 +420,7 @@ class ConsultaController extends Controller {
                                              ->where('consultas.periodo_id', '=', $id_periodo)
                                              ->where('consultas.especialidade_id', '=', $id_especialidade)
                                              ->where('consultas.medico_id', '=', $id_medico)
-                                             ->where('consultas.system_status', 0)
+                                             ->where('consultas.system_status', '=', $this->ativado)
                                              ->orderBy('calendarios.data', 'desc')
                                              ->paginate($this->totalPage);
 
@@ -426,35 +462,43 @@ class ConsultaController extends Controller {
   }
 
   public function cancelarAgendamentoConsulta(Request $request) {
-    // dd($request->all());
     if ($request->id_consulta != null) {
       $codigo = $request->id_consulta;
 
-      $consulta = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-          ->join('locals', 'consultas.local_id', '=', 'locals.id')
-          ->where('consultas.codigo_consulta', '=', $codigo)
-          ->get()
-          ->first();
+     $consulta = Consulta::where('codigo_consulta', $codigo)->first();
 
-    //  $consulta->system_status = 1;
+     $consulta->system_status = $this->desativado;
 
-      // if ($consulta->save()) {
-      if (true) {
-        // $request->session()->flash('sucesso', 'Agendamento cancelado com sucesso!');
-        return redirect()->action('ConsultaController@listagemConsultas')->with('sucesso', 'Agendamento cancelado com sucesso!');
-      } else {
-        // $request->session()->flash('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
-        return redirect()->action('ConsultaController@listagemConsultas')->with('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
+     $periodo = Periodo::where('id', $consulta->periodo_id)->first();
+     $vagas_atuais = $periodo->vagas_disponiveis;
+     $total_consultas = $periodo->total_consultas;
+
+      if ($vagas_atuais <= $total_consultas) {
+        $novo_numero_vagas = $vagas_atuais + 1;
+        $periodo->vagas_disponiveis = $novo_numero_vagas;
+
+        // dd($consulta, $periodo);
+
+        $status = false;
+        try {
+          $consulta->save();
+          $periodo->save();
+          $status = true;
+        } catch (Exception $e) {
+          $e;
+        }
+
+        if ($status) {
+          $request->session()->flash('sucesso', 'Agendamento cancelado com sucesso!');
+          return redirect()->action('ConsultaController@listagemConsultas');
+        } else {
+          $request->session()->flash('falha', 'Não foi possível realizar o cancelamento do agendamento, por favor tente em instantes!');
+          return redirect()->action('ConsultaController@listagemConsultas');
+        }
       }
     } else {
-      // $request->session()->flash('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
-      // return redirect()->action('ConsultaController@listagemConsultas');
-      return redirect()->action('ConsultaController@listagemConsultas')->with('erro', 'Não foi possível realizar o cancelamento do agendamento, tente em instantes!');
+      $request->session()->flash('falha', 'Não foi possível realizar o cancelamento do agendamento, por favor tente em instantes!');
+      return redirect()->action('ConsultaController@listagemConsultas');
     }
 
 

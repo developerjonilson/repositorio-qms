@@ -29,6 +29,9 @@
 			position: fixed;
 			bottom: 0px;
 		}
+		.hidden {
+			display: none !important;
+		}
 		</style>
 
 	</head>
@@ -106,7 +109,7 @@
 		<div class="footer">
 			<hr>
 			<div class="text-center">
-				{{date_default_timezone_set('America/Fortaleza')}}
+				<span class="hidden">{{date_default_timezone_set('America/Fortaleza')}}</span>
 				QMS - Query System Management   -   {{date('H:i:s  -  d/m/Y')}}
 			</div>
 		</div>

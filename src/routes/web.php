@@ -65,13 +65,12 @@ Route::get('/operador/vagas-disponiveis/{idPeriodo}', 'ConsultaController@getVag
 Route::get('/operador/local/{idPeriodo}', 'ConsultaController@getLocal');
 Route::post('/operador/agendando-consulta/', 'ConsultaController@agendandoConsulta');
 Route::get('/operador/agendamento-sucesso/{id?}', 'ConsultaController@sucessoAgendamentoConsulta');
-Route::post('/operador/cancelar-agendamento-consulta', 'ConsultaController@cancelarAgendamentoConsulta');
-
 
 Route::get('/operador/ver-consulta/{id}', 'ConsultaController@verConsulta');
 Route::get('/operador/listagem-consultas', 'ConsultaController@listagemConsultas');
 Route::get('/operador/filtrar-consultas', 'ConsultaController@filtrarConsultas');
 Route::get('/operador/consultas/gerar-pdf/{codigo?}', 'ConsultaController@gerarPdf');
+Route::post('/operador/cancelar-agendamento-consulta', 'ConsultaController@cancelarAgendamentoConsulta');
 
 
 
