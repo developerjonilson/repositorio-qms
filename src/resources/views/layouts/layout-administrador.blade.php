@@ -20,6 +20,8 @@
 	<link rel="stylesheet" href="/css/demo.css">
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+
+	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.png">
@@ -106,6 +108,7 @@
 							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Operadores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPaciente" class="collapse ">
 								<ul class="nav">
+									<li><a href="{{ action('AdministradorController@operadores') }}" class="">Operadores</a></li>
 									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Cadastrar Operador</a></li>
 									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Editar Operador</a></li>
 									<li><a href="{{ action('AdministradorController@removerOperador') }}" class="">Remover Operador</a></li>
@@ -171,6 +174,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/script.js"></script>
+	<script src="/scripts/datatables/jquery.dataTables.min.js"></script>
+	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
 
 </body>
 

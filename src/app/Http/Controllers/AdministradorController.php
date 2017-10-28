@@ -144,6 +144,9 @@ class AdministradorController extends Controller {
 
   }
 
+  public function operadores() {
+    return view('administrador.operador.operadores');
+  }
 
   public function cadastrarOperador() {
     return view('administrador.operador.cadastrar-operador');

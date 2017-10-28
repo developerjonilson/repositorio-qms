@@ -22,6 +22,8 @@ Route::get('/administrador/perfil', 'AdministradorController@perfilUsuario');
 Route::post('/administrador/alterar-perfil', 'AdministradorController@alterProfile');
 
 Route::get('/administrador/cadastrar-operador', 'AdministradorController@cadastrarOperador');
+Route::get('/administrador/operadores', 'AdministradorController@operadores');
+
 Route::get('/administrador/cadastrar-medico', 'AdministradorController@cadastrarMedico');
 Route::get('/administrador/alterar-medico', 'AdministradorController@alterarMedico');
 Route::get('/administrador/remover-operador', 'AdministradorController@removerOperador');

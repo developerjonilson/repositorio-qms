@@ -177,6 +177,7 @@ return [
         qms\Providers\EventServiceProvider::class,
         qms\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
