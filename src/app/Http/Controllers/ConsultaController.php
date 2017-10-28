@@ -31,6 +31,7 @@ class ConsultaController extends Controller {
 
   public function __construct() {
       $this->middleware('auth');
+      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddleware::class');
   }
 
   public function agendarConsulta(Request $request, $idPaciente = null) {

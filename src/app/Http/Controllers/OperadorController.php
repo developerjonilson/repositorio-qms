@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Response;
 class OperadorController extends Controller {
   public function __construct() {
       $this->middleware('auth');
-      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddlewareOperador::class');
+      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddleware::class');
   }
 
   public function index() {

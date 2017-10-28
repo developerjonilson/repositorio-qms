@@ -61,14 +61,15 @@ $(document).ready(function () {
   })
 
   $('#form-change-password').submit(function() {
-    $('#icone-btn').removeClass('fa-check-circle');
-    $('#icone-btn').addClass('fa-spinner fa-spin');
-    $('#enviar').attr('disabled', 'disabled');
+    $('.loading').fadeOut(700).removeClass('hidden');
   });
 
   $('#form_login').submit(function() {
-    $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
-    $('#btn_login').attr('disabled', 'disabled');
+    $('.loading').fadeOut(700).removeClass('hidden');
+  });
+
+  $('#cancel').click(function() {
+    $('.loading').fadeOut(700).removeClass('hidden');
   });
 
   // função para buscar os valores dos selected de medicos por especialidade:
@@ -138,7 +139,7 @@ $(document).ready(function () {
 
 // DIV loading no carregamento da pagina:
   $('.loading').fadeOut(700).addClass('hidden');
-  
+
 
   $('#search_type').change(function () {
     var option = $(this).val();

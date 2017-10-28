@@ -1,4 +1,4 @@
-@extends('layouts.layout-administrador')
+@extends('layouts.layout-atendente')
 
 @section('conteudo')
 
@@ -19,19 +19,29 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="metric">
-						<span class="icon"><i class="fa fa-user-o "></i></span>
+						<span class="icon"><i class="fa fa-users"></i></span>
 						<p>
-							<span class="number">3</span>
-							<span class="title">Atendentes do QMS</span>
+							<span class="number">{{$pacientes}}</span>
+							{{-- <span class="number">1.000.000.000.000</span> --}}
+							<span class="title">Pacientes</span>
 						</p>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="metric">
-						<span class="icon"><i class="fa fa-users"></i></span>
+						<span class="icon"><i class="fa fa-stethoscope 5x"></i></span>
 						<p>
-							<span class="number">4</span>
-							<span class="title">Operadores do QMS</span>
+							<span class="number">{{$consultas}}</span>
+							<span class="title">Consultas</span>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="metric">
+						<span class="icon"><i class="fa fa-medkit"></i></span>
+						<p>
+							<span class="number">{{$especialidades}}</span>
+							<span class="title">Especialidades</span>
 						</p>
 					</div>
 				</div>
@@ -39,20 +49,14 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-user-md"></i></span>
 						<p>
-							<span class="number">20</span>
-							<span class="title">Médicos no QMS</span>
+							<span class="number">{{$medicos}}</span>
+							<span class="title">Médicos</span>
 						</p>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="metric">
-						<span class="icon"><i class="fa fa-calendar-check-o"></i></span>
-						<p>
-							<span class="number">20</span>
-							<span class="title">Calendário Médico</span>
-						</p>
-					</div>
-				</div>
+			</div>
+			<div class="row">
+
 			</div>
 		</div>
 	</div>

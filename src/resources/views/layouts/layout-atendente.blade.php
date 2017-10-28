@@ -59,14 +59,14 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="{{ action('AdministradorController@manualAdministrador') }}">Manual de Usuário</a></li>
+								<li><a href="{{ action('AtendenteController@manualAtendente') }}">Manual de Usuário</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle"></i> <span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="{{action('AdministradorController@perfilUsuario')}}"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
-								<li><a href="{{action('AdministradorController@alterarSenha')}}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
+								<li><a href="{{action('AtendenteController@perfilUsuario')}}"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
+								<li><a href="{{action('AtendenteController@alterarSenha')}}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
 								<li>
 										<a href="{{ route('logout') }}"	onclick="event.preventDefault();
 										document.getElementById('logout-form').submit();">
@@ -90,45 +90,27 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{action('AdministradorController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+						<li><a href="{{action('AtendenteController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
 
 						<li>
-							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Atendentes</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subAtendente" class="collapse ">
 								<ul class="nav">
-									<li><a href="#" class="">Cadastrar Atendente</a></li>
-									<li><a href="#" class="">Editar Atendente</a></li>
-									<li><a href="#" class="">Remover Atendente</a></li>
+									<li><a href="#" class="">Cadastrar</a></li>
+									<li><a href="#" class="">Listar</a></li>
 								</ul>
 							</div>
 						</li>
+
 						<li>
-							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Operadores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPaciente" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Cadastrar Operador</a></li>
-									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Editar Operador</a></li>
-									<li><a href="{{ action('AdministradorController@removerOperador') }}" class="">Remover Operador</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-user-md"></i> <span>Médicos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subConsulta" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarMedico') }}">Cadastrar Médico</a></li>
-									<li><a href="{{ action('AdministradorController@alterarMedico') }}">Alterar dados dos Médicos</a></li>
-									<li><a href="{{ action('AdministradorController@removerMedico') }}">Remover Médicos</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subCalendario" data-toggle="collapse" class="collapsed"><i class="lnr lnr-calendar-full"></i> <span>Calendários</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subCalendario" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarHorario') }}">Alterar Horários</a></li>
-								</ul>
-							</div>
+								<a href="{{ route('logout') }}"	onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
+										<i class="lnr lnr-exit"></i> <span>Sair</span>
+								</a>
+
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										{{ csrf_field() }}
+								</form>
 						</li>
 					</ul>
 				</nav>

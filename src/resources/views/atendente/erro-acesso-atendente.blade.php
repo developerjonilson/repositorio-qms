@@ -13,7 +13,7 @@
     </div>
     <div class="row centralizado">
       <br><br>
-      <a href="/administrador" class="btn btn-primary">Voltar</a>
+      <a href="{{ action('AtendenteController@index') }}" class="btn btn-primary">Me tire daqui!</a>
     </div>
 
 
