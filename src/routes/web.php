@@ -21,8 +21,11 @@ Route::post('/administrador/update-password', 'AdministradorController@updatePas
 Route::get('/administrador/perfil', 'AdministradorController@perfilUsuario');
 Route::post('/administrador/alterar-perfil', 'AdministradorController@alterProfile');
 
-Route::get('/administrador/cadastrar-operador', 'AdministradorController@cadastrarOperador');
 Route::get('/administrador/operadores', 'AdministradorController@operadores');
+Route::get('/administrador/get-operadores', 'AdministradorController@getOperador')->name('administrador.get-operadores');
+Route::get('/administrador/ver-operador/{id}', 'AdministradorController@verOperador')->name('administrador.ver-operador');
+Route::post('/administrador/cadastrar-operador', 'AdministradorController@cadastrarOperador')->name('administrador.cadastrar-operador');
+Route::post('/administrador/editar-operador', 'AdministradorController@editarOperador')->name('administrador.editar-operador');
 
 Route::get('/administrador/cadastrar-medico', 'AdministradorController@cadastrarMedico');
 Route::get('/administrador/alterar-medico', 'AdministradorController@alterarMedico');

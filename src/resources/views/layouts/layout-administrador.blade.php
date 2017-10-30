@@ -173,9 +173,12 @@
 	<script src="/scripts/moment-with-locales.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
+	<script src="/scripts/validator.min.js"></script>
 	<script src="/scripts/script.js"></script>
 	<script src="/scripts/datatables/jquery.dataTables.min.js"></script>
 	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
+
+	@yield('pos-script')
 
 </body>
 

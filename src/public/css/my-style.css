@@ -2,6 +2,10 @@
   color: red;
 }
 
+.size {
+  font-size: small;
+}
+
 .centralizado {
   text-align: center;
 }
