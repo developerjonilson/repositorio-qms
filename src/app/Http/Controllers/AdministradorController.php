@@ -160,18 +160,14 @@ class AdministradorController extends Controller {
   }
 
   public function getOperador() {
-    // $users = User::select(['id', 'name', 'email']);
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
 
-    // return Datatables::of($users)->make();
     return Datatables::of($users)->addColumn('action', function($user) {
       // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="alert(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
       return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
              '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   '.
-              // '<a href="#" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o"></i> Editar</a>   '.
               '<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Excluir</a>';
     })->make(true);
-    // return Datatables::of(User::query())->make(true);
   }
 
   public function verOperador($id) {
@@ -357,7 +353,7 @@ class AdministradorController extends Controller {
   }
 
   public function editarOperador(Request $request) {
-
+    dd($request->all());
   }
 
   public function cadastrarMedico() {

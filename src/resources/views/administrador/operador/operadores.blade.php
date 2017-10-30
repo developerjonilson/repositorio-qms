@@ -54,7 +54,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_cancel"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_cancel_new"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><h3>Cadastrar Novo Operador</h3></h4>
         <p><span class="vermelho size">(*) Campos Obrigatórios</span></p>
       </div>
@@ -82,7 +82,7 @@
             <div class="col-md-8">
               <div class="form-group">
                 <label for="nome">Nome Completo<span class="vermelho">*</span></label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="José da Silva Filho" data-error="Esse campo é obrigatório e só aceita letras!" required pattern="[a-zA-Z\s]+" value="{{ old('name') }}">
+                <input type="text" class="form-control" name="name" id="name" placeholder="José da Silva Filho" data-error="Esse campo é obrigatório e só aceita letras e SEM ACENTUAÇÃO!" required pattern="^[A-Za-z -]+$" value="{{ old('name') }}">
                 <div class="help-block with-errors"></div>
               </div>
             </div>
@@ -188,33 +188,33 @@
               <div class="form-group">
                 <label for="estado">Estado<span class="vermelho">*</span></label>
                 <select name="nome_estado" id="nome_estado" class="form-control">
-									<option value="ACRE">ACRE</option>
-									<option value="ALAGOAS">ALAGOAS</option>
-									<option value="AMAPÁ">AMAPÁ</option>
-									<option value="AMAZONAS">AMAZONAS</option>
-									<option value="BAHIA">BAHIA</option>
-									<option value="CEARÁ" selected>CEARÁ</option>
-									<option value="DISTRITO FEDEREAL">DISTRITO FEDEREAL</option>
-									<option value="ESPÍRITO SANTO">ESPÍRITO SANTO</option>
-									<option value="GOIÁS">GOIÁS</option>
-									<option value="MARANHÃO">MARANHÃO</option>
-									<option value="MATO GROSSO">MATO GROSSO</option>
-									<option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
-									<option value="MINAS GEREAIS">MINAS GEREAIS</option>
-									<option value="PARÁ">PARÁ</option>
-									<option value="PARAÍBA">PARAÍBA</option>
-									<option value="PARANÁ">PARANÁ</option>
-									<option value="PERNAMBUCO">PERNAMBUCO</option>
-									<option value="PIAUÍ">PIAUÍ</option>
-									<option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
-									<option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
-									<option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
-									<option value="RONDÔNIA">RONDÔNIA</option>
-									<option value="RORAIMA">RORAIMA</option>
-									<option value="SANTA CATARINA">SANTA CATARINA</option>
-									<option value="SÃO PAULO">PAULO</option>
-									<option value="SERGIPE">SERGIPE</option>
-									<option value="TOCANTINS">TOCANTINS</option>
+                  <option value="ACRE">ACRE</option>
+                  <option value="ALAGOAS">ALAGOAS</option>
+                  <option value="AMAPA">AMAPA</option>
+                  <option value="AMAZONAS">AMAZONAS</option>
+                  <option value="BAHIA">BAHIA</option>
+                  <option value="CEARA" selected>CEARA</option>
+                  <option value="DISTRITO FEDEREAL">DISTRITO FEDEREAL</option>
+                  <option value="ESPIRITO SANTO">ESPIRITO SANTO</option>
+                  <option value="GOIAS">GOIAS</option>
+                  <option value="MARANHAO">MARANHAO</option>
+                  <option value="MATO GROSSO">MATO GROSSO</option>
+                  <option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
+                  <option value="MINAS GEREAIS">MINAS GEREAIS</option>
+                  <option value="PARA">PARA</option>
+                  <option value="PARAIBA">PARAIBA</option>
+                  <option value="PARANA">PARANA</option>
+                  <option value="PERNAMBUCO">PERNAMBUCO</option>
+                  <option value="PIAUI">PIAUI</option>
+                  <option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
+                  <option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
+                  <option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
+                  <option value="RONDONIA">RONDONIA</option>
+                  <option value="RORAIMA">RORAIMA</option>
+                  <option value="SANTA CATARINA">SANTA CATARINA</option>
+                  <option value="SAO PAULO">SAO PAULO</option>
+                  <option value="SERGIPE">SERGIPE</option>
+                  <option value="TOCANTINS">TOCANTINS</option>
 							</select>
               </div>
             </div>
@@ -247,7 +247,7 @@
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-success" form="new_operador" id="enviar"><i class="fa fa-check-circle"></i>  Salvar Operador</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_cancel"><i class="fa fa-times-circle"></i>  Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_cancel_new"><i class="fa fa-times-circle"></i>  Cancelar</button>
       </div>
 
 		</div>
@@ -409,11 +409,11 @@
             <p><span class="vermelho size">(*) Campos Obrigatórios</span></p>
           </div>
           <div class="modal-body">
-            @isset($erro)
+            @isset($erroEdit)
               <div class="row">
                 <div class="col-md-12">
                   <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="btn_cancel_edit"><span aria-hidden="true">&times;</span></button>
                     <i class="fa fa-times-circle"></i> {{ $erro }}
                   </div>
                 </div>
@@ -432,30 +432,30 @@
                 <div class="col-md-8">
                   <div class="form-group">
                     <label for="nome">Nome Completo<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="José da Silva Filho" data-error="Esse campo é obrigatório e só aceita letras!" required pattern="[a-zA-Z\s]+" value="{{ old('name') }}">
+                    <input type="text" class="form-control" name="name" id="edit_name" placeholder="José da Silva Filho" data-error="Esse campo é obrigatório e só aceita letras e SEM ACENTUAÇÃO!" required pattern="^[A-Za-z -]+$" value="{{ old('name') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="data_nascimento">Data de Nascimento<span class="vermelho">*</span></label>
-                    <input type="date" class="form-control" name="data_nascimento" id="data_nascimento" data-error="Esse campo é obrigatório!" required value="{{ old('data_nascimento') }}">
+                    <input type="date" class="form-control" name="data_nascimento" id="edit_data_nascimento" data-error="Esse campo é obrigatório!" required value="{{ old('data_nascimento') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group">
+                  <div class="form-group edit_cpf">
                     <label for="cpf">CPF<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="cpf" id="cpf" placeholder="233.140.732-09" data-error="Esse campo é obrigatório!" required value="{{ old('cpf') }}">
+                    <input type="text" class="form-control" name="cpf" id="edit_cpf" placeholder="233.140.732-09" data-error="Esse campo é obrigatório!" required value="{{ old('cpf') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="rg">RG<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="rg" id="rg" placeholder="2007912033" data-error="Esse campo é obrigatório!" required value="{{ old('rg') }}">
+                    <input type="text" class="form-control" name="rg" id="edit_rg" placeholder="2007912033" data-error="Esse campo é obrigatório e só aceita números!" required value="{{ old('rg') }}" pattern="[0-9]+">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
@@ -465,7 +465,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="email">Email<span class="vermelho">*</span></label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="jose@gmail.com" data-error="Por favor, informe um email correto!" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{ old('email') }}">
+                    <input type="email" class="form-control" name="email" id="edit_email" placeholder="jose@gmail.com" data-error="Por favor, informe um email correto!" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{ old('email') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
@@ -475,7 +475,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Senha</label>
-                    <input type="text" class="form-control" value='Será adiciona a senha padrão ( QMS12345678 ), que será obrigatório a alteração da mesma no primeiro acesso!' readonly>
+                    <input type="text" class="form-control" value='A senha não pode ser alterada, só pelo operador ao realizar o login no sistema!' readonly>
                   </div>
                 </div>
               </div>
@@ -492,14 +492,14 @@
                 <div class="col-md-9">
                   <div class="form-group">
                     <label for="rua">Rua<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua Francisco da Cunha" data-error="Esse campo é obrigatório!" required value="{{ old('rua') }}">
+                    <input type="text" class="form-control" name="rua" id="edit_rua" placeholder="Rua Francisco da Cunha" data-error="Esse campo é obrigatório!" required value="{{ old('rua') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="numero">Número<span class="vermelho">*</span></label>
-                    <input type="number" class="form-control" name="numero" id="numero" placeholder="233" data-error="Esse campo é obrigatório e só aceita números!" required  pattern="([0-9])+(?:-?\d){4,}" value="{{ old('numero') }}">
+                    <input type="number" class="form-control" name="numero" id="edit_numero" placeholder="233" data-error="Esse campo é obrigatório e só aceita números!" required  pattern="([0-9])+(?:-?\d){4,}" value="{{ old('numero') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
@@ -508,13 +508,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="complemento">Complemento</label>
-                    <input type="text" class="form-control" name="complemento" id="complemento" value="{{ old('complemento') }}">
+                    <input type="text" class="form-control" name="complemento" id="edit_complemento" value="{{ old('complemento') }}">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="bairro">Bairro<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="bairro" id="bairro" placeholder="Centro" data-error="Esse campo é obrigatório!" required value="{{ old('bairro') }}">
+                    <input type="text" class="form-control" name="bairro" id="edit_bairro" placeholder="Centro" data-error="Esse campo é obrigatório!" required value="{{ old('bairro') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
@@ -523,46 +523,46 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="cidade">Cidade<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="nome_cidade" id="nome_cidade" placeholder="Milagres" value="{{ old('nome_cidade') }}" data-error="Esse campo é obrigatório!" required>
+                    <input type="text" class="form-control" name="nome_cidade" id="edit_nome_cidade" placeholder="Milagres" value="{{ old('nome_cidade') }}" data-error="Esse campo é obrigatório!" required>
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
+                  <div class="form-group edit_cep">
                     <label for="cep">CEP<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="cep" id="cep" placeholder="632500-000" value="{{ old('cep') }}" data-error="Esse campo é obrigatório!" required>
+                    <input type="text" class="form-control" name="cep" id="edit_cep" placeholder="632500-000" value="{{ old('cep') }}" data-error="Esse campo é obrigatório!" required>
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="estado">Estado<span class="vermelho">*</span></label>
-                    <select name="nome_estado" id="nome_estado" class="form-control">
-    									<option value="ACRE">ACRE</option>
+                    <select name="nome_estado" id="edit_nome_estado" class="form-control">
+                      <option value="ACRE">ACRE</option>
     									<option value="ALAGOAS">ALAGOAS</option>
-    									<option value="AMAPÁ">AMAPÁ</option>
+    									<option value="AMAPA">AMAPA</option>
     									<option value="AMAZONAS">AMAZONAS</option>
     									<option value="BAHIA">BAHIA</option>
-    									<option value="CEARÁ" selected>CEARÁ</option>
+    									<option value="CEARA" selected>CEARA</option>
     									<option value="DISTRITO FEDEREAL">DISTRITO FEDEREAL</option>
-    									<option value="ESPÍRITO SANTO">ESPÍRITO SANTO</option>
-    									<option value="GOIÁS">GOIÁS</option>
-    									<option value="MARANHÃO">MARANHÃO</option>
+    									<option value="ESPIRITO SANTO">ESPIRITO SANTO</option>
+    									<option value="GOIAS">GOIAS</option>
+    									<option value="MARANHAO">MARANHAO</option>
     									<option value="MATO GROSSO">MATO GROSSO</option>
     									<option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
     									<option value="MINAS GEREAIS">MINAS GEREAIS</option>
-    									<option value="PARÁ">PARÁ</option>
-    									<option value="PARAÍBA">PARAÍBA</option>
-    									<option value="PARANÁ">PARANÁ</option>
+    									<option value="PARA">PARA</option>
+    									<option value="PARAIBA">PARAIBA</option>
+    									<option value="PARANA">PARANA</option>
     									<option value="PERNAMBUCO">PERNAMBUCO</option>
-    									<option value="PIAUÍ">PIAUÍ</option>
+    									<option value="PIAUI">PIAUI</option>
     									<option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
     									<option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
     									<option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
-    									<option value="RONDÔNIA">RONDÔNIA</option>
+    									<option value="RONDONIA">RONDONIA</option>
     									<option value="RORAIMA">RORAIMA</option>
     									<option value="SANTA CATARINA">SANTA CATARINA</option>
-    									<option value="SÃO PAULO">PAULO</option>
+    									<option value="SAO PAULO">SAO PAULO</option>
     									<option value="SERGIPE">SERGIPE</option>
     									<option value="TOCANTINS">TOCANTINS</option>
     							</select>
@@ -580,24 +580,24 @@
 
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group">
+                  <div class="form-group edit_telefone">
                     <label for="telefone_um">Telefone<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="telefone_um" id="telefone_um" placeholder="(88) 99900-1234" data-error="Esse campo é obrigatório!" required value="{{ old('telefone_um') }}">
+                    <input type="text" class="form-control" name="telefone_um" id="edit_telefone_um" placeholder="(88) 99900-1234" data-error="Esse campo é obrigatório!" required value="{{ old('telefone_um') }}">
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group">
+                  <div class="form-group edit_telefone">
                     <label for="telefone_dois">Telefone (Opcional)</label>
-                    <input type="text" class="form-control" name="telefone_dois" id="telefone_dois" placeholder="(88) 99900-1234" {{ old('telefone_dois') }}>
+                    <input type="text" class="form-control" name="telefone_dois" id="edit_telefone_dois" placeholder="(88) 99900-1234" {{ old('telefone_dois') }}>
                   </div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-success" form="new_operador" id="enviar"><i class="fa fa-check-circle"></i>  Salvar Operador</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_cancel"><i class="fa fa-times-circle"></i>  Cancelar</button>
+            <button type="submit" class="btn btn-success" form="edit_operador" id="btn_editar"><i class="fa fa-check-circle"></i>  Salvar Alterações</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_cancel_edit"><i class="fa fa-times-circle"></i>  Cancelar</button>
           </div>
 
     		</div>
@@ -689,32 +689,54 @@
 
       $.get('/administrador/ver-operador/' + id, function (operador) {
 
-        $('#name').attr('value', operador.name);
-        $('#ver_data_nascimento').attr('value', operador.data_nascimento);
-        $('#ver_cpf').attr('value', operador.cpf);
-        $('#ver_rg').attr('value', operador.rg);
-        $('#ver_email').attr('value', operador.email);
-        $('#ver_rua').attr('value', operador.rua);
-        $('#ver_numero').attr('value', operador.numero);
-        $('#ver_complemento').attr('value', operador.complemento);
-        $('#var_bairro').attr('value', operador.bairro);
-        $('#ver_cidade').attr('value', operador.nome_cidade);
-        $('#ver_cep').attr('value', operador.cep);
-        $('#ver_estado').attr('value', operador.nome_estado);
-        $('#ver_telefone_um').attr('value', operador.telefone_um);
-        $('#ver_telefone_dois').attr('value', operador.telefone_dois);
+        $('#edit_name').attr('value', operador.name);
+        $('#edit_data_nascimento').attr('value', operador.data_nascimento);
+        $(' #edit_cpf').attr('value', operador.cpf);
+        $('#edit_rg').attr('value', operador.rg);
+        $('#edit_email').attr('value', operador.email);
+        $('#edit_rua').attr('value', operador.rua);
+        $('#edit_numero').attr('value', operador.numero);
+        $('#edit_complemento').attr('value', operador.complemento);
+        $('#edit_bairro').attr('value', operador.bairro);
+        $('#edit_nome_cidade').attr('value', operador.nome_cidade);
+        $('#edit_cep').attr('value', operador.cep);
+        $('#edit_estado').attr('value', operador.nome_estado);
+        $('#edit_telefone_um').attr('value', operador.telefone_um);
+        $('#edit_telefone_dois').attr('value', operador.telefone_dois);
 
-        $('.cpf input, .maskcpf').mask('000.000.000-00');
-        $('.cep input, .maskcep').mask('00000-000');
-        $(".telefone input, .masktel").mask("(99) 99999-9999");
+        $('.edit_cpf input, .maskcpf').mask('000.000.000-00');
+        $('.edit_cep input, .maskcep').mask('00000-000');
+        $(".edit_telefone input, .masktel").mask("(99) 99999-9999");
 
       });
 
       $('.loading').fadeOut(700).addClass('hidden');
     };
 
-    $('#btn_cancel').click(function () {
+    $('#btn_cancel_new').click(function () {
         $("#new_operador")[0].reset();
+    });
+
+    $('#btn_cancel_edit').click(function () {
+      // $('#edit_operador')[0].reset();
+      $('#edit_operador').trigger("reset");
+
+      // $('#edit_name').val('');
+      // $('#edit_data_nascimento').val('');
+      // $('#edit_cpf').val('');
+      // $('#edit_rg').val('');
+      // $('#edit_email').val('');
+      // $('#edit_rua').val('');
+      // $('#edit_numero').val('');
+      // $('#edit_complemento').val('');
+      // $('#edit_bairro').val('');
+      // $('#edit_nome_cidade').val('');
+      // $('#edit_cep').val('');
+      // $('#edit_estado').val('');
+      // $('#edit_telefone_um').val('');
+      // $('#edit_telefone_dois').val('');
+
+      // alert('ok!');
     });
 
     // $('#nome').attr('value', operador.name);

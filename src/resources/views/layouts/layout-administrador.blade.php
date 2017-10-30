@@ -109,7 +109,6 @@
 							<div id="subPaciente" class="collapse ">
 								<ul class="nav">
 									<li><a href="{{ action('AdministradorController@operadores') }}" class="">Operadores</a></li>
-									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Cadastrar Operador</a></li>
 									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Editar Operador</a></li>
 									<li><a href="{{ action('AdministradorController@removerOperador') }}" class="">Remover Operador</a></li>
 								</ul>
