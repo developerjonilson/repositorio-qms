@@ -10,6 +10,8 @@ class Cidade extends Model
 {
     protected $table = 'cidades';
 
+    protected $primaryKey = 'id_cidade';
+
     protected $fillable = [
         'nome_cidade', 'cep', 'estado_id',
     ];

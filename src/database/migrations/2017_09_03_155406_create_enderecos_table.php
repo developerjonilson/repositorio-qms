@@ -16,7 +16,7 @@ class CreateEnderecosTable extends Migration
         Schema::create('enderecos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
-            $table->increments('id');
+            $table->increments('id_endereco');
             $table->string('rua');
             $table->string('numero');
             $table->string('complemento')->nullable();
@@ -24,7 +24,7 @@ class CreateEnderecosTable extends Migration
             //$table->integer('paciente_id')->unsigned();
             // $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
             $table->integer('cidade_id')->unsigned();
-            $table->foreign('cidade_id')->references('id')->on('cidades')->onDelete('cascade');
+            $table->foreign('cidade_id')->references('id_cidade')->on('cidades')->onDelete('cascade');
             $table->timestamps();
         });
 

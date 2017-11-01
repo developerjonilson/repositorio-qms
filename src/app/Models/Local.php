@@ -10,6 +10,10 @@ use \qms\Models\Periodo;
 
 class Local extends Model
 {
+  protected $table = 'locals';
+
+  protected $primaryKey = 'id_local';
+
   protected $fillable = [
       'nome_fantasia', 'numero_cnes', 'nome_razao_social', 'endereco_id',
   ];

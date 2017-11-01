@@ -11,6 +11,10 @@ use \qms\Models\Calendario;
 
 class Medico extends Model
 {
+  protected $table = 'medicos';
+
+  protected $primaryKey = 'id_medico';
+
   protected $fillable = [
       'nome_medico', 'numero_crm', 'endereco_id', 'telefone_id',
   ];
@@ -24,7 +28,7 @@ class Medico extends Model
   }
 
   public function especialidades() {
-    return $this->belongsToMany(Especialidade::class);
+    return $this->belongsToMany(Especialidade::class, 'especialidade_medico', 'id_medico', 'id_especialidade');
   }
 
   public function calendarios(){

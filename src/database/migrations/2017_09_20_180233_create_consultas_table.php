@@ -14,29 +14,29 @@ class CreateConsultasTable extends Migration
     public function up()
     {
         Schema::create('consultas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_consulta');
 
             $table->integer('codigo_consulta');
             $val = 0;
             $table->integer('system_status')->default($val);
 
             $table->integer('calendario_id')->unsigned();
-            $table->foreign('calendario_id')->references('id')->on('calendarios');
+            $table->foreign('calendario_id')->references('id_calendario')->on('calendarios');
 
             $table->integer('periodo_id')->unsigned();
-            $table->foreign('periodo_id')->references('id')->on('periodos');
+            $table->foreign('periodo_id')->references('id_periodo')->on('periodos');
 
             $table->integer('paciente_id')->unsigned();
-            $table->foreign('paciente_id')->references('id')->on('pacientes');
+            $table->foreign('paciente_id')->references('id_paciente')->on('pacientes');
 
             $table->integer('especialidade_id')->unsigned();
-            $table->foreign('especialidade_id')->references('id')->on('especialidades');
+            $table->foreign('especialidade_id')->references('id_especialidade')->on('especialidades');
 
             $table->integer('medico_id')->unsigned();
-            $table->foreign('medico_id')->references('id')->on('medicos');
+            $table->foreign('medico_id')->references('id_medico')->on('medicos');
 
             $table->integer('local_id')->unsigned();
-            $table->foreign('local_id')->references('id')->on('locals');
+            $table->foreign('local_id')->references('id_local')->on('locals');
 
             $table->timestamps();
         });

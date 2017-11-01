@@ -28,8 +28,8 @@ class CreateUsersTable extends Migration
             $table->date('data_alteracao_senha');
             $table->integer('endereco_id')->unsigned();
             $table->integer('telefone_id')->unsigned();
-            $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');;
-            $table->foreign('telefone_id')->references('id')->on('telefones')->onDelete('cascade');;
+            $table->foreign('endereco_id')->references('id_endereco')->on('enderecos')->onDelete('cascade');;
+            $table->foreign('telefone_id')->references('id_telefone')->on('telefones')->onDelete('cascade');;
             $table->rememberToken();
             $table->timestamps();
         });

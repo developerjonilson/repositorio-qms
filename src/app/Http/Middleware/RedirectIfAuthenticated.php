@@ -29,8 +29,7 @@ class RedirectIfAuthenticated
               if (strcmp($tipoUser, 'administrador' ) == 0) {
                 return redirect('/administrador');
               } else {
-                // aqui é pra retornar para o index de atendende, que não foi feito ainda
-                return redirect('/administrador');
+                return redirect('/atendende');
               }
 
             }

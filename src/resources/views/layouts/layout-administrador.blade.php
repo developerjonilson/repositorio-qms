@@ -93,37 +93,10 @@
 					<ul class="nav">
 						<!-- meus itens meu -->
 						<li><a href="{{action('AdministradorController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-
-						<li>
-							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Atendentes</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subAtendente" class="collapse ">
-								<ul class="nav">
-									<li><a href="#" class="">Cadastrar Atendente</a></li>
-									<li><a href="#" class="">Editar Atendente</a></li>
-									<li><a href="#" class="">Remover Atendente</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Operadores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPaciente" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@operadores') }}" class="">Operadores</a></li>
-									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Editar Operador</a></li>
-									<li><a href="{{ action('AdministradorController@removerOperador') }}" class="">Remover Operador</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-user-md"></i> <span>Médicos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subConsulta" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarMedico') }}">Cadastrar Médico</a></li>
-									<li><a href="{{ action('AdministradorController@alterarMedico') }}">Alterar dados dos Médicos</a></li>
-									<li><a href="{{ action('AdministradorController@removerMedico') }}">Remover Médicos</a></li>
-								</ul>
-							</div>
-						</li>
+						<li><a href="{{ action('AdministradorController@atendentes') }}" class=""><i class="lnr lnr-user"></i> <span>Atendentes</span></a></li>
+						<li><a href="{{ action('AdministradorController@operadores') }}" class=""><i class="lnr lnr-users"></i> <span>Operadores</span></a></li>
+						<li><a href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
+						<li><a href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
 						<li>
 							<a href="#subCalendario" data-toggle="collapse" class="collapsed"><i class="lnr lnr-calendar-full"></i> <span>Calendários</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subCalendario" class="collapse ">

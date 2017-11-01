@@ -52,7 +52,8 @@ class AutorizacaoMiddleware
                 }
               }
             } else {
-              return Redirect('/operador/acesso-negado-operador');
+              // return Redirect('/operador/acesso-negado-operador');
+              return Redirect('/operador');
             }
 
           } else {
@@ -81,7 +82,8 @@ class AutorizacaoMiddleware
                   }
                 }
               } else {
-                return Redirect('/administrador/acesso-negado-administrador');
+                // return Redirect('/administrador/acesso-negado-administrador');
+                return Redirect('/administrador');
               }
 
             } else {
@@ -113,7 +115,8 @@ class AutorizacaoMiddleware
 
                   }
                 } else {
-                  return Redirect('/atendente/acesso-negado-atendente');
+                  // return Redirect('/atendente/acesso-negado-atendente');
+                  return Redirect('/atendente');
                 }
 
               }

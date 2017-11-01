@@ -12,6 +12,8 @@ class Telefone extends Model
 {
   protected $table = 'telefones';
 
+  protected $primaryKey = 'id_telefone';
+
   protected $fillable = [
       'telefone_um', 'telefone_dois',
   ];

@@ -4,7 +4,7 @@
   <div class="row">
     <ol class="breadcrumb">
       <li><a href="{{ action('AdministradorController@index') }}">Administrador</a></li>
-      <li class="active">Operadores</li>
+      <li class="active">Atendentes</li>
     </ol>
   </div>
 
@@ -12,19 +12,13 @@
 
     <div class="panel panel-headline">
       <div class="panel-heading">
-        <h3 class="panel-title">Operadores</h3>
+        <h3 class="panel-title">Atendentes     (Não está feito!)</h3>
         <hr>
         <div class="erros">
           @isset($sucesso)
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <i class="fa fa-check-square-o"></i> {{ $sucesso }}
-            </div>
-          @endisset
-          @isset($erroExcluir)
-            <div class="alert alert-danger alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <i class="fa fa-times-circle"></i> {{ $erroExcluir }}
             </div>
           @endisset
         </div>
@@ -245,7 +239,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="telefone_dois">Telefone (Opcional)</label>
-                <input type="text" class="form-control" name="telefone_dois" id="telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}">
+                <input type="text" class="form-control" name="telefone_dois" id="telefone_dois" placeholder="(88) 99900-1234" {{ old('telefone_dois') }}>
               </div>
             </div>
           </div>
@@ -410,7 +404,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_cancel_edit"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_cancel"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel"><h3>Editar Informações do Operador</h3></h4>
             <p><span class="vermelho size">(*) Campos Obrigatórios</span></p>
           </div>
@@ -419,8 +413,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <i class="fa fa-times-circle"></i> {{ $erroEdit }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="btn_cancel_edit"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-times-circle"></i> {{ $erro }}
                   </div>
                 </div>
               </div>
@@ -428,7 +422,6 @@
 
             <form class="" action="{{ route('administrador.editar-operador') }}" id="edit_operador" name="edit_operador" method="post" data-toggle="validator">
               {{ csrf_field() }}
-              <input type="hidden" name="operador_id" id="edit_operador_id" value="{{ old('operador_id') }}">
               <div class="row">
                 <div class="col-md-12">
                   <h4>Informações Pessoais</h4>
@@ -482,7 +475,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Senha</label>
-                    <input type="text" class="form-control" value='A senha não pode ser alterada, só pelo operador ao realizar o login no sistema!' disabled>
+                    <input type="text" class="form-control" value='A senha não pode ser alterada, só pelo operador ao realizar o login no sistema!' readonly>
                   </div>
                 </div>
               </div>
@@ -544,8 +537,35 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="estado">Estado<span class="vermelho">*</span></label>
-                    <input type="text" name="nome_estado" id="edit_nome_estado" class="form-control" value="{{ old('nome_estado') }}" data-error="Esse campo é obrigatório!" required>
-                    <div class="help-block with-errors"></div>
+                    <select name="nome_estado" id="edit_nome_estado" class="form-control">
+                      <option value="ACRE">ACRE</option>
+    									<option value="ALAGOAS">ALAGOAS</option>
+    									<option value="AMAPA">AMAPA</option>
+    									<option value="AMAZONAS">AMAZONAS</option>
+    									<option value="BAHIA">BAHIA</option>
+    									<option value="CEARA" selected>CEARA</option>
+    									<option value="DISTRITO FEDEREAL">DISTRITO FEDEREAL</option>
+    									<option value="ESPIRITO SANTO">ESPIRITO SANTO</option>
+    									<option value="GOIAS">GOIAS</option>
+    									<option value="MARANHAO">MARANHAO</option>
+    									<option value="MATO GROSSO">MATO GROSSO</option>
+    									<option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
+    									<option value="MINAS GEREAIS">MINAS GEREAIS</option>
+    									<option value="PARA">PARA</option>
+    									<option value="PARAIBA">PARAIBA</option>
+    									<option value="PARANA">PARANA</option>
+    									<option value="PERNAMBUCO">PERNAMBUCO</option>
+    									<option value="PIAUI">PIAUI</option>
+    									<option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
+    									<option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
+    									<option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
+    									<option value="RONDONIA">RONDONIA</option>
+    									<option value="RORAIMA">RORAIMA</option>
+    									<option value="SANTA CATARINA">SANTA CATARINA</option>
+    									<option value="SAO PAULO">SAO PAULO</option>
+    									<option value="SERGIPE">SERGIPE</option>
+    									<option value="TOCANTINS">TOCANTINS</option>
+    							</select>
                   </div>
                 </div>
               </div>
@@ -569,7 +589,7 @@
                 <div class="col-md-6">
                   <div class="form-group edit_telefone">
                     <label for="telefone_dois">Telefone (Opcional)</label>
-                    <input type="text" class="form-control" name="telefone_dois" id="edit_telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}">
+                    <input type="text" class="form-control" name="telefone_dois" id="edit_telefone_dois" placeholder="(88) 99900-1234" {{ old('telefone_dois') }}>
                   </div>
                 </div>
               </div>
@@ -625,10 +645,6 @@
 
   @isset($erro)
     $('#modal_cadastrar_operador').modal('show');
-  @endisset
-
-  @isset($erroEdit)
-    $('#modal_editar_operador').modal('show');
   @endisset
 
   $('enviar').click(function() {
@@ -705,7 +721,6 @@
     function operadorParaEditar(id) {
       $('.loading').fadeOut(700).removeClass('hidden');
       $.get('/administrador/ver-operador/' + id, function (operador) {
-        $('#edit_operador_id').attr('value', operador.id);
         $('#edit_name').attr('value', operador.name);
         $('#edit_data_nascimento').attr('value', operador.data_nascimento);
         $(' #edit_cpf').attr('value', operador.cpf);
@@ -717,7 +732,7 @@
         $('#edit_bairro').attr('value', operador.bairro);
         $('#edit_nome_cidade').attr('value', operador.nome_cidade);
         $('#edit_cep').attr('value', operador.cep);
-        $('#edit_nome_estado').attr('value', operador.nome_estado);
+        $('#edit_estado').attr('value', operador.nome_estado);
         $('#edit_telefone_um').attr('value', operador.telefone_um);
         $('#edit_telefone_dois').attr('value', operador.telefone_dois);
 
@@ -746,7 +761,42 @@
     $('#btn_cancel_edit').click(function () {
       // $('#edit_operador')[0].reset();
       $('#edit_operador').trigger("reset");
+
+      // $('#edit_name').val('');
+      // $('#edit_data_nascimento').val('');
+      // $('#edit_cpf').val('');
+      // $('#edit_rg').val('');
+      // $('#edit_email').val('');
+      // $('#edit_rua').val('');
+      // $('#edit_numero').val('');
+      // $('#edit_complemento').val('');
+      // $('#edit_bairro').val('');
+      // $('#edit_nome_cidade').val('');
+      // $('#edit_cep').val('');
+      // $('#edit_estado').val('');
+      // $('#edit_telefone_um').val('');
+      // $('#edit_telefone_dois').val('');
+
+      // alert('ok!');
     });
+
+    // $('#nome').attr('value', operador.name);
+    // $('#data_nascimento').attr('value', operador.data_nascimento);
+    // $('#cpf').attr('value', operador.cpf);
+    // $('#rg').attr('value', operador.rg);
+    // $('#email').attr('value', operador.email);
+    // $('#rua').attr('value', operador.rua);
+    // $('#numero').attr('value', operador.numero);
+    // $('#complemento').attr('value', operador.complemento);
+    // $('#bairro').attr('value', operador.bairro);
+    // $('#cidade').attr('value', operador.nome_cidade);
+    // $('#cep').attr('value', operador.cep);
+    // $('#estado').attr('value', operador.nome_estado);
+    // $('#telefone_um').attr('value', operador.telefone_um);
+    // $('#telefone_dois').attr('value', operador.telefone_dois);
+
+
+
 
   </script>
 @endsection

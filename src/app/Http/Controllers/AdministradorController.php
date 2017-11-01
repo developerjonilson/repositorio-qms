@@ -154,7 +154,17 @@ class AdministradorController extends Controller {
         $sucesso = $request->session()->get('sucesso');
         return view('administrador.operador.operadores', compact('sucesso'));
       } else {
-        return view('administrador.operador.operadores');
+        if ($request->session()->has('erroEdit')) {
+          $erroEdit = $request->session()->get('erroEdit');
+          return view('administrador.operador.operadores', compact('erroEdit'));
+        } else {
+          if ($request->session()->has('erroExcluir')) {
+            $erroExcluir = $request->session()->get('erroExcluir');
+            return view('administrador.operador.operadores', compact('erroExcluir'));
+          } else {
+            return view('administrador.operador.operadores');
+          }
+        }
       }
     }
   }
@@ -163,19 +173,18 @@ class AdministradorController extends Controller {
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
-      // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="alert(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
       return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
              '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   '.
-              '<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Excluir</a>';
+             '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
     })->make(true);
   }
 
   public function verOperador($id) {
     $operador = DB::table('users')
-        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id')
-        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
-        ->join('estados', 'cidades.estado_id', '=', 'estados.id')
-        ->join('telefones', 'users.telefone_id', '=', 'telefones.id')
+        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'users.telefone_id', '=', 'telefones.id_telefone')
         ->select('users.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
         ->where('users.id', '=', $id)
         ->get()
@@ -305,7 +314,6 @@ class AdministradorController extends Controller {
       $telefone = Telefone::create(['telefone_um' => $telefone_um,
                                       'telefone_dois' => $telefone_dois, ]);
 
-
       $user = new User();
       $user->name = $request->name;
       $user->data_nascimento = $request->data_nascimento;
@@ -316,25 +324,25 @@ class AdministradorController extends Controller {
       $user->tipo = 'operador';
       $user->numero_alteracao_senha = 0;
       $user->data_alteracao_senha = date('Y-m-d');
-      $user->telefone_id = $telefone->id;
+      $user->telefone_id = $telefone->id_telefone;
 
       $estado = Estado::create($request->all());
       $cidade = new Cidade($request->all());
-      $cidade->estado_id = $estado->id;
+      $cidade->estado_id = $estado->id_estado;
 
       $cidadeCreate = Cidade::create(['nome_cidade' => $cidade->nome_cidade,
                                       'cep' => $cep,
                                       'estado_id' => $cidade->estado_id, ]);
       $endereco = new Endereco($request->all());
 
-      $endereco->cidade_id = $cidadeCreate->id;
+      $endereco->cidade_id = $cidadeCreate->id_cidade;
 
       $enderecoCreate = Endereco::create(['rua' => $endereco->rua,
                                       'numero' => $endereco->numero,
                                       'complemento' => $endereco->complemento,
                                       'bairro' => $endereco->bairro,
                                       'cidade_id' => $endereco->cidade_id, ]);
-      $user->endereco_id = $enderecoCreate->id;
+      $user->endereco_id = $enderecoCreate->id_endereco;
 
       if ($user->save()) {
         $request->session()->flash('sucesso', '  Cadastro realizado com sucesso!');
@@ -353,7 +361,210 @@ class AdministradorController extends Controller {
   }
 
   public function editarOperador(Request $request) {
-    dd($request->all());
+    // dd($request->all());
+
+    if ($request->operador_id != null && $request->name != null &&
+        $request->data_nascimento != null &&
+        $request->cpf != null && $request->rg != null &&
+        $request->email != null && $request->rua != null &&
+        $request->numero != null && $request->bairro != null &&
+        $request->nome_cidade != null && $request->cep != null &&
+        $request->nome_estado != null && $request->telefone_um != null) {
+
+        $operador_id = $request->operador_id;
+
+        $data = $request->data_nascimento;
+        list($ano, $mes, $dia,) = explode('-', $data);
+        $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+        $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
+
+        if ($idade < 18) {
+          $request->session()->flash('erroEdit', 'O Operador não pode ser menor (não tem 18 anos),
+                                          por favor verifique a data informada!');
+          return redirect('/administrador/operadores')->withInput();
+        }
+
+        $validacaoCpf = AdministradorController::validaCpf($request->cpf);
+        if (!$validacaoCpf) {
+          $request->session()->flash('erroEdit', 'O CPF informado é inválido!');
+          return redirect('/administrador/operadores')->withInput();
+        }
+
+        $valor = trim($request->cpf);
+        $valor = str_replace(".", "", $valor);
+        $valor = str_replace(".", "", $valor);
+        $cpf = str_replace("-", "", $valor);
+
+        $operadorBanco = User::find($operador_id);
+        if ($operadorBanco->cpf != $cpf) {
+          $operadorBancoCpf = User::where('cpf', $cpf)->first();
+          if ($operadorBancoCpf != null) {
+            $request->session()->flash('erroEdit', 'Esse CPF já está cadastrado!');
+            return redirect('/administrador/operadores')->withInput();
+          }
+        }
+
+        $operadorBanco = User::find($operador_id);
+        if ($operadorBanco->rg != $request->rg) {
+          $operadorBancoRg = User::where('rg', $request->rg)->first();
+          if ($operadorBancoRg != null) {
+            $request->session()->flash('erroEdit', 'Esse RG já está cadastrado!');
+            return redirect('/administrador/operadores')->withInput();
+          }
+        }
+
+        $operadorBanco = User::find($operador_id);
+        if ($operadorBanco->email != $request->email) {
+          $operadorBancoEmail = User::where('email', $request->email)->first();
+          if ($operadorBancoEmail != null) {
+            $request->session()->flash('erroEdit', 'Esse Email já está cadastrado!');
+            return redirect('/administrador/operadores')->withInput();
+          }
+        }
+
+        $valor = trim($request->cep);
+        $cep = str_replace("-", "", $valor);
+
+        $valor = trim($request->telefone_um);
+        $valor = str_replace("(", "", $valor);
+        $valor = str_replace(")", "", $valor);
+        $valor = str_replace(" ", "", $valor);
+        $telefone_um = str_replace("-", "", $valor);
+
+        $telefone_dois = trim($request->telefone_dois);
+        $telefone_dois = str_replace("(", "", $telefone_dois);
+        $telefone_dois = str_replace(")", "", $telefone_dois);
+        $telefone_dois = str_replace(" ", "", $telefone_dois);
+        $telefone_dois = str_replace("-", "", $telefone_dois);
+
+        // $operador_id = $request->operador_id;
+
+        $user = User::find($operador_id);
+        $telefone =Telefone::find($user->telefone_id);
+        $endereco = Endereco::find($user->endereco_id);
+        $cidade = Cidade::find($endereco->cidade_id);
+        $estado = Estado::find($cidade->estado_id);
+
+        $telefone->telefone_um = $telefone_um;
+        $telefone->telefone_dois = $telefone_dois;
+
+        $estado->nome_estado = $request->nome_estado;
+
+        $cidade->nome_cidade = $request->nome_cidade;
+        $cidade->cep = $request->cep;
+
+        $endereco->rua = $request->rua;
+        $endereco->numero = $request->numero;
+        $endereco->bairro = $request->bairro;
+        $endereco->complemento = $request->complemento;
+
+        $user->name = $request->name;
+        $user->data_nascimento = $request->data_nascimento;
+        $user->cpf = $cpf;
+        $user->rg = $request->rg;
+        $user->email = $request->email;
+
+        $status = false;
+        try {
+          $user->save();
+          $telefone->save();
+          $endereco->save();
+          $cidade->save();
+          $estado->save();
+
+          $status = true;
+        } catch (Exception $e) {
+          dd($e);
+        }
+
+        if ($status) {
+          $request->session()->flash('sucesso', 'Operador alterado com sucesso!');
+          return redirect('/administrador/operadores');
+        } else {
+          $request->session()->flash('erroEdit', 'Não foi possível editar o Operador, por favor tente em instantes!');
+          return redirect('/administrador/operadores');
+        }
+
+    } else {
+      $request->session()->flash('erroEdit', 'Campos obrigatórios ficaram em branco!');
+      return redirect('/administrador/operadores')->withInput();
+    }
+
+  }
+
+  public function excluirOperador(Request $request) {
+    $operador_id = $request->operador_id;
+
+    $operador = User::find($operador_id);
+    $telefone =Telefone::find($operador->telefone_id);
+    $endereco = Endereco::find($operador->endereco_id);
+    $cidade = Cidade::find($endereco->cidade_id);
+    $estado = Estado::find($cidade->estado_id);
+
+    $status = false;
+    try {
+      $operador->delete();
+      $telefone->delete();
+      $endereco->delete();
+      $cidade->delete();
+      $estado->delete();
+
+      $status = true;
+    } catch (Exception $e) {
+      dd($e);
+    }
+
+    if ($status) {
+      $request->session()->flash('sucesso', 'Operador excluído com sucesso!');
+      return redirect('/administrador/operadores');
+    } else {
+      $request->session()->flash('erroExcluir', 'Não foi possível excluir o Operador, por favor tente em instantes!');
+      return redirect('/administrador/operadores');
+    }
+
+  }
+
+  public function atendentes(Request $request) {
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.atendente.atendentes', compact('erro'));
+    } else {
+      if ($request->session()->has('sucesso')) {
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.atendente.atendentes', compact('sucesso'));
+      } else {
+        return view('administrador.atendente.atendentes');
+      }
+    }
+  }
+
+  public function administradores(Request $request) {
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.admin.administradores', compact('erro'));
+    } else {
+      if ($request->session()->has('sucesso')) {
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.admin.administradores', compact('sucesso'));
+      } else {
+        return view('administrador.admin.administradores');
+      }
+    }
+  }
+
+  public function medicos(Request $request) {
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.operador.operadores', compact('erro'));
+    } else {
+      if ($request->session()->has('sucesso')) {
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.operador.operadores', compact('sucesso'));
+      } else {
+        return view('administrador.operador.operadores');
+      }
+    }
   }
 
   public function cadastrarMedico() {

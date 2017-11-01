@@ -26,6 +26,11 @@ Route::get('/administrador/get-operadores', 'AdministradorController@getOperador
 Route::get('/administrador/ver-operador/{id}', 'AdministradorController@verOperador')->name('administrador.ver-operador');
 Route::post('/administrador/cadastrar-operador', 'AdministradorController@cadastrarOperador')->name('administrador.cadastrar-operador');
 Route::post('/administrador/editar-operador', 'AdministradorController@editarOperador')->name('administrador.editar-operador');
+Route::post('/administrador/excluir-operador', 'AdministradorController@excluirOperador')->name('administrador.excluir-operador');
+
+Route::get('/administrador/atendentes', 'AdministradorController@atendentes')->name('administrador.atendentes');
+Route::get('/administrador/administradores', 'AdministradorController@administradores')->name('administrador.administradores');
+Route::get('/administrador/medicos', 'AdministradorController@medicos');
 
 Route::get('/administrador/cadastrar-medico', 'AdministradorController@cadastrarMedico');
 Route::get('/administrador/alterar-medico', 'AdministradorController@alterarMedico');

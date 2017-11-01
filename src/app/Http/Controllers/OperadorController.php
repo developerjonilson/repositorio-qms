@@ -2,6 +2,7 @@
 
 namespace qms\Http\Controllers;
 
+// use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Redirect;

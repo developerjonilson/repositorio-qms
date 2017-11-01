@@ -16,11 +16,11 @@ class CreateCidadesTable extends Migration
         Schema::create('cidades', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
-            $table->increments('id');
+            $table->increments('id_cidade');
             $table->string('nome_cidade');
             $table->string('cep');
             $table->integer('estado_id')->unsigned();
-            $table->foreign('estado_id')->references('id')->on('estados')->onDelete('cascade');
+            $table->foreign('estado_id')->references('id_estado')->on('estados')->onDelete('cascade');
             $table->timestamps();
         });
 

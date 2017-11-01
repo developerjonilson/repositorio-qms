@@ -9,6 +9,10 @@ use \qms\Models\Consulta;
 
 class Paciente extends Model
 {
+  protected $table = 'pacientes';
+
+  protected $primaryKey = 'id_paciente';
+
   protected $fillable = [
       'nome_paciente', 'sexo', 'data_nascimento', 'numero_cns', 'cpf', 'rg',
       'nome_mae', 'nome_pai', 'endereco_id', 'telefone_id',
