@@ -229,7 +229,6 @@ $(document).ready(function(){
       errorContainer: $('#errorContainer'),
       errorLabelContainer: $('#errorContainer'),
       submitHandler: function (form) {
-        // $('#search-paciente').trigger('submit');
         $('.loading').fadeIn('fast').removeClass('hidden').delay(10000);
         $("#numero_cns").unmask();
         form.submit();
@@ -406,6 +405,117 @@ $(document).ready(function(){
           form.submit();
         },
     });
+
+
+
+// cadastrar operador
+//    $("#new_operador").validate({
+//         // Define as regras
+//         rules: {
+//           name: {
+//             required: true
+//           },
+//           data_nascimento: {
+//             required: true,
+//           },
+//           cpf: {
+//             required: true,
+//             verificarCpf: true
+//           },
+//           rg: {
+//             required: true,
+//             digits: true
+//           },
+//           email: {
+//             required: true,
+//           },
+//           rua: {
+//             required: true
+//           },
+//           numero: {
+//             required: true,
+//             digits: true
+//           },
+//           bairro: {
+//             required: true
+//           },
+//           cidade: {
+//             required: true
+//           },
+//           cep: {
+//             required: true,
+//           },
+//           nome_estado: {
+//             required: true
+//           },
+//           telefone_um: {
+//             required: true
+//           },
+//           telefone_dois: {
+//             required: true
+//           },
+//         },
+//         // Define as mensagens de erro para cada regra
+//         messages: {
+//             name: {
+//               required: "Esse campo não pode ficar vazio!",
+//             },
+//             data_nascimento: {
+//               required: "Esse campo não pode ficar vazio!",
+//             },
+//             cpf: {
+//               required: "Esse campo não pode ficar vazio!",
+//               verificarCpf: "Esse CPF informado é inválido!"
+//             },
+//             rg: {
+//               required: "Esse campo não pode ficar vazio!",
+//               digits:"Este campo só podem conter numeros!"
+//             },
+//             email: {
+//               required: "Esse campo não pode ficar vazio!",
+//             },
+//             rua: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//             numero: {
+//                required: "Esse campo não pode ficar vazio!",
+//                digits:"Este campo só podem conter numeros!"
+//             },
+//             bairro: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//             cidade: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//             cep: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//             nome_estado: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//             telefone_um: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//             telefone_dois: {
+//                required: "Esse campo não pode ficar vazio!",
+//             },
+//
+//         },
+//
+//       submitHandler: postFormNewOperador,
+//     }
+//   );
+//
+//   function postFormNewOperador(form) {
+//       $('.loading').fadeIn('fast').removeClass('hidden');
+//
+//       $('#cpf').unmask();
+//       $('#cep').unmask();
+//       $('#telefone_um').unmask();
+//       $('#telefone_dois').unmask();
+//
+//       form.submit();
+//   };
 
   });
 

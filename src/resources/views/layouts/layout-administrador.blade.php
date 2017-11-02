@@ -20,12 +20,31 @@
 	<link rel="stylesheet" href="/css/demo.css">
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+
+	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.png">
 </head>
 
 <body>
+	<div class="loading">
+		<div class="sk-fading-circle">
+      <div class="sk-circle1 sk-circle"></div>
+      <div class="sk-circle2 sk-circle"></div>
+      <div class="sk-circle3 sk-circle"></div>
+      <div class="sk-circle4 sk-circle"></div>
+      <div class="sk-circle5 sk-circle"></div>
+      <div class="sk-circle6 sk-circle"></div>
+      <div class="sk-circle7 sk-circle"></div>
+      <div class="sk-circle8 sk-circle"></div>
+      <div class="sk-circle9 sk-circle"></div>
+      <div class="sk-circle10 sk-circle"></div>
+      <div class="sk-circle11 sk-circle"></div>
+      <div class="sk-circle12 sk-circle"></div>
+    </div>
+	</div>
+
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<!-- NAVBAR -->
@@ -49,7 +68,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle"></i> <span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="{{action('AdministradorController@perfilUsuario')}}"><i class="lnr lnr-user"></i> <span>Meu Perfil</span></a></li>
-								<li><a href="{{action('AdministradorController@alterarSenhaUsuario')}}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
+								<li><a href="{{action('AdministradorController@alterarSenha')}}"><i class="lnr lnr-cog"></i> <span>Alterar Senha</span></a></li>
 								<li>
 										<a href="{{ route('logout') }}"	onclick="event.preventDefault();
 										document.getElementById('logout-form').submit();">
@@ -74,37 +93,10 @@
 					<ul class="nav">
 						<!-- meus itens meu -->
 						<li><a href="{{action('AdministradorController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-
-						<li>
-							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Atendentes</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subAtendente" class="collapse ">
-								<ul class="nav">
-									<li><a href="#" class="">Cadastrar Atendente</a></li>
-									<li><a href="#" class="">Editar Atendente</a></li>
-									<li><a href="#" class="">Remover Atendente</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subPaciente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Operadores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPaciente" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Cadastrar Operador</a></li>
-									<li><a href="{{ action('AdministradorController@cadastrarOperador') }}" class="">Editar Operador</a></li>
-									<li><a href="{{ action('AdministradorController@removerOperador') }}" class="">Remover Operador</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subConsulta" data-toggle="collapse" class="collapsed"><i class="fa fa-user-md"></i> <span>Médicos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subConsulta" class="collapse ">
-								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarMedico') }}">Cadastrar Médico</a></li>
-									<li><a href="{{ action('AdministradorController@alterarMedico') }}">Alterar dados dos Médicos</a></li>
-									<li><a href="{{ action('AdministradorController@removerMedico') }}">Remover Médicos</a></li>
-								</ul>
-							</div>
-						</li>
+						<li><a href="{{ action('AdministradorController@atendentes') }}" class=""><i class="lnr lnr-user"></i> <span>Atendentes</span></a></li>
+						<li><a href="{{ action('AdministradorController@operadores') }}" class=""><i class="lnr lnr-users"></i> <span>Operadores</span></a></li>
+						<li><a href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
+						<li><a href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
 						<li>
 							<a href="#subCalendario" data-toggle="collapse" class="collapsed"><i class="lnr lnr-calendar-full"></i> <span>Calendários</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subCalendario" class="collapse ">
@@ -149,7 +141,16 @@
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
+	<script src="/scripts/moment.js"></script>
+	<script src="/scripts/moment-with-locales.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+	<script src="/scripts/validation.js"></script>
+	<script src="/scripts/validator.min.js"></script>
 	<script src="/scripts/script.js"></script>
+	<script src="/scripts/datatables/jquery.dataTables.min.js"></script>
+	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
+
+	@yield('pos-script')
 
 </body>
 

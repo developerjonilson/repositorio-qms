@@ -164,32 +164,32 @@
 								{{-- <input type="text" name="nome_estado" id="nome_estado" placeholder="CE" value="CEARÁ" class="form-control campo"> --}}
 								<select name="nome_estado" id="nome_estado" class="form-control">
 									<option value="ACRE">ACRE</option>
-									<option value="ALAGOAS">ALAGOAS</option>
-									<option value="AMAPÁ">AMAPÁ</option>
-									<option value="AMAZONAS">AMAZONAS</option>
-									<option value="BAHIA">BAHIA</option>
-									<option value="CEARÁ" selected>CEARÁ</option>
-									<option value="DISTRITO FEDEREAL">DISTRITO FEDEREAL</option>
-									<option value="ESPÍRITO SANTO">ESPÍRITO SANTO</option>
-									<option value="GOIÁS">GOIÁS</option>
-									<option value="MARANHÃO">MARANHÃO</option>
-									<option value="MATO GROSSO">MATO GROSSO</option>
-									<option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
-									<option value="MINAS GEREAIS">MINAS GEREAIS</option>
-									<option value="PARÁ">PARÁ</option>
-									<option value="PARAÍBA">PARAÍBA</option>
-									<option value="PARANÁ">PARANÁ</option>
-									<option value="PERNAMBUCO">PERNAMBUCO</option>
-									<option value="PIAUÍ">PIAUÍ</option>
-									<option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
-									<option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
-									<option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
-									<option value="RONDÔNIA">RONDÔNIA</option>
-									<option value="RORAIMA">RORAIMA</option>
-									<option value="SANTA CATARINA">SANTA CATARINA</option>
-									<option value="SÃO PAULO">PAULO</option>
-									<option value="SERGIPE">SERGIPE</option>
-									<option value="TOCANTINS">TOCANTINS</option>
+                  <option value="ALAGOAS">ALAGOAS</option>
+                  <option value="AMAPA">AMAPA</option>
+                  <option value="AMAZONAS">AMAZONAS</option>
+                  <option value="BAHIA">BAHIA</option>
+                  <option value="CEARA" selected>CEARA</option>
+                  <option value="DISTRITO FEDEREAL">DISTRITO FEDEREAL</option>
+                  <option value="ESPIRITO SANTO">ESPIRITO SANTO</option>
+                  <option value="GOIAS">GOIAS</option>
+                  <option value="MARANHAO">MARANHAO</option>
+                  <option value="MATO GROSSO">MATO GROSSO</option>
+                  <option value="MATO GROSSO DO SUL">MATO GROSSO DO SUL</option>
+                  <option value="MINAS GEREAIS">MINAS GEREAIS</option>
+                  <option value="PARA">PARA</option>
+                  <option value="PARAIBA">PARAIBA</option>
+                  <option value="PARANA">PARANA</option>
+                  <option value="PERNAMBUCO">PERNAMBUCO</option>
+                  <option value="PIAUI">PIAUI</option>
+                  <option value="RIO DE JANEIRO">RIO DE JANEIRO</option>
+                  <option value="RIO GRANDE DO SUL">RIO GRANDE DO SUL</option>
+                  <option value="RIO GRANDE DO NORTE">RIO GRANDE DO NORTE</option>
+                  <option value="RONDONIA">RONDONIA</option>
+                  <option value="RORAIMA">RORAIMA</option>
+                  <option value="SANTA CATARINA">SANTA CATARINA</option>
+                  <option value="SAO PAULO">SAO PAULO</option>
+                  <option value="SERGIPE">SERGIPE</option>
+                  <option value="TOCANTINS">TOCANTINS</option>
 							</select>
 							</div>
 						</div>

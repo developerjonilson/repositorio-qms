@@ -13,7 +13,7 @@ class CalendarioTableSeeder extends Seeder
     {
 
       DB::table('calendarios')->insert([
-          'data' => '2017-11-24',
+          'data' => '2017-11-28',
           'especialidade_id' => 2,
           'medico_id' => 1,
           'created_at'=> date("Y/m/d h:i:s"),
@@ -21,7 +21,7 @@ class CalendarioTableSeeder extends Seeder
       ]);
 
       DB::table('calendarios')->insert([
-          'data' => '2017-12-25',
+          'data' => '2017-11-29',
           'especialidade_id' => 2,
           'medico_id' => 2,
           'created_at'=> date("Y/m/d h:i:s"),
@@ -29,7 +29,7 @@ class CalendarioTableSeeder extends Seeder
       ]);
 
       DB::table('calendarios')->insert([
-          'data' => '2017-11-26',
+          'data' => '2017-11-30',
           'especialidade_id' => 2,
           'medico_id' => 1,
           'created_at'=> date("Y/m/d h:i:s"),

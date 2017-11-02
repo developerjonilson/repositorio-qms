@@ -12,13 +12,13 @@ class EspecialidadeMedicoTableSeeder extends Seeder
     public function run()
     {
       DB::table('especialidade_medico')->insert([
-          'especialidade_id' => 2,
-          'medico_id' => 1,
+          'id_especialidade' => 2,
+          'id_medico' => 1,
       ]);
 
       DB::table('especialidade_medico')->insert([
-          'especialidade_id' => 2,
-          'medico_id' => 2,
+          'id_especialidade' => 2,
+          'id_medico' => 2,
       ]);
     }
 }

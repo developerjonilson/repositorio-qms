@@ -19,7 +19,7 @@ class PacienteController extends Controller {
 
   public function __construct() {
       $this->middleware('auth');
-      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddlewareOperador::class');
+      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddleware::class');
   }
 
   public function cadastrarPaciente(Request $request) {
@@ -103,32 +103,30 @@ class PacienteController extends Controller {
         $paciente->nome_mae = strtoupper($request->nome_mae);
         $paciente->nome_pai = strtoupper($request->nome_pai);
         // $paciente = new Paciente($request->all());
-        $paciente->telefone_id = $telefone->id;
-
-        // return $paciente;
+        $paciente->telefone_id = $telefone->id_telefone;
 
         $estado = Estado::create($request->all());
         $cidade = new Cidade($request->all());
-        $cidade->estado_id = $estado->id;
+        $cidade->estado_id = $estado->id_estado;
 
         $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
                                         'cep' => $cidade->cep,
-                                        'estado_id' => $cidade->estado_id, ]);
+                                        'estado_id' => $cidade->estado_id]);
         $endereco = new Endereco($request->all());
 
-        $endereco->cidade_id = $cidadeCreate->id;
+        $endereco->cidade_id = $cidadeCreate->id_cidade;
 
         $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
                                         'numero' => $endereco->numero,
                                         'complemento' => strtoupper($endereco->complemento),
                                         'bairro' => strtoupper($endereco->bairro),
                                         'cidade_id' => $endereco->cidade_id, ]);
-        $paciente->endereco_id = $enderecoCreate->id;
+        $paciente->endereco_id = $enderecoCreate->id_endereco;
 
         if ($paciente->save()) {
           //tudo feito com sucesso;
           $sucesso = '1';
-          $idPaciente = $paciente->id;
+          $idPaciente = $paciente->id_paciente;
           $request->session()->flash('sucesso', $sucesso);
           $request->session()->flash('idPaciente', $idPaciente);
 
@@ -268,15 +266,15 @@ class PacienteController extends Controller {
   public function verPaciente($idPaciente) {
     if ($idPaciente != null) {
       $paciente = DB::table('pacientes')
-          ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id')
-          ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
-          ->join('estados', 'cidades.estado_id', '=', 'estados.id')
-          ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id')
+          ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id_endereco')
+          ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+          ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+          ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id_telefone')
           ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
-          ->where('pacientes.id', '=', $idPaciente)
+          ->where('pacientes.id_paciente', '=', $idPaciente)
           ->first();
 
-      $paciente->id = $idPaciente;
+      // $paciente->id_paciente = $idPaciente; //olhar isso
       // dd($paciente);
       return view('paciente.ver-paciente')->with('paciente', $paciente);
     } else {
@@ -292,14 +290,14 @@ class PacienteController extends Controller {
     $id_paciente = $request->input('paciente_id');
 
     $paciente = DB::table('pacientes')
-        ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id')
-        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
-        ->join('estados', 'cidades.estado_id', '=', 'estados.id')
-        ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id')
+        ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id_telefone')
         ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
-        ->where('pacientes.id', '=', $id_paciente)
+        ->where('pacientes.id_paciente', '=', $id_paciente)
         ->first();
-    $paciente->id = $id_paciente;
+    // $paciente->id = $id_paciente;
 
     return redirect('operador/alterar-paciente')->with('paciente', $paciente);
   }
@@ -308,17 +306,17 @@ class PacienteController extends Controller {
     $status = $request->session()->get('stat');
 
     $paciente = DB::table('pacientes')
-        ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id')
-        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
-        ->join('estados', 'cidades.estado_id', '=', 'estados.id')
-        ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id')
+        ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id_telefone')
         ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
         ->where('pacientes.numero_cns', '=', $numero_cns)
         ->first();
 
     $paciente_id = DB::table('pacientes')->where('numero_cns', '=', $numero_cns)->first();
 
-    $paciente->id = $paciente_id->id;
+    // $paciente->id = $paciente_id->id;
 
     return redirect('operador/alterar-paciente')->with('paciente', $paciente)->with('stat', $status);
   }

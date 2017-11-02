@@ -14,12 +14,12 @@ class CreateCalendariosTable extends Migration
     public function up()
     {
         Schema::create('calendarios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_calendario');
             $table->date('data');
             $table->integer('especialidade_id')->unsigned();
-            $table->foreign('especialidade_id')->references('id')->on('especialidades');
+            $table->foreign('especialidade_id')->references('id_especialidade')->on('especialidades');
             $table->integer('medico_id')->unsigned();
-            $table->foreign('medico_id')->references('id')->on('medicos');
+            $table->foreign('medico_id')->references('id_medico')->on('medicos');
             $table->timestamps();
         });
     }

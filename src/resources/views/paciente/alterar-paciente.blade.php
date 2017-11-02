@@ -9,7 +9,7 @@
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					@if (Session::has('paciente'))
-						<a href="/operador/ver-paciente/{{ Session::get('paciente')->id }}" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+						<a href="/operador/ver-paciente/{{ Session::get('paciente')->id_paciente }}" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
 					@else
 						<a href="/operador/pesquisar-pacientes" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
 					@endif
@@ -44,7 +44,7 @@
 							@if (Session::has('paciente'))
 								<form class="" action="{{ action('PacienteController@alterandoPaciente') }}" method="post" id="form-alteracao-paciente" name="form-alteracao-paciente">
 									{{ csrf_field() }}
-									<input type="hidden" name="paciente_id" id="paciente_id" value="{{ Session::get('paciente')->id }}">
+									<input type="hidden" name="paciente_id" id="paciente_id" value="{{ Session::get('paciente')->id_paciente }}">
 									<input type="hidden" name="endereco_id" id="endereco_id" value="{{ Session::get('paciente')->endereco_id }}">
 									<input type="hidden" name="cidade_id" id="cidade_id" value="{{ Session::get('paciente')->cidade_id }}">
 									<input type="hidden" name="estado_id" id="estado_id" value="{{ Session::get('paciente')->estado_id }}">

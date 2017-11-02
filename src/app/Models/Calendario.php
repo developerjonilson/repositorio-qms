@@ -12,6 +12,8 @@ class Calendario extends Model
 {
   protected $table = 'calendarios';
 
+  protected $primaryKey = 'id_calendario';
+
   protected $fillable = [
       'data', 'especialidade_id', 'medico_id',
   ];

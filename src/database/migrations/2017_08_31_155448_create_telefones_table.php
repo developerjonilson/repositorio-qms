@@ -16,7 +16,7 @@ class CreateTelefonesTable extends Migration
         Schema::create('telefones', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
-            $table->increments('id');
+            $table->increments('id_telefone');
             $table->string('telefone_um')->nullable();
             $table->string('telefone_dois')->nullable();
             // $table->integer('paciente_id')->unsigned();

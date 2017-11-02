@@ -70,8 +70,8 @@
 				<!-- TABBED CONTENT -->
 				<form class="" action="{{ action('OperadorController@alterProfile')}}" method="post" id="edit-profile">
 					{{ csrf_field() }}
-					<input type="hidden" name="telefone_id" id="telefone_id" value="{{ $telefone->id }}">
-					<input type="hidden" name="endereco_id" id="endereco_id" value="{{ $endereco->id }}">
+					<input type="hidden" name="telefone_id" id="telefone_id" value="{{ $telefone->id_telefone }}">
+					<input type="hidden" name="endereco_id" id="endereco_id" value="{{ $endereco->id_endereco }}">
 					<div class="custom-tabs-line tabs-line-bottom left-aligned">
 						<ul class="nav" role="tablist">
 							<li class="active"><a href="#tab-bottom-left1" role="tab" data-toggle="tab">Contato</a></li>

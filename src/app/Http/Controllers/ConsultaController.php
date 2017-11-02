@@ -31,6 +31,7 @@ class ConsultaController extends Controller {
 
   public function __construct() {
       $this->middleware('auth');
+      $this->middleware('\qms\Http\Middleware\AutorizacaoMiddleware::class');
   }
 
   public function agendarConsulta(Request $request, $idPaciente = null) {
@@ -39,7 +40,7 @@ class ConsultaController extends Controller {
       $sucesso = $request->session()->get('sucesso');
       $idPaciente = $request->session()->get('idPaciente');
 
-      $paciente = Paciente::where('id', $idPaciente)->first();
+      $paciente = Paciente::where('id_paciente', $idPaciente)->first();
       $especialidades = Especialidade::all();
       return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades, 'sucesso' => $sucesso]);
     } else {
@@ -47,13 +48,13 @@ class ConsultaController extends Controller {
         $erro = $request->session()->get('erro');
         //return $erro;
         if ($idPaciente != null) {
-          $paciente = Paciente::where('id', $idPaciente)->first();
+          $paciente = Paciente::where('id_paciente', $idPaciente)->first();
           $especialidades = Especialidade::all();
           return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades, 'erro' => $erro]);
         }
       } else {
         if ($idPaciente != null) {
-          $paciente = Paciente::where('id', $idPaciente)->first();
+          $paciente = Paciente::where('id_paciente', $idPaciente)->first();
           $especialidades = Especialidade::all();
           return view('consulta.agendar-consulta', ['paciente' => $paciente, 'especialidades' => $especialidades]);
         } else {
@@ -67,7 +68,7 @@ class ConsultaController extends Controller {
   public function pacienteParaAgendarConsulta(Request $request) {
     //busca e mostra o paciente_id:
     $id_paciente = $request->input('paciente_id');
-    $paciente = Paciente::where('id', $id_paciente)->first();
+    $paciente = Paciente::where('id_paciente', $id_paciente)->first();
 
     $especialidades = Especialidade::all();
 
@@ -76,7 +77,7 @@ class ConsultaController extends Controller {
   }
 
   public function getMedicos($idEspecialidade) {
-    $especialidade = Especialidade::where('id', $idEspecialidade)->get()->first();
+    $especialidade = Especialidade::where('id_especialidade', $idEspecialidade)->get()->first();
     $medicos = $especialidade->medicos;
 
     return Response::json($medicos);
@@ -102,14 +103,14 @@ class ConsultaController extends Controller {
   }
 
   public function getVagas($idPeriodo) {
-    $vagas = Periodo::where('id', $idPeriodo)->get()->first();
+    $vagas = Periodo::where('id_periodo', $idPeriodo)->get()->first();
 
     return Response::json($vagas);
   }
 
   public function getLocal($idPeriodo) {
-    $vagas = Periodo::where('id', $idPeriodo)->get()->first();
-    $local = DB::table('locals')->where('id', '=', $vagas->local_id)
+    $vagas = Periodo::where('id_periodo', $idPeriodo)->get()->first();
+    $local = DB::table('locals')->where('id_local', '=', $vagas->local_id)
                                 ->get()->first();
 
     return Response::json($local);
@@ -142,17 +143,17 @@ class ConsultaController extends Controller {
               //erro consulta já foi agendada:
               return redirect('operador/agendar-consulta/'.$id_paciente)->with('erro', '2');
             } else {
-              $calendario = Calendario::where('id', $id_data_consulta)->get()->first();
-              $periodo = Periodo::where('id', $id_periodo)->get()->first();
+              $calendario = Calendario::where('id_calendario', $id_data_consulta)->get()->first();
+              $periodo = Periodo::where('id_periodo', $id_periodo)->get()->first();
 
               $consultaMesmoPeriodo = DB::table('consultas')
-                                        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-                                        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-                                        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
+                                        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                                        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                                        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
                                         ->select('consultas.*', 'periodos.*', 'pacientes.*')
                                         ->where('calendarios.data', '=', $calendario->data)
                                         ->where('periodos.nome', '=', $periodo->nome)
-                                        ->where('pacientes.id', '=', $id_paciente)
+                                        ->where('pacientes.id_paciente', '=', $id_paciente)
                                         ->where('consultas.system_status', '=', $this->ativado)
                                         ->first();
 
@@ -168,7 +169,7 @@ class ConsultaController extends Controller {
                 $consulta->medico_id = $id_medico;
                 $consulta->local_id = $id_local;
 
-                $periodo = Periodo::where('id', $id_periodo)->get()->first();
+                $periodo = Periodo::where('id_periodo', $id_periodo)->get()->first();
                 $vagas_atuais = $periodo->vagas_disponiveis;
                 if ($vagas_atuais > 0) {
                   $novo_numero_vagas = $vagas_atuais - 1;
@@ -205,7 +206,7 @@ class ConsultaController extends Controller {
                                                       ->where('consultas.system_status', '=', $this->ativado)
                                                       ->get()->first();
 
-                    return redirect()->action('ConsultaController@sucessoAgendamentoConsulta', $consultaSalva->id);
+                    return redirect()->action('ConsultaController@sucessoAgendamentoConsulta', $consultaSalva->id_consulta);
                   } else {
                     //erro ao agendar a consulta:
                     return redirect('operador/agendar-consulta/'.$id_paciente)->with('erro', '4');
@@ -266,11 +267,11 @@ class ConsultaController extends Controller {
       $falha = $request->session()->get('falha');
 
       $consultas = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
           ->where('consultas.system_status', '=', $this->ativado)
           ->orderBy('consultas.created_at', 'desc')
           ->paginate($this->totalPage);
@@ -283,11 +284,11 @@ class ConsultaController extends Controller {
       $sucesso = $request->session()->get('sucesso');
 
       $consultas = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
           ->where('consultas.system_status', '=', $this->ativado)
           ->orderBy('consultas.created_at', 'desc')
           ->paginate($this->totalPage);
@@ -303,11 +304,11 @@ class ConsultaController extends Controller {
       return view('consulta.listagem-consultas', ['consultas' => $consultas], ['especialidades' => $especialidades]);
     } else {
       $consultas = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
           ->where('consultas.system_status', '=', $this->ativado)
           ->orderBy('consultas.created_at', 'desc')
           ->paginate($this->totalPage);
@@ -333,12 +334,12 @@ class ConsultaController extends Controller {
 
   public function verConsulta(Request $request, $idConsulta) {
     $consulta = DB::table('consultas')
-        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-        ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-        ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-        ->join('locals', 'consultas.local_id', '=', 'locals.id')
+        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+        ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+        ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+        ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
         ->where('consultas.codigo_consulta', '=', $idConsulta)->get()->first();
     $request->session()->reflash();
     return view('consulta.ver-consulta', ['consulta' => $consulta]);
@@ -353,11 +354,11 @@ class ConsultaController extends Controller {
       $id_especialidade = $request->session()->get('id_especialidade');
       $id_medico = $request->session()->get('id_medico');
 
-      $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-                                         ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-                                         ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-                                         ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-                                         ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+      $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                                         ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                                         ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                                         ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                                         ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                          ->where('consultas.calendario_id', '=', $id_data_consulta)
                                          ->where('consultas.periodo_id', '=', $id_periodo)
                                          ->where('consultas.especialidade_id', '=', $id_especialidade)
@@ -373,11 +374,11 @@ class ConsultaController extends Controller {
     } else {
       if (isset($request->numero_cns)) {
         $numero_cns = $request->numero_cns;
-        $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-                                           ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-                                           ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-                                           ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-                                           ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+        $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                                           ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                                           ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                                           ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                                           ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                            ->where('pacientes.numero_cns', '=', $numero_cns)
                                            ->where('consultas.system_status', '=', $this->ativado)
                                            ->orderBy('calendarios.data', 'desc')
@@ -391,11 +392,11 @@ class ConsultaController extends Controller {
         if ($request->session()->has('numero_cns')) {
           $numero_cns = $request->session()->get('numero_cns');
 
-          $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-                                             ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-                                             ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-                                             ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-                                             ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                                             ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                                             ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                                             ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                                             ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                              ->where('pacientes.numero_cns', '=', $numero_cns)
                                              ->where('consultas.system_status', '=', $this->ativado)
                                              ->orderBy('calendarios.data', 'desc')
@@ -411,11 +412,11 @@ class ConsultaController extends Controller {
           $id_especialidade = $request->especialidade;
           $id_medico =  $request->medico;
 
-          $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-                                             ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-                                             ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-                                             ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-                                             ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
+          $consultas = DB::table('consultas')->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                                             ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                                             ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                                             ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                                             ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                              ->where('consultas.calendario_id', '=', $id_data_consulta)
                                              ->where('consultas.periodo_id', '=', $id_periodo)
                                              ->where('consultas.especialidade_id', '=', $id_especialidade)
@@ -441,12 +442,12 @@ class ConsultaController extends Controller {
   public function gerarPdf(Request $request, $codigo = null) {
     if ($codigo != null) {
       $consulta = DB::table('consultas')
-          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id')
-          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id')
-          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id')
-          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id')
-          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id')
-          ->join('locals', 'consultas.local_id', '=', 'locals.id')
+          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+          ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
           ->where('consultas.codigo_consulta', '=', $codigo)
           ->get()
           ->first();
@@ -469,7 +470,7 @@ class ConsultaController extends Controller {
 
      $consulta->system_status = $this->desativado;
 
-     $periodo = Periodo::where('id', $consulta->periodo_id)->first();
+     $periodo = Periodo::where('id_periodo', $consulta->periodo_id)->first();
      $vagas_atuais = $periodo->vagas_disponiveis;
      $total_consultas = $periodo->total_consultas;
 

@@ -61,14 +61,15 @@ $(document).ready(function () {
   })
 
   $('#form-change-password').submit(function() {
-    $('#icone-btn').removeClass('fa-check-circle');
-    $('#icone-btn').addClass('fa-spinner fa-spin');
-    $('#enviar').attr('disabled', 'disabled');
+    $('.loading').fadeOut(700).removeClass('hidden');
   });
 
   $('#form_login').submit(function() {
-    $('#icone_btn_login').addClass('fa fa-spinner fa-spin');
-    $('#btn_login').attr('disabled', 'disabled');
+    $('.loading').fadeOut(700).removeClass('hidden');
+  });
+
+  $('#cancel').click(function() {
+    $('.loading').fadeOut(700).removeClass('hidden');
   });
 
   // função para buscar os valores dos selected de medicos por especialidade:
@@ -79,7 +80,7 @@ $(document).ready(function () {
       $('#medico').empty();
       $('#medico').append('<option value="" disabled selected>Selecione...</option>');
       $.each(medicos, function (key, medico) {
-        $('#medico').append('<option value="'+medico.id+'">'+medico.nome_medico+'</option>');
+        $('#medico').append('<option value="'+medico.id_medico+'">'+medico.nome_medico+'</option>');
       });
       $('#medico').prop("disabled", false);
     });
@@ -101,7 +102,7 @@ $(document).ready(function () {
       $.each(calendarios, function (key, calendario) {
         //$('#data_consulta').append('<option value="'+calendario.id+'"> <?php date("d/m/Y", strtotime('+calendario.data+')) ?> </option>');
         var data = moment(calendario.data).format('DD/MM/YYYY');
-        $('#data_consulta').append('<option value="'+calendario.id+'"><time>'+data+'</time></option>');
+        $('#data_consulta').append('<option value="'+calendario.id_calendario+'"><time>'+data+'</time></option>');
       });
       $('#data_consulta').prop("disabled", false);
     });
@@ -117,7 +118,7 @@ $(document).ready(function () {
       $('#local_nome_fantasia').attr('value', '');
       $('#periodo').append('<option value="" disabled selected>Selecione...</option>');
       $.each(periodos, function (key, periodo) {
-        $('#periodo').append('<option value="'+periodo.id+'">'+periodo.nome+'</option>');
+        $('#periodo').append('<option value="'+periodo.id_periodo+'">'+periodo.nome+'</option>');
       });
       $('#periodo').prop("disabled", false);
     });
@@ -131,14 +132,14 @@ $(document).ready(function () {
     });
 
     $.get('/operador/local/'+idPeriodo, function (local) {
-      $('#local_id').attr('value', local.id);
+      $('#local_id').attr('value', local.id_local);
       $('#local_nome_fantasia').attr('value', local.nome_fantasia);
     });
   });
 
 // DIV loading no carregamento da pagina:
   $('.loading').fadeOut(700).addClass('hidden');
-  
+
 
   $('#search_type').change(function () {
     var option = $(this).val();

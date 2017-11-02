@@ -113,13 +113,13 @@
 												<td>{{ $paciente->nome_mae }}</td>
 												<td width="30">
 													<div class="col-md-12">
-													<a href="/operador/ver-paciente/{{ $paciente->id }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
+													<a href="/operador/ver-paciente/{{ $paciente->id_paciente }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
 													</div>
 													<span class="col-md-1"></span>
 													<div class="col-md-12">
 														<form class="" action="{{ action('ConsultaController@pacienteParaAgendarConsulta') }}" method="post" id="form-para-agendar-consulta">
 															{{ csrf_field() }}
-															<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
+															<input type="hidden" name="paciente_id" value="{{ $paciente->id_paciente }}">
 															<button type="submit" class="btn btn-success btn-xs btn-block" id="btn-agendar"><i id="icone-btn-agendar" class="fa fa-calendar"></i>  Agendar consulta </button>
 														</form>
 												</td>

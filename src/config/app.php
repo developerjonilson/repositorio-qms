@@ -177,6 +177,7 @@ return [
         qms\Providers\EventServiceProvider::class,
         qms\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 

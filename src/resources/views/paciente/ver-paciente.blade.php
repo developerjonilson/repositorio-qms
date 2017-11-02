@@ -135,7 +135,7 @@
 								<div class="col-md-3">
 									<form class="" action="{{ action('ConsultaController@pacienteParaAgendarConsulta') }}" method="post" id="form-para-agendar-consulta">
 										{{ csrf_field() }}
-										<input type="hidden" name="paciente_id" id="paciente_id" value="{{ $paciente->id }}">
+										<input type="hidden" name="paciente_id" id="paciente_id" value="{{ $paciente->id_paciente }}">
 										<button type="submit" class="btn btn-success btn-block" id="btn-agendar"><i id="icone-btn-agendar" class="fa fa-calendar"></i>  Agendar consulta </button>
 									</form>
 								</div>
@@ -143,7 +143,7 @@
 								<div class="col-md-4">
 									<form class="" action="{{ action('PacienteController@pacienteParaAlterarPost') }}" method="post" id="form-para-alterar-paciente">
 										{{ csrf_field() }}
-										<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
+										<input type="hidden" name="paciente_id" value="{{ $paciente->id_paciente }}">
 										<button type="submit" class="btn btn-warning btn-block" id="btn-aterar"><i id="icone-btn-alterar" class="fa fa-pencil-square-o"></i>  Alterar Informações do Paciente</button>
 									</form>
 								</div>

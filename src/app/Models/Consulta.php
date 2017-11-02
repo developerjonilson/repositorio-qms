@@ -12,6 +12,10 @@ use \qms\Models\Local;
 
 class Consulta extends Model
 {
+  protected $table = 'consultas';
+
+  protected $primaryKey = 'id_consulta';
+
   protected $fillable = [
     'codigo_consulta', 'calendario_id', 'periodo_id', 'paciente_id',
     'especilidade_id', 'medico_id',  'local_id',

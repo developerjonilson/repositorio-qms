@@ -28,23 +28,10 @@ class LoginController extends Controller
           return '/administrador';
         } else {
           //aqui é pra redirecionar para atendente index:
-          return '/administrador';
+          return '/atendente';
         }
       }
     }
-
-    // protected function redirectTo() {
-    //   if (strcmp(\Auth::user()->tipo, 'operador') == 0) {
-    //     return '/operador';
-    //   } else {
-    //     if (strcmp(\Auth::user()->tipo, 'administrador') == 0) {
-    //       return '/administrador';
-    //     } else {
-    //       //aqui é pra redirecionar para atendente index:
-    //       return '/administrador';
-    //     }
-    //   }
-    // }
 
     /**
      * Create a new controller instance.

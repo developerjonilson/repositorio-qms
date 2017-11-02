@@ -59,7 +59,7 @@
 												<select class="form-control" name="especialidade" id="especialidade">
 													<option value="" disabled selected>Selecione...</option>
 													@foreach ($especialidades as $especialidade)
-														<option value="{{$especialidade->id}}"> {{$especialidade->nome_especialidade}} </option>
+														<option value="{{$especialidade->id_especialidade}}"> {{$especialidade->nome_especialidade}} </option>
 													@endforeach
 												</select>
 											</div>

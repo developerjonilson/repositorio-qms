@@ -14,11 +14,11 @@ class CreateEspecialidadeMedicoTable extends Migration
     public function up()
     {
       Schema::create('especialidade_medico', function (Blueprint $table) {
-          $table->increments('id');
-          $table->integer('especialidade_id')->unsigned();
-          $table->foreign('especialidade_id')->references('id')->on('especialidades')->onDelete('cascade');
-          $table->integer('medico_id')->unsigned();
-          $table->foreign('medico_id')->references('id')->on('medicos')->onDelete('cascade');
+          $table->increments('id_especialidade_medico');
+          $table->integer('id_especialidade')->unsigned();
+          $table->foreign('id_especialidade')->references('id_especialidade')->on('especialidades')->onDelete('cascade');
+          $table->integer('id_medico')->unsigned();
+          $table->foreign('id_medico')->references('id_medico')->on('medicos')->onDelete('cascade');
       });
     }
 

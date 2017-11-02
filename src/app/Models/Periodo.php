@@ -11,6 +11,8 @@ class Periodo extends Model
 {
   protected $table = 'periodos';
 
+  protected $primaryKey = 'id_periodo';
+
   protected $fillable = [
       'nome', 'total_consultas', 'vagas_disponiveis', 'calendario_id', 'local_id',
   ];

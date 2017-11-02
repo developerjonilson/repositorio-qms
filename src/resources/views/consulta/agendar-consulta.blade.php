@@ -86,7 +86,7 @@
 					<div class="panel-body">
 						<form class="" action="{{ action('ConsultaController@agendandoConsulta') }}" method="post" id="form-agendar-consulta" name="form-agendar-consulta">
 							{{ csrf_field() }}
-							<input type="hidden" name="paciente_id" value="{{ $paciente->id }}">
+							<input type="hidden" name="paciente_id" value="{{ $paciente->id_paciente }}">
 							<div class="row">
 								<hr>
 							</div>
@@ -96,7 +96,7 @@
 									<select class="form-control" name="especialidade" id="especialidade">
 										<option value="" disabled selected>Selecione...</option>
 										@foreach ($especialidades as $especialidade)
-											<option value="{{ $especialidade->id }}">{{ $especialidade->nome_especialidade }}</option>
+											<option value="{{ $especialidade->id_especialidade }}">{{ $especialidade->nome_especialidade }}</option>
 										@endforeach
 									</select>
 								</div>
@@ -158,7 +158,7 @@
 
 							<form class="" action="{{ action('ConsultaController@agendandoConsulta') }}" method="post" id="form-agendar-consulta" name="form-agendar-consulta">
 								{{ csrf_field() }}
-								<input type="hidden" name="paciente_id" value="{{ Session::get('paciente')->id }}">
+								<input type="hidden" name="paciente_id" value="{{ Session::get('paciente')->id_paciente }}">
 								<div class="row">
 									<hr>
 								</div>
@@ -168,7 +168,7 @@
 										<select class="form-control" name="especialidade" id="especialidade">
 											<option value="" disabled selected>Selecione...</option>
 											@foreach (session('especialidades') as $especialidade)
-												<option value="{{ $especialidade->id }}">{{ $especialidade->nome_especialidade }}</option>
+												<option value="{{ $especialidade->id_especialidade }}">{{ $especialidade->nome_especialidade }}</option>
 											@endforeach
 										</select>
 									</div>
