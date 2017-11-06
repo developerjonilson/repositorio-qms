@@ -587,6 +587,10 @@ class AdministradorController extends Controller {
     return view('administrador.cadastrar-horario');
   }
 
+  public function calendarioAtendimento() {
+    return view('administrador.medico.calendario');
+  }
+
   public function manualAdministrador() {
     return view('administrador.manual-administrador');
   }

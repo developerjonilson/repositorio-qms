@@ -22,6 +22,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 
 	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
+	<link href="/css/calendar/fullcalendar.min.css" rel="stylesheet">
+
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.png">
@@ -149,6 +151,9 @@
 	<script src="/scripts/script.js"></script>
 	<script src="/scripts/datatables/jquery.dataTables.min.js"></script>
 	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
+	<script src="/scripts/calendar/fullcalendar.min.js"></script>
+	<script src="/scripts/calendar/pt-br.js"></script>
+
 
 	@yield('pos-script')
 

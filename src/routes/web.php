@@ -32,11 +32,14 @@ Route::get('/administrador/atendentes', 'AdministradorController@atendentes')->n
 Route::get('/administrador/administradores', 'AdministradorController@administradores')->name('administrador.administradores');
 Route::get('/administrador/medicos', 'AdministradorController@medicos');
 
+Route::get('/administrador/cadastrar-horario', 'AdministradorController@cadastrarHorario');
 Route::get('/administrador/cadastrar-medico', 'AdministradorController@cadastrarMedico');
 Route::get('/administrador/alterar-medico', 'AdministradorController@alterarMedico');
 Route::get('/administrador/remover-operador', 'AdministradorController@removerOperador');
 Route::get('/administrador/remover-medico', 'AdministradorController@removerMedico');
-Route::get('/administrador/cadastrar-horario', 'AdministradorController@cadastrarHorario');
+
+//rotas do calendario de atendimento medico:
+Route::get('/administrador/calendario-atendimento', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
 
 
 
