@@ -17,6 +17,8 @@ use \qms\Models\Paciente;
 use \qms\Models\Especialidade;
 use \qms\Models\Medico;
 use \qms\Models\Consulta;
+use \qms\Models\Periodo;
+use \qms\Models\Calendario;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
@@ -587,7 +589,26 @@ class AdministradorController extends Controller {
     return view('administrador.cadastrar-horario');
   }
 
-  public function calendarioAtendimento() {
+  public function calendarioAtendimento($medico_id) {
+    $medico = Medico::find($medico_id);
+
+    return view('administrador.medico.calendario', compact('medico'));
+  }
+
+  public function verCalendarioAtendimento($medico_id) {
+    $data = DB::table('periodos')
+        ->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
+        ->join('locals', 'periodos.local_id', '=', 'locals.id_local')
+        ->join('medicos', 'calendarios.medico_id', '=', 'medicos.id_medico')
+        ->join('especialidades', 'calendarios.especialidade_id', '=', 'especialidades.id_especialidade')
+        ->select('periodos.*', 'calendarios.*', 'locals.*', 'medicos.*', 'especialidades.*')
+        ->where('calendarios.medico_id', '=', $medico_id)
+        ->get();
+
+    return Response()->json($data);
+  }
+
+  public function calendarioCadastrar() {
     return view('administrador.medico.calendario');
   }
 

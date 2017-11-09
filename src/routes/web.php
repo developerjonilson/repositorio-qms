@@ -39,7 +39,10 @@ Route::get('/administrador/remover-operador', 'AdministradorController@removerOp
 Route::get('/administrador/remover-medico', 'AdministradorController@removerMedico');
 
 //rotas do calendario de atendimento medico:
-Route::get('/administrador/calendario-atendimento', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
+// Route::get('/administrador/calendario-atendimento', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
+Route::get('/administrador/calendario-atendimento/{medico_id}', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
+Route::get('/administrador/calendario-atendimento/ver/{medico_id}', 'AdministradorController@verCalendarioAtendimento')->name('administrador.calendario.ver');
+Route::get('/administrador/calendario-atendimento/cadastrar', 'AdministradorController@calendarioCadastrar')->name('administrador.calendario.cadastrar');
 
 
 
