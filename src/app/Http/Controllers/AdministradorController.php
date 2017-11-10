@@ -558,13 +558,13 @@ class AdministradorController extends Controller {
   public function medicos(Request $request) {
     if ($request->session()->has('erro')) {
       $erro = $request->session()->get('erro');
-      return view('administrador.operador.operadores', compact('erro'));
+      return view('administrador.medico.medicos', compact('erro'));
     } else {
       if ($request->session()->has('sucesso')) {
         $sucesso = $request->session()->get('sucesso');
-        return view('administrador.operador.operadores', compact('sucesso'));
+        return view('administrador.medico.medicos', compact('sucesso'));
       } else {
-        return view('administrador.operador.operadores');
+        return view('administrador.medico.medicos');
       }
     }
   }

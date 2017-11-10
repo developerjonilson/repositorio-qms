@@ -11,6 +11,8 @@
 
   <div class="panel panel-headline">
 		<div class="panel-heading">
+      <a href="{{ route('administrador.medicos') }}" class="btn btn-info"><i class="fa fa-reply"></i>  Voltar</a>
+      <hr>
 			<h3 class="panel-title">Calendário de Atendimento Médico</h3>
       <hr>
       <div class="row">
@@ -83,15 +85,15 @@ $(document).ready(function() {
   // let dataHoje = moment().format("YYYY-MM-DD");
   // alert(dataHoje);
   let path = window.location.pathname.split('/')
-  let medico_id = path[3]
-  let path_calendar = '/administrador/calendario-atendimento/ver/'
+  let medico_id = path[4]
+  let path_calendar = '/administrador/medicos/calendario-atendimento/ver/'
 
   $('#calendar').fullCalendar({
-    // header: {
-    //   left: 'prev,next today',
-    //   center: 'title',
-    //   right: 'month,basicWeek,basicDay'
-    // },
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,basicWeek,basicDay'
+    },
 
     // defaultDate: '2017-10-12',
     // defaultDate: dataHoje,
@@ -104,14 +106,25 @@ $(document).ready(function() {
     selectHelper: true,
     events: path_calendar + medico_id
 
+    // events: [
+    //   {
+    //     title: 'All Day Event',
+    //     start: '2017-11-09',
+    //     description: 'long description3 ---2313213231231231231231231231231231232131232113',
+    //   }
+    // ],
+    // eventRender: function(event, element) {
+    //   element.find('.fc-title').append("<br/>" + event.description);
+    // }
+
     // eventSources: [
     //     {
     //       url: path_calendar + medico_id,
     //       type: 'GET',
-    //       // data: {
-    //       //     custom_param1: 'something',
-    //       //     custom_param2: 'somethingelse'
-    //       // },
+    //       data: {
+    //         // custom_param1: 'something',
+    //         title: 'nome'
+    //       },
     //       error: function() {
     //           alert('there was an error while fetching events!');
     //       },
