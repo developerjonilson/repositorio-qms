@@ -11,21 +11,21 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 
 ### Geral
 - [x] [Inteface Gráfica dos Usuários tipo **_Operador_** e **_Administrador_**](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/1-interfaces.md)
-- [ ] [Login no sistema](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/2-login.md)
+- [x] [Login no sistema](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/2-login.md)
 
 
 ### Módulo Operador
-- [ ] Alteração de Senha Padrão no Primeiro Login realizado
-- [ ] Perfil Usuário
-- [ ] Alteração de Perfil Usuário
-- [ ] Alteração de Senha de Usuário
+- [x] Alteração de Senha Padrão no Primeiro Login realizado
+- [x] Perfil Usuário
+- [x] Alteração de Perfil Usuário
+- [x] Alteração de Senha de Usuário
 
-- [ ] Cadastrar Pacientes
-- [ ] Pesquisar Pacientes
-- [ ] Alterar registros de pacientes
-- [ ] Agendar consultas
-- [ ] Alterar consultas agendadas
-- [ ] Pesquisar Consultas
+- [x] Cadastrar Pacientes
+- [x] Pesquisar Pacientes
+- [x] Alterar registros de pacientes
+- [x] Agendar consultas
+- [x] Alterar consultas agendadas
+- [x] Pesquisar Consultas
 
 - [ ] Gerar relatório diário de consultas agendas
 - [ ] Gerar relatório mensal de consultas agendas
@@ -33,17 +33,17 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 
 
 ### Módulo Administrador
-- [ ] Alteração de Senha Padrão no Primeiro Login realizado
-- [ ] Perfil Usuário
-- [ ] Alteração de Perfil Usuário
-- [ ] Alteração de Senha de Usuário
+- [x] Alteração de Senha Padrão no Primeiro Login realizado
+- [x] Perfil Usuário
+- [x] Alteração de Perfil Usuário
+- [x] Alteração de Senha de Usuário
 
-- [ ] Cadastrar novos administradores
+- [x] Cadastrar novos administradores
 
 - [ ] Cadastrar Médicos
 - [ ] Alterar registros de médicos
 - [ ] Cadastrar horários médicos
 
-- [ ] Cadastrar Operadores
-- [ ] Alterar Operadores
-- [ ] Excluir Operadores
+- [x] Cadastrar Operadores
+- [x] Alterar Operadores
+- [x] Excluir Operadores
