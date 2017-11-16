@@ -406,59 +406,6 @@ $(document).ready(function(){
         },
     });
 
-
-
-  $("#cadastrar_atendimento").validate({
-        ignore: [ '' ],
-        rules: {
-          especialidade: {
-            required: true
-          },
-          start: {
-            required: true
-          },
-          periodo: {
-            required: true,
-          },
-          total_consultas: {
-            required: true,
-            min: 1
-          },
-          local: {
-            required: true
-          },
-        },
-        messages: {
-            especialidade: {
-              required: "Esse campo não pode ficar vazio!",
-            },
-            start: {
-              required: "Você tem que informar uma data!",
-            },
-            periodo: {
-              required: "Esse campo não pode ficar vazio!",
-            },
-            total_consultas: {
-              required: "Esse campo não pode ficar vazio!",
-              min: "Informe um número maior que 0 (Zero)!"
-            },
-            local: {
-              required: "Esse campo não pode ficar vazio!",
-            },
-        },
-
-      submitHandler: postFormCreateAtendimento,
-    }
-  );
-
-  function postFormCreateAtendimento(form) {
-    $('.loading').fadeIn('fast').removeClass('hidden');
-
-    form.submit();
-  };
-
-  // $.validator.setDefaults({ ignore: '' });
-
 });
 
 

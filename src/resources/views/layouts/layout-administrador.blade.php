@@ -13,17 +13,17 @@
 	<link rel="stylesheet" href="/vend/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/vend/linearicons/style.css">
 	<link rel="stylesheet" href="/vend/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="/vend/toastr/toastr.min.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/css/my-style.css">
-	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-	<link rel="stylesheet" href="/css/demo.css">
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 
 	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
 	<link href="/css/calendar/fullcalendar.min.css" rel="stylesheet">
-	<link href="/css/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/sweetalert2.min.css">
+
 
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
@@ -139,8 +139,9 @@
 	<script src="/vend/jquery/jquery.min.js"></script>
 	<script src="/vend/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/vend/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-	<script src="/vend/chartist/js/chartist.min.js"></script>
+	<script src="/vend/toastr/toastr.min.js"></script>
+	{{-- <script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="/vend/chartist/js/chartist.min.js"></script> --}}
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
@@ -154,8 +155,7 @@
 	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
 	<script src="/scripts/calendar/fullcalendar.min.js"></script>
 	<script src="/scripts/calendar/pt-br.js"></script>
-	<script src="/scripts/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-	<script src="/scripts/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="/scripts/sweetalert2.min.js"></script>
 
 	@yield('pos-script')
 

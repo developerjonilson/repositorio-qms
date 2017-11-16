@@ -47,11 +47,17 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close btn_cancel" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Cadastrar Novo Atendimento</h4>
           </div>
           <div class="modal-body">
             <input type="hidden" name="medico_id" id="medico_id" value="{{ $medico->id_medico }}">
+            <div class="row">
+              <div class="col-md-12">
+                <p><span class="vermelho">Campos Obrigatórios (*)</span></p>
+              </div>
+            </div>
+            <hr>
             <div class="row">
               <div class="form-group col-md-2">
                 <label for="numero_crm">Número CRM</label>
@@ -64,8 +70,8 @@
             </div>
             <div class="row">
               <div class="form-group col-md-12">
-                <label for="nome_especialidade">Especialidade</label>
-                <select class="form-control" name="especialidade" id="especialidade">
+                <label for="nome_especialidade">Especialidade<span class="vermelho">*</span></label>
+                <select class="form-control" name="especialidade" id="especialidade" required>
                   <option value="" disabled selected>Selecione...</option>
                   @foreach ($especialidades as $especialidade)
                     <option value="{{ $especialidade->id_especialidade }}">{{ $especialidade->nome_especialidade }}</option>
@@ -78,62 +84,42 @@
               <div class="col-md-12">
                 <table class="table table-bordered table-hover" id="dynamic_fields">
                   <thead>
-                    <td><b>Data do Atendimento</b></td>
-                    <td><b>Período do Atendimento</b></td>
+                    <td><b>Data do Atendimento<span class="vermelho">*</span></b></td>
+                    <td><b>Período do Atendimento<span class="vermelho">*</span></b></td>
+                    <td><b>Total de Pacientes<span class="vermelho">*</span></b></td>
                     <td><b>Ações</b></td>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><input type="date" class="form-control start" value="" name="start[]"></td>
                       <td>
-                        <select class="form-control" name="periodo" id="periodo">
-                        <option value="" disabled selected>Selecione...</option>
-                        <option value="Manhã">Manhã</option>
-                        <option value="Tarde">Tarde</option>
-                        <option value="Noite">Noite</option>
-                      </select>
-                    </td>
-                      <td><button type="button" class="btn btn-success" name="add" id="add">Adicionar Mais</button></td>
+                        <input type="date" class="form-control start" value="" name="start[]" min="{{ date('Y-m-d') }}" required>
+                      </td>
+                      <td>
+                        <select class="form-control" name="periodo[]" id="periodo" required>
+                          <option value="" disabled selected>Selecione...</option>
+                          <option value="Manhã">Manhã</option>
+                          <option value="Tarde">Tarde</option>
+                          <option value="Noite">Noite</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="number" name="total_consultas[]" id="total_consultas" value="{{ old('total_consultas') }}" class="form-control" min="1" required>
+                      </td>
+                      <td><button type="button" class="btn btn-success" name="add" id="add"><i class="fa fa-plus"></i>   Adicionar</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              {{-- <div class="col-md-5">
-                <label for="start">Data do Atendimento</label>
-                <div class="input-group date">
-                  <input type="text" id="start" name="start" class="form-control">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                </div>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="periodo">Periodo de Atendimento</label>
-                <select class="form-control" name="periodo" id="periodo">
-                  <option value="" disabled selected>Selecione...</option>
-                  <option value="Manhã">Manhã</option>
-                  <option value="Tarde">Tarde</option>
-                  <option value="Noite">Noite</option>
-                </select>
-              </div>
-              <div class="col-md-2">
-                <label>Mais</label>
-                <button type="button" class="btn btn-primary" title="Adicionar mais um atendimento" id="novo_atendimento"><i class="fa fa-plus"></i>  Adicionar Atedimento</button>
-              </div> --}}
             </div>
+
             <div class="row" id="new_fields">
 
             </div>
             <hr>
             <div class="row">
               <div class="form-group col-md-12">
-                <label for="total_consultas">Número de Pacientes a serem atendidos</label>
-                <input type="number" name="total_consultas" id="total_consultas" value="{{ old('total_consultas') }}" class="form-control">
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="form-group col-md-12">
-                <label for="local">Local</label>
-                <select class="form-control" name="local" id="local">
+                <label for="local">Local<span class="vermelho">*</span></label>
+                <select class="form-control" name="local" id="local" required>
                   <option value="" disabled selected>Selecione...</option>
                   @foreach ($locals as $local)
                     <option value="{{ $local->id_local }}">{{ $local->numero_cnes }} - {{ $local->nome_fantasia }}</option>
@@ -144,7 +130,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success" id="enviar"><i class="fa fa-check-circle"></i>  Cadastrar</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal" id=""><i class="fa fa-times-circle"></i>  Cancelar</button>
+            <button type="button" class="btn btn-danger btn_cancel" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Cancelar</button>
           </div>
         </div>
       </div>
@@ -177,42 +163,38 @@ $(document).ready(function() {
     events: path_calendar + medico_id
   });
 
-  $('.start').datepicker({
-    format: 'yyyy-mm-dd',
-    orientation: "bottom right",
-    startDate: '-0d',
-    language: 'pt-BR',
-    daysOfWeekHighlighted: "0",
-    daysOfWeekDisabled: "0",
-    todayHighlight: true,
-  });
-
-  $('#datepicker').on('changeDate', function() {
-    $('#start').val(
-        $('#datepicker').datepicker('getFormattedDate')
-    );
-});
-
 //adicionar campos com data e periodo:
-  var i = 1;
-  var max = 10;
+  var i = 0;
+  var max = 9;
 
   $('#add').click(function () {
-    if (i <= max) {
+    if (i < max) {
       i++;
       $('#dynamic_fields').append(
         '<tr id="row'+i+'">'+
-        '<td><input type="date" class="form-control start" value="" name="start['+i+']"></td>'+
         '<td>'+
-          '<select class="form-control" name="periodo" id="periodo">'+
+          '<input type="date" class="form-control start" value="" name="start['+i+']" min="{{ date('Y-m-d') }}" required>'+
+        '</td>'+
+        '<td>'+
+          '<select class="form-control" name="periodo['+i+']" id="periodo" required>'+
             '<option value="" disabled selected>Selecione...</option>'+
             '<option value="Manhã">Manhã</option>'+
             '<option value="Tarde">Tarde</option>'+
             '<option value="Noite">Noite</option>'+
           '</select>'+
         '</td>'+
-        '<td><button type="button" class="btn btn-danger btn_remove" name="remove" id="'+i+'">Remove</button></td>'+
+        '<td>'+
+          '<input type="number" name="total_consultas['+i+']" id="total_consultas" value="{{ old('total_consultas') }}" class="form-control"  min="1" required>'+
+        '</td>'+
+        '<td><button type="button" class="btn btn-danger btn_remove" name="remove" id="'+i+'"><i class="fa fa-minus"></i>   Remove</button></td>'+
       '</tr>');
+    } else {
+      swal({
+        title: 'Erro!',
+        text: 'Você só pode cadastrar até 10 atendimentos por vez!',
+        type: 'error',
+        confirmButtonText: 'Ok. Já entendi...'
+      });
     }
   });
 
@@ -221,20 +203,24 @@ $(document).ready(function() {
     $('#row'+button_id+'').remove();
   });
 
-  $(function(){
-    var dtToday = new Date();
 
-    var month = dtToday.getMonth() + 1;
-    var day = dtToday.getDate();
-    var year = dtToday.getFullYear();
-    if(month < 10)
-        month = '0' + month.toString();
-    if(day < 10)
-        day = '0' + day.toString();
+  $('.btn_cancel').click(function () {
+    for (var num = 0; num < 9; i++) {
+      $('#row'+num+'').remove();
+    }
+    // $('#row1').remove();
+    // $('#row2').remove();
+    // $('#row3').remove();
+    // $('#row4').remove();
+    // $('#row5').remove();
+    // $('#row6').remove();
+    // $('#row7').remove();
+    // $('#row8').remove();
+    // $('#row9').remove();
+    i = 0;
+    $('#cadastrar_atendimento')[0].reset();
+  });
 
-    var maxDate = year + '-' + month + '-' + day;
-    $('.start').attr('min', maxDate);
-});
 
 });
 </script>
