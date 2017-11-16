@@ -190,9 +190,9 @@ $(document).ready(function() {
       '</tr>');
     } else {
       swal({
-        title: 'Erro!',
-        text: 'Você só pode cadastrar até 10 atendimentos por vez!',
-        type: 'error',
+        title: 'Desculpe!',
+        text: 'Mas você só pode cadastrar até 10 atendimentos por vez!',
+        type: 'info',
         confirmButtonText: 'Ok. Já entendi...'
       });
     }
@@ -205,23 +205,11 @@ $(document).ready(function() {
 
 
   $('.btn_cancel').click(function () {
-    // for (var num = 0; num < 9; i++) {
-    //   $('#row'+num+'').remove();
-    // }
     var num = 0;
     while (num <= 9) {
       $('#row'+num+'').remove();
       num++;
     }
-    // $('#row1').remove();
-    // $('#row2').remove();
-    // $('#row3').remove();
-    // $('#row4').remove();
-    // $('#row5').remove();
-    // $('#row6').remove();
-    // $('#row7').remove();
-    // $('#row8').remove();
-    // $('#row9').remove();
     i = 0;
     $('#cadastrar_atendimento')[0].reset();
   });
