@@ -205,8 +205,13 @@ $(document).ready(function() {
 
 
   $('.btn_cancel').click(function () {
-    for (var num = 0; num < 9; i++) {
+    // for (var num = 0; num < 9; i++) {
+    //   $('#row'+num+'').remove();
+    // }
+    var num = 0;
+    while (num <= 9) {
       $('#row'+num+'').remove();
+      num++;
     }
     // $('#row1').remove();
     // $('#row2').remove();
