@@ -19,6 +19,7 @@ use \qms\Models\Medico;
 use \qms\Models\Consulta;
 use \qms\Models\Periodo;
 use \qms\Models\Calendario;
+use \qms\Models\Local;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
@@ -591,8 +592,10 @@ class AdministradorController extends Controller {
 
   public function calendarioAtendimento($medico_id) {
     $medico = Medico::find($medico_id);
+    $locals = Local::all();
+    $especialidades = $medico->especialidades;
 
-    return view('administrador.medico.calendario', compact('medico'));
+    return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
   }
 
   public function verCalendarioAtendimento($medico_id) {
@@ -608,7 +611,10 @@ class AdministradorController extends Controller {
     return Response()->json($data);
   }
 
-  public function calendarioCadastrar() {
+  public function calendarioCadastrar(Request $request) {
+    dd($request->all());
+
+
     return view('administrador.medico.calendario');
   }
 

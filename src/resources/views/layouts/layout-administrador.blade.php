@@ -23,8 +23,7 @@
 
 	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
 	<link href="/css/calendar/fullcalendar.min.css" rel="stylesheet">
-	<link href="/css/bootstrap-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
-	<link href="/css/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
 
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
@@ -155,8 +154,8 @@
 	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
 	<script src="/scripts/calendar/fullcalendar.min.js"></script>
 	<script src="/scripts/calendar/pt-br.js"></script>
-	<script src="/css/bootstrap-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-	<script src="/css/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+	<script src="/scripts/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="/scripts/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js"></script>
 
 	@yield('pos-script')
 
