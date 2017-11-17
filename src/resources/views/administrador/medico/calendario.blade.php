@@ -224,6 +224,10 @@ $(document).ready(function() {
     $('#cadastrar_atendimento')[0].reset();
   });
 
+  $('#cadastrar_atendimento').submit(function () {
+    $('.loading').fadeOut(700).removeClass('hidden');
+  });
+
   @isset($erro)
     $('#model_new_atendimento').modal('show');
   @endisset

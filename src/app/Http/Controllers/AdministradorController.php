@@ -634,6 +634,9 @@ class AdministradorController extends Controller {
         return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
     } else {
       # aqui é pra ter o codigo para salvar no banco de dados!
+      return 'Deu certo!';
+
+      
     }
 
   }
