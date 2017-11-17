@@ -590,12 +590,18 @@ class AdministradorController extends Controller {
     return view('administrador.cadastrar-horario');
   }
 
-  public function calendarioAtendimento($medico_id) {
+  public function calendarioAtendimento(Request $request, $medico_id) {
     $medico = Medico::find($medico_id);
     $locals = Local::all();
     $especialidades = $medico->especialidades;
 
-    return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro'));
+    } else {
+      return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
+    }
+    // return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
   }
 
   public function verCalendarioAtendimento($medico_id) {
@@ -612,10 +618,24 @@ class AdministradorController extends Controller {
   }
 
   public function calendarioCadastrar(Request $request) {
-    dd($request->all());
+    // dd($request->all());
+    $id_medico = $request->medico_id;
+    $id_especialidade = $request->especialidade;
+    $id_local = $request->local;
 
+    $datas_start = $request->start;
+    $periodos  = $request->periodo;
+    $total_consultas = $request->total_consultas;
 
-    return view('administrador.medico.calendario');
+    if ($id_medico == null || $id_especialidade == null || $id_local == null ||
+        count($datas_start) == 0 || count($periodos) == 0 || count($total_consultas) == 0) {
+
+        $request->session()->flash('erro', 'Por favor, preencha todos os campos obrigatórios!');
+        return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+    } else {
+      # aqui é pra ter o codigo para salvar no banco de dados!
+    }
+
   }
 
   public function manualAdministrador() {

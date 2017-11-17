@@ -29,7 +29,7 @@
 		<div class="panel-body">
 			<div class="row">
         <hr>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_atendimento">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model_new_atendimento">
           <i class="fa fa-plus-square-o"></i> Adicionar Atendimento
         </button>
         <hr>
@@ -43,7 +43,7 @@
 
   <form class="" action="{{ route('administrador.calendario.cadastrar') }}" method="post" id="cadastrar_atendimento" name="cadastrar_atendimento">
     {{ csrf_field() }}
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"  id="new_atendimento" data-backdrop="static">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"  id="model_new_atendimento" data-backdrop="static">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -55,6 +55,16 @@
             <div class="row">
               <div class="col-md-12">
                 <p><span class="vermelho">Campos Obrigatórios (*)</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                @isset($erro)
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-times-circle"></i> {{ $erro }}
+                  </div>
+                @endisset
               </div>
             </div>
             <hr>
@@ -105,15 +115,11 @@
                       <td>
                         <input type="number" name="total_consultas[]" id="total_consultas" value="{{ old('total_consultas') }}" class="form-control" min="1" required>
                       </td>
-                      <td><button type="button" class="btn btn-success" name="add" id="add"><i class="fa fa-plus"></i>   Adicionar</button></td>
+                      <td><button type="button" class="btn btn-primary" name="add" id="add"><i class="fa fa-plus"></i>   Adicionar</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </div>
-
-            <div class="row" id="new_fields">
-
             </div>
             <hr>
             <div class="row">
@@ -169,6 +175,9 @@ $(document).ready(function() {
 
   $('#add').click(function () {
     if (i < max) {
+      // var button_remove_id = i;
+      // $('.btn_remove#'+button_remove_id+'').remove();
+
       i++;
       $('#dynamic_fields').append(
         '<tr id="row'+i+'">'+
@@ -201,6 +210,7 @@ $(document).ready(function() {
   $(document).on('click', '.btn_remove', function () {
     var button_id = $(this).attr('id');
     $('#row'+button_id+'').remove();
+    i--;
   });
 
 
@@ -214,6 +224,9 @@ $(document).ready(function() {
     $('#cadastrar_atendimento')[0].reset();
   });
 
+  @isset($erro)
+    $('#model_new_atendimento').modal('show');
+  @endisset
 
 });
 </script>
