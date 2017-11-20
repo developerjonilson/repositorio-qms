@@ -264,7 +264,7 @@ $(document).ready(function() {
 
 //adicionar campos com data e periodo:
   var i = 0;
-  var max = 9;
+  var max = 14;
   var num_one = 1;
 
   $('#add').click(function () {
@@ -297,7 +297,7 @@ $(document).ready(function() {
     } else {
       swal({
         title: 'Desculpe!',
-        text: 'Mas você só pode cadastrar até 10 atendimentos por vez!',
+        text: 'Mas você só pode cadastrar até 15 atendimentos por vez!',
         type: 'info',
         confirmButtonText: 'Ok. Já entendi...'
       });
@@ -345,6 +345,7 @@ $(document).ready(function() {
       cancelButtonText: 'Cancelar'
     }).then(function (result) {
       if (result.value) {
+        $('.loading').fadeOut(700).removeClass('hidden');
 
         $.post("{{ route('administrador.calendario.excluir') }}",
         {
@@ -353,6 +354,7 @@ $(document).ready(function() {
         },
         function(result) {
           if (result.menssage === 'error') {
+            $('.loading').fadeOut(700).addClass('hidden');
             swal({
               title: 'Erro!',
               text: 'Ocorreu um erro ao excluir o atendimento!',
@@ -361,23 +363,18 @@ $(document).ready(function() {
             });
           }
           if (result.menssage === 'success') {
+            $('.loading').fadeOut(700).addClass('hidden');
             swal(
               'Excluído!',
               'O atendimento foi excluído com sucesso.',
               'success'
             ).then(function (result) {
+              $('.loading').fadeOut(700).removeClass('hidden');
               location.reload(true)
             })
           }
         }, "json");
 
-        // swal(
-        //   'Excluído!',
-        //   'O atendimento foi excluído com sucesso.',
-        //   'success'
-        // ).then(function (result) {
-        //   location.reload(true)
-        // })
       }
     })
 
