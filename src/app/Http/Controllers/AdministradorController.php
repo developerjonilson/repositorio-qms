@@ -648,6 +648,7 @@ class AdministradorController extends Controller {
         $request->session()->flash('erro', 'Por favor, preencha todos os campos obrigatórios!');
         return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
     } else {
+<<<<<<< HEAD
 
       $keys_datas = array_keys($datas_start);
       $last_index_datas = end($keys_datas);
@@ -760,6 +761,12 @@ class AdministradorController extends Controller {
       $result = ['menssage' => 'success'];
     } else {
       $result = ['menssage' => 'error'];
+=======
+      # aqui é pra ter o codigo para salvar no banco de dados!
+      return 'Deu certo!';
+
+      
+>>>>>>> 7385a93bce4e063d771659ed271de0e5043cf865
     }
 
     return Response::json($result);

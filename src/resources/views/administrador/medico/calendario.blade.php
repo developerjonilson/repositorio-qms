@@ -323,6 +323,10 @@ $(document).ready(function() {
     $('#number_fields').val(i);
   });
 
+  $('#cadastrar_atendimento').submit(function () {
+    $('.loading').fadeOut(700).removeClass('hidden');
+  });
+
   @isset($erro)
     $('#model_new_atendimento').modal('show');
   @endisset
