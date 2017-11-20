@@ -594,14 +594,30 @@ class AdministradorController extends Controller {
     $medico = Medico::find($medico_id);
     $locals = Local::all();
     $especialidades = $medico->especialidades;
+    // $especialidades = Especialidade::find($especialidade_id);
 
     if ($request->session()->has('erro')) {
       $erro = $request->session()->get('erro');
       return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro'));
     } else {
-      return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
+
+      if ($request->session()->has('erro_list_datas') && $request->session()->has('sucesso')) {
+        $erro_list_datas = $request->session()->get('erro_list_datas');
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro_list_datas', 'sucesso'));
+      } else {
+        if ($request->session()->has('erro_list_datas')) {
+          $erro_list_datas = $request->session()->get('erro_list_datas');
+          return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro_list_datas'));
+        } else {
+          $sucesso = $request->session()->get('sucesso');
+          return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'sucesso'));
+        }
+      }
+
     }
-    // return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
+
+    return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
   }
 
   public function verCalendarioAtendimento($medico_id) {
@@ -618,7 +634,6 @@ class AdministradorController extends Controller {
   }
 
   public function calendarioCadastrar(Request $request) {
-    // dd($request->all());
     $id_medico = $request->medico_id;
     $id_especialidade = $request->especialidade;
     $id_local = $request->local;
@@ -633,9 +648,121 @@ class AdministradorController extends Controller {
         $request->session()->flash('erro', 'Por favor, preencha todos os campos obrigatórios!');
         return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
     } else {
-      # aqui é pra ter o codigo para salvar no banco de dados!
+
+      $keys_datas = array_keys($datas_start);
+      $last_index_datas = end($keys_datas);
+      $erro_list_datas = array();
+      $sucesso_list = array();
+
+      for ($i=0; $i <= $last_index_datas; $i++) {
+        if (array_key_exists($i, $datas_start)) {
+          $search_db = DB::table('periodos')->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
+                                            ->select('periodos.*', 'calendarios.*')
+                                            ->where('periodos.start', '=', $datas_start[$i])
+                                            ->where('periodos.nome', '=', $periodos[$i])
+                                            ->where('calendarios.data', '=', $datas_start[$i])
+                                            ->where('calendarios.medico_id', '=', $id_medico)
+                                            ->first();
+
+          if ($search_db == null) {
+            $especialidade = Especialidade::where('id_especialidade', $id_especialidade)->get()->first();
+            $title = $periodos[$i]." - ".$especialidade->nome_especialidade;
+
+            $periodo = new Periodo();
+            $periodo->nome = $periodos[$i];
+            $periodo->title = $title;
+            $periodo->start = $datas_start[$i];
+            $periodo->total_consultas = $total_consultas[$i];
+            $periodo->vagas_disponiveis = $total_consultas[$i];
+            // $periodo->calendario_id = $calendario->id_calendario;
+            $periodo->local_id = $id_local;
+
+            $calendarioBanco = Calendario::where('data', $datas_start[$i])->get()->first();
+            if ($calendarioBanco != null) {
+              $periodo->calendario_id = $calendarioBanco->id_calendario;
+            } else {
+              $calendario = Calendario::create(['data' => $datas_start[$i],
+                                              'especialidade_id' => $id_especialidade,
+                                              'medico_id' => $id_medico]);
+
+              $periodo->calendario_id = $calendario->id_calendario;
+            }
+
+            if ($periodo->save()) {
+              array_push($sucesso_list, array('data' => $datas_start[$i], 'periodo' => $periodos[$i]));
+            } else {
+              array_push($erro_list_datas, array('data' => $datas_start[$i], 'periodo' => $periodos[$i]));
+            }
+
+          } else {
+            array_push($erro_list_datas, array('data' => $datas_start[$i], 'periodo' => $periodos[$i]));
+          }
+
+        }
+      }
+
+      if ($erro_list_datas == null) {
+        $request->session()->flash('sucesso', $sucesso_list);
+        return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+      } else {
+        if ($erro_list_datas != null && $sucesso_list != null) {
+          $request->session()->flash('erro_list_datas', $erro_list_datas);
+          $request->session()->flash('sucesso', $sucesso_list);
+          return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        } else {
+          $request->session()->flash('erro_list_datas', $erro_list_datas);
+          return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        }
+
+      }
+
     }
 
+  }
+
+  public function calendarioExcluir(Request $request) {
+    $id_periodo = $request->id;
+    $periodo_delete = Periodo::where('id_periodo', $id_periodo)->get()->first();
+    $calendario_delete = Calendario::where('id_calendario', $periodo_delete->calendario_id)->get()->first();
+    $consultas_delete = Consulta::where('periodo_id', $id_periodo)->get();
+    $outros_periodos = Periodo::where('start', $calendario_delete->data)->get();
+
+    $status = false;
+
+    $num_datas = count($outros_periodos);
+
+    if ($num_datas == 1) {
+      try {
+        foreach ($consultas_delete as $consulta) {
+          $consulta->delete();
+        }
+        $periodo_delete->delete();
+        $calendario_delete->delete();
+        $status = true;
+      } catch (Exception $e) {
+        $e;
+      }
+    } else {
+      try {
+        foreach ($consultas_delete as $consulta) {
+          $consulta->delete();
+        }
+        $periodo_delete->delete();
+        $status = true;
+      } catch (Exception $e) {
+        $e;
+      }
+    }
+
+    $result;
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
   }
 
   public function manualAdministrador() {
