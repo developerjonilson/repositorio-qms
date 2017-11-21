@@ -12,7 +12,7 @@
 
     <div class="panel panel-headline">
       <div class="panel-heading">
-        <h3 class="panel-title">Especialidades (Em Construção) - Falta: Ver, Editar e Excluir</h3>
+        <h3 class="panel-title">Especialidades</h3>
         <hr>
         <div class="erros">
           @isset($sucesso)
@@ -56,11 +56,18 @@
               </div>
               <div class="modal-body">
 
+                @isset($erro)
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-times-circle"></i> {{ $erro }}
+                  </div>
+                @endisset
+
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="nome_especialidade">Nome da Especialidade</label>
-                      <input type="text" class="form-control" id="nome_especialidade" name="nome_especialidade" required>
+                      <label for="ver_descricao_especialidade">Código de Identificação da Especialidade</label>
+                      <input type="number" name="codigo_especialidade" id="codigo_especialidade" value="" class="form-control" required>
                     </div>
                   </div>
                 </div>
@@ -68,8 +75,8 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="ver_descricao_especialidade">Breve Descrição Sobre a Especialidade</label>
-                      <textarea class="form-control" rows="4" id="descricao_especialidade" name="descricao_especialidade" required></textarea>
+                      <label for="nome_especialidade">Nome da Especialidade</label>
+                      <input type="text" class="form-control" id="nome_especialidade" name="nome_especialidade" required>
                     </div>
                   </div>
                 </div>
@@ -98,8 +105,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="ver_nome_especialidade">Nome da Especialidade</label>
-                    <input type="text" class="form-control" id="ver_nome_especialidade" disabled>
+                    <label for="ver_descricao_especialidade">Código de Identificação da Especialidade</label>
+                    <input type="number" name="ver_codigo_especialidade" id="ver_codigo_especialidade" class="form-control" disabled>
                   </div>
                 </div>
               </div>
@@ -107,8 +114,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="ver_descricao_especialidade">Breve Descrição Sobre a Especialidade</label>
-                    <textarea class="form-control" rows="4" id="ver_descricao_especialidade" name="ver_descricao_especialidade" disabled></textarea>
+                    <label for="ver_nome_especialidade">Nome da Especialidade</label>
+                    <input type="text" class="form-control" id="ver_nome_especialidade" disabled>
                   </div>
                 </div>
               </div>
@@ -134,14 +141,10 @@
   <script type="text/javascript">
 
   @isset($erro)
-    $('#modal_cadastrar_medico').modal('show');
+    $('#modal_cadastrar_especialidade').modal('show');
   @endisset
 
-  @isset($erroEdit)
-    $('#modal_editar_medico').modal('show');
-  @endisset
-
-  $('enviar').click(function() {
+  $('#new_especialidade').submit(function() {
     $('.loading').fadeIn('fast').removeClass('hidden');
   });
 
@@ -174,7 +177,7 @@
             serverSide: true,
             ajax: '{{ route('administrador.get-especialidades') }}',
             columns: [
-                { data: 'id_especialidade', name: 'id_especialidade' },
+                { data: 'codigo_especialidade', name: 'codigo_especialidade' },
                 { data: 'nome_especialidade', name: 'nome_especialidade' },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
@@ -187,8 +190,8 @@
 
       $.get('/administrador/ver-especialidade/' + id, function (especialidade) {
         $('#btn_delete_especialidade').attr('value', especialidade.id_especialidade);
+        $('#ver_codigo_especialidade').attr('value', especialidade.codigo_especialidade);
         $('#ver_nome_especialidade').attr('value', especialidade.nome_especialidade);
-        $('#ver_descricao_especialidade').append(especialidade.nome_especialidade);
       });
 
       $('.loading').fadeOut(700).addClass('hidden')

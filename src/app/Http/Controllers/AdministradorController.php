@@ -556,17 +556,70 @@ class AdministradorController extends Controller {
     }
   }
 
-  public function especialidades() {
-    return view('administrador.medico.especialidades');
+  public function especialidades(Request $request) {
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.medico.especialidades', compact('erro'));
+    } else {
+      if ($request->session()->has('sucesso')) {
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.medico.especialidades', compact('sucesso'));
+      } else {
+        return view('administrador.medico.especialidades');
+      }
+    }
   }
 
   public function cadastrarEspecialidade(Request $request) {
-    // dd($request->all());
+    $codigo_especialidade = $request->codigo_especialidade;
     $nome_especialidade = $request->nome_especialidade;
-    $descricao_especialidade = $request->descricao_especialidade;
 
-    // dd($nome_especialidade, $descricao_especialidade);
-    
+    $especialidadeBanco = DB::table('especialidades')
+                                    ->where('codigo_especialidade', '=', $codigo_especialidade)
+                                    ->where('nome_especialidade', '=', $nome_especialidade)
+                                    ->get()->first();
+
+    if ($especialidadeBanco != null) {
+      $request->session()->flash('erro', 'O código ou especialidade já cadastrados!');
+      return redirect('/administrador/especialidades');
+    } else {
+      $especialidadeCodigo = DB::table('especialidades')
+                                      ->where('codigo_especialidade', '=', $codigo_especialidade)
+                                      ->get()->first();
+
+      if ($especialidadeCodigo != null) {
+        $request->session()->flash('erro', 'O código já está cadastrado!');
+        return redirect('/administrador/especialidades');
+      } else {
+        $especialidadeNome = DB::table('especialidades')
+                                        ->where('nome_especialidade', '=', $nome_especialidade)
+                                        ->get()->first();
+
+        if ($especialidadeNome != null) {
+          $request->session()->flash('erro', 'Essa especialidade já está cadastrada!');
+          return redirect('/administrador/especialidades');
+        } else {
+          $especialidade_salvar = new Especialidade();
+          $especialidade_salvar->codigo_especialidade = $codigo_especialidade;
+          $especialidade_salvar->nome_especialidade = $nome_especialidade;
+
+          if ($especialidade_salvar->save()) {
+            $request->session()->flash('sucesso', 'A especialidade foi cadastrada com sucesso!');
+            return redirect('/administrador/especialidades');
+          } else {
+            $request->session()->flash('erro', 'Erro inesperado, tente em instantes!');
+            return redirect('/administrador/especialidades');
+          }
+
+
+        }
+
+      }
+    }
+
+
+    dd($codigo_especialidade, $nome_especialidade);
+
   }
 
   public function getEspecialidades() {

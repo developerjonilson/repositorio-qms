@@ -164,6 +164,11 @@
 	<script src="/scripts/sweetalert2.min.js"></script>
 
 	@yield('pos-script')
+	<script>
+		moment.locale('pt-br');
+
+		$('.hora').html(moment().format('llll'));
+	</script>
 
 </body>
 

@@ -158,6 +158,13 @@
 	<script src="/scripts/validator.min.js"></script>
 	<script src="/scripts/script.js"></script>
 
+	@yield('pos-script')
+	<script>
+		moment.locale('pt-br');
+
+		$('.hora').html(moment().format('llll'));
+	</script>
+
 </body>
 
 </html>
