@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+  moment.locale('pt-br');
+
+  $('.hora').html(moment().format('llll'));
+
   $(window).on('load', function() {
     let pathname = window.location.pathname.split('/')
     // console.log(pathname)

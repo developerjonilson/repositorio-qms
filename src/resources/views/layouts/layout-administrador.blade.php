@@ -61,6 +61,9 @@
 				</div>
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
+						<li class="">
+							<a><i class="lnr lnr-clock"></i> <span class="hora"></span></a>
+						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
@@ -100,15 +103,18 @@
 						<li><a href="{{ action('AdministradorController@operadores') }}" class=""><i class="lnr lnr-users"></i> <span>Operadores</span></a></li>
 						<li><a href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
 						<li><a href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
+						<li><a href="{{ action('AdministradorController@especialidades') }}" class=""><i class="fa fa-medkit"></i> <span>Especialidades</span></a></li>
 						<li>
-							<a href="#subCalendario" data-toggle="collapse" class="collapsed"><i class="lnr lnr-calendar-full"></i> <span>Calendários</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subCalendario" class="collapse ">
+							<a href="#subRelatios" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subRelatios" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarHorario') }}">Alterar Horários</a></li>
+									<li><a href="#" class="">Diário</a></li>
+									<li><a href="#" class="">Mensal</a></li>
 								</ul>
 							</div>
 						</li>
 					</ul>
+
 				</nav>
 			</div>
 		</div>
@@ -146,7 +152,7 @@
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
 	<script src="/scripts/moment.js"></script>
-	<script src="/scripts/moment-with-locales.js"></script>
+	{{-- <script src="/scripts/moment-with-locales.js"></script> --}}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>

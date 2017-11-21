@@ -14,7 +14,7 @@ class Especialidade extends Model
   protected $primaryKey = 'id_especialidade';
 
   protected $fillable = [
-      'nome_especialidade',
+      'codigo_especialidade', 'nome_especialidade',
   ];
 
   public function calendario(){

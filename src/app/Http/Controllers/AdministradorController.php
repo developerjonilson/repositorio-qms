@@ -556,6 +556,58 @@ class AdministradorController extends Controller {
     }
   }
 
+  public function especialidades() {
+    return view('administrador.medico.especialidades');
+  }
+
+  public function cadastrarEspecialidade(Request $request) {
+    // dd($request->all());
+    $nome_especialidade = $request->nome_especialidade;
+    $descricao_especialidade = $request->descricao_especialidade;
+
+    // dd($nome_especialidade, $descricao_especialidade);
+    
+  }
+
+  public function getEspecialidades() {
+    $especialidades = Especialidade::all();
+
+    return Datatables::of($especialidades)
+    ->addColumn('action', function($especialidade) {
+      return '<button type="button" id="ver_especialidade" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_especialidade" value="'.$especialidade->id_especialidade.'" onclick="verEspecialidade(this.value)"><i class="fa fa-eye"></i> Ver</button>   ';
+    })->make(true);
+  }
+
+  public function verEspecialidade($id_especialidade) {
+    $especialidade = Especialidade::find($id_especialidade);
+
+    return Response::json($especialidade);
+  }
+
+  public function excluirEspecialidade(Request $request) {
+    $especialidade_id = $request->id;
+    $especialidade = Especialidade::find($especialidade_id);
+
+    $status = false;
+
+    try {
+      $especialidade->delete();
+      $status = true;
+    } catch (Exception $e) {
+      $e;
+    }
+
+    $result;
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
+  }
+
   public function medicos(Request $request) {
     if ($request->session()->has('erro')) {
       $erro = $request->session()->get('erro');
@@ -570,24 +622,34 @@ class AdministradorController extends Controller {
     }
   }
 
+  public function getMedico() {
+    $medicos = Medico::all();
+
+    return Datatables::of($medicos)
+    ->addColumn('action', function($medico) {
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_medico" value="'.$medico->id_medico.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
+             '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_medico" value="'.$medico->id_medico.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   '.
+             '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_medico" value="'.$medico->id_medico.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   '.
+             '<td><a href="/administrador/medicos/calendario-atendimento/'.$medico->id_medico.'" class="btn btn-success btn-xs" id="ver-calendario">Ver Calendário <i class="fa fa-share-square-o"></i></a></td>';
+    })->make(true);
+  }
+
+  public function verMedico($id) {
+    $operador = DB::table('users')
+        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'users.telefone_id', '=', 'telefones.id_telefone')
+        ->select('users.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+        ->where('users.id', '=', $id)
+        ->get()
+        ->first();
+
+    return Response::json($operador);
+  }
+
   public function cadastrarMedico() {
-    return view('administrador.cadastrar-medico');
-  }
-
-  public function alterarMedico() {
-    return 'Essa pagina ainda não foi criada, se está achando ruim faça ela';
-  }
-
-  public function removerOperador() {
-    return view('administrador.remover-operador');
-  }
-
-  public function removerMedico() {
-    return view('administrador.remover-medico');
-  }
-
-  public function cadastrarHorario() {
-    return view('administrador.cadastrar-horario');
+    # code...
   }
 
   public function calendarioAtendimento(Request $request, $medico_id) {

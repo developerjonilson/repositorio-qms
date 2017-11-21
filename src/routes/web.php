@@ -30,13 +30,16 @@ Route::post('/administrador/excluir-operador', 'AdministradorController@excluirO
 
 Route::get('/administrador/atendentes', 'AdministradorController@atendentes')->name('administrador.atendentes');
 Route::get('/administrador/administradores', 'AdministradorController@administradores')->name('administrador.administradores');
-Route::get('/administrador/medicos', 'AdministradorController@medicos')->name('administrador.medicos');
 
-Route::get('/administrador/cadastrar-horario', 'AdministradorController@cadastrarHorario');
-Route::get('/administrador/cadastrar-medico', 'AdministradorController@cadastrarMedico');
-Route::get('/administrador/alterar-medico', 'AdministradorController@alterarMedico');
-Route::get('/administrador/remover-operador', 'AdministradorController@removerOperador');
-Route::get('/administrador/remover-medico', 'AdministradorController@removerMedico');
+
+Route::get('/administrador/medicos', 'AdministradorController@medicos')->name('administrador.medicos');
+Route::get('/administrador/get-medicos', 'AdministradorController@getMedico')->name('administrador.get-medicos');
+
+Route::get('/administrador/especialidades', 'AdministradorController@especialidades')->name('administrador.especialidades');
+Route::post('/administrador/cadastrar-especialidade', 'AdministradorController@cadastrarEspecialidade')->name('administrador.especialidade.cadastrar');
+Route::get('/administrador/get-especialidades', 'AdministradorController@getEspecialidades')->name('administrador.get-especialidades');
+Route::get('/administrador/ver-especialidade/{id_especialidade}', 'AdministradorController@verEspecialidade')->name('administrador.ver-especialidade');
+Route::post('/administrador/excluir-especialidade', 'AdministradorController@excluirEspecialidade')->name('administrador.especialidade.excluir');
 
 //rotas do calendario de atendimento medico:
 // Route::get('/administrador/calendario-atendimento', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
