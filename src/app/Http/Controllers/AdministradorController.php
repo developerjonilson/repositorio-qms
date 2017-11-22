@@ -317,8 +317,9 @@ class AdministradorController extends Controller {
       $telefone = Telefone::create(['telefone_um' => $telefone_um,
                                       'telefone_dois' => $telefone_dois, ]);
 
+
       $user = new User();
-      $user->name = $request->name;
+      $user->name = strtoupper($request->name);
       $user->data_nascimento = $request->data_nascimento;
       $user->cpf = $cpf;
       $user->rg = $request->rg;
@@ -333,17 +334,17 @@ class AdministradorController extends Controller {
       $cidade = new Cidade($request->all());
       $cidade->estado_id = $estado->id_estado;
 
-      $cidadeCreate = Cidade::create(['nome_cidade' => $cidade->nome_cidade,
+      $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
                                       'cep' => $cep,
                                       'estado_id' => $cidade->estado_id, ]);
       $endereco = new Endereco($request->all());
 
       $endereco->cidade_id = $cidadeCreate->id_cidade;
 
-      $enderecoCreate = Endereco::create(['rua' => $endereco->rua,
+      $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
                                       'numero' => $endereco->numero,
-                                      'complemento' => $endereco->complemento,
-                                      'bairro' => $endereco->bairro,
+                                      'complemento' => strtoupper($endereco->complemento),
+                                      'bairro' => strtoupper($endereco->bairro),
                                       'cidade_id' => $endereco->cidade_id, ]);
       $user->endereco_id = $enderecoCreate->id_endereco;
 

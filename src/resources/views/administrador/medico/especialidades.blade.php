@@ -124,8 +124,10 @@
 
 @section('pos-script')
   <script type="text/javascript">
-
   @isset($sucesso)
+    $('#codigo_especialidade').attr('value', '');
+    $('#nome_especialidade').attr('value', '');
+
     swal(
       'Sucesso!',
       '{{ $sucesso }}',

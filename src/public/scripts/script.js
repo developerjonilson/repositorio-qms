@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-  
-
   $(window).on('load', function() {
     let pathname = window.location.pathname.split('/')
     // console.log(pathname)

@@ -125,7 +125,7 @@
                     <input type="hidden" name="number_fields" id="number_fields" value="0">
                     <tr>
                       <td>
-                        <input type="date" class="form-control start" value="" name="start[]" min="{{ date('Y-m-d') }}" required>
+                        <input type="date" class="form-control start" value="" name="start[]" min="{{ date('Y-m-d', strtotime('+1 days')) }}" max="{{ date('Y-m-d', strtotime('+100 years')) }}" required>
                       </td>
                       <td>
                         <select class="form-control" name="periodo[]" id="periodo" required>
