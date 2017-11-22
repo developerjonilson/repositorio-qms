@@ -13,7 +13,7 @@ class PeriodoTableSeeder extends Seeder
     {
       DB::table('periodos')->insert([
         'nome' => 'Manhã',
-        'title' => 'Manhã - Ortopedia e Traumatologia',
+        'title' => 'Manhã - ALERGIA E IMUNOLOGIA',
         'start' => '2017-11-28',
         'total_consultas' => 20,
         'vagas_disponiveis' => 20,
@@ -25,7 +25,7 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Manhã',
-        'title' => 'Manhã - Ortopedia e Traumatologia',
+        'title' => 'Manhã - ALERGIA E IMUNOLOGIA',
         'start' => '2017-11-29',
         'total_consultas' => 20,
         'vagas_disponiveis' => 20,
@@ -37,7 +37,7 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Tarde',
-        'title' => 'Tarde - Ortopedia e Traumatologia',
+        'title' => 'Tarde - ALERGIA E IMUNOLOGIA',
         'start' => '2017-11-28',
         'total_consultas' => 20,
         'vagas_disponiveis' => 18,
@@ -49,7 +49,7 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Tarde',
-        'title' => 'Tarde - Ortopedia e Traumatologia',
+        'title' => 'Tarde - ALERGIA E IMUNOLOGIA',
         'start' => '2017-11-29',
         'total_consultas' => 20,
         'vagas_disponiveis' => 15,
@@ -61,7 +61,7 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Noite',
-        'title' => 'Noite - Ortopedia e Traumatologia',
+        'title' => 'Noite - ALERGIA E IMUNOLOGIA',
         'start' => '2017-11-30',
         'total_consultas' => 20,
         'vagas_disponiveis' => 10,
