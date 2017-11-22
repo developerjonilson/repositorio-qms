@@ -14,14 +14,6 @@
       <div class="panel-heading">
         <h3 class="panel-title">Especialidades</h3>
         <hr>
-        <div class="erros">
-          @isset($sucesso)
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <i class="fa fa-check-square-o"></i> {{ $sucesso }}
-            </div>
-          @endisset
-        </div>
       </div>
 
       <div class="panel-body">
@@ -56,18 +48,11 @@
               </div>
               <div class="modal-body">
 
-                @isset($erro)
-                  <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <i class="fa fa-times-circle"></i> {{ $erro }}
-                  </div>
-                @endisset
-
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="ver_descricao_especialidade">Código de Identificação da Especialidade</label>
-                      <input type="number" name="codigo_especialidade" id="codigo_especialidade" value="" class="form-control" required>
+                      <input type="number" name="codigo_especialidade" id="codigo_especialidade" value="{{ old('codigo_especialidade') }}" class="form-control" required>
                     </div>
                   </div>
                 </div>
@@ -76,14 +61,14 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nome_especialidade">Nome da Especialidade</label>
-                      <input type="text" class="form-control" id="nome_especialidade" name="nome_especialidade" required>
+                      <input type="text" class="form-control" id="nome_especialidade" name="nome_especialidade" value="{{ old('nome_especialidade') }}" required>
                     </div>
                   </div>
                 </div>
 
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-success" id="enviar"><i class="fa fa-check-circle"></i>  Cadastrar</button>
+                <button type="submit" class="btn btn-success" id="enviar_especialidade"><i class="fa fa-check-circle"></i>  Cadastrar</button>
                 <button type="button" class="btn btn-danger btn_cancelar_especialidade" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Cancelar</button>
               </div>
 
@@ -140,11 +125,24 @@
 @section('pos-script')
   <script type="text/javascript">
 
-  @isset($erro)
-    $('#modal_cadastrar_especialidade').modal('show');
+  @isset($sucesso)
+    swal(
+      'Sucesso!',
+      '{{ $sucesso }}',
+      'success'
+    )
   @endisset
 
-  $('#new_especialidade').submit(function() {
+  @isset($erro)
+    $('#modal_cadastrar_especialidade').modal('show');
+    swal(
+      'Erro!',
+      '{{ $erro }}',
+      'error'
+    )
+  @endisset
+
+  $('#enviar_especialidade').click(function() {
     $('.loading').fadeIn('fast').removeClass('hidden');
   });
 
@@ -201,8 +199,8 @@
       let id_periodo = $(this).val();
 
       swal({
-        title: 'Excluir Especialidade?',
-        text: "Você tem certeza que deseja excluir essa Especialidade, sendo assim, não será possivel agendar atendimentos para os médicos que são dessa especialidade.",
+        title: 'Excluir Especialidade',
+        text: "Você tem certeza que deseja excluir essa Especialidade?",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#5cb85c',

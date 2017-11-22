@@ -581,7 +581,7 @@ class AdministradorController extends Controller {
 
     if ($especialidadeBanco != null) {
       $request->session()->flash('erro', 'O código ou especialidade já cadastrados!');
-      return redirect('/administrador/especialidades');
+      return back()->withInput();
     } else {
       $especialidadeCodigo = DB::table('especialidades')
                                       ->where('codigo_especialidade', '=', $codigo_especialidade)
@@ -589,15 +589,15 @@ class AdministradorController extends Controller {
 
       if ($especialidadeCodigo != null) {
         $request->session()->flash('erro', 'O código já está cadastrado!');
-        return redirect('/administrador/especialidades');
+        return back()->withInput();
       } else {
         $especialidadeNome = DB::table('especialidades')
                                         ->where('nome_especialidade', '=', $nome_especialidade)
                                         ->get()->first();
 
         if ($especialidadeNome != null) {
-          $request->session()->flash('erro', 'Essa especialidade já está cadastrada!');
-          return redirect('/administrador/especialidades');
+          $request->session()->flash('erro', 'Esse nome da especialidade já está cadastrado!');
+          return back()->withInput();
         } else {
           $especialidade_salvar = new Especialidade();
           $especialidade_salvar->codigo_especialidade = $codigo_especialidade;
@@ -605,10 +605,11 @@ class AdministradorController extends Controller {
 
           if ($especialidade_salvar->save()) {
             $request->session()->flash('sucesso', 'A especialidade foi cadastrada com sucesso!');
-            return redirect('/administrador/especialidades');
+            return back()->withInput();
           } else {
             $request->session()->flash('erro', 'Erro inesperado, tente em instantes!');
-            return redirect('/administrador/especialidades');
+            // return redirect('/administrador/especialidades');
+            return back()->withInput();
           }
 
 
