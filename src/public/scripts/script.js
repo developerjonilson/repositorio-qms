@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
-  $('input[name="cpf"]').mask('000.000.000-00');
-  $('#edit_rg').mask('000.000.000-00');
-  $('#edit_cep').mask('00000-000');
-  $("#edit_telefone_um").mask("(99) 99999-9999");
-  $("#edit_telefone_dois").mask("(99) 99999-9999");
+  // $('input[name="cpf"]').mask('000.000.000-00');
+  // $('#edit_rg').mask('000.000.000-00');
+  // $('#edit_cep').mask('00000-000');
+  // $("#edit_telefone_um").mask("(99) 99999-9999");
+  // $("#edit_telefone_dois").mask("(99) 99999-9999");
 
   $(window).on('load', function() {
     let pathname = window.location.pathname.split('/')

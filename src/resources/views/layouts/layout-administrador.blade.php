@@ -23,6 +23,7 @@
 	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
 	<link href="/css/calendar/fullcalendar.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/sweetalert2.min.css">
+	<link  href="/css/bootstrap-datepicker/bootstrap-datepicker3.css" rel="stylesheet">
 
 
 	<!-- ICONS -->
@@ -162,6 +163,8 @@
 	<script src="/scripts/calendar/fullcalendar.min.js"></script>
 	<script src="/scripts/calendar/pt-br.js"></script>
 	<script src="/scripts/sweetalert2.min.js"></script>
+	<script src="/scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
 	@yield('pos-script')
 	<script>
