@@ -45,7 +45,7 @@
               <th>#</th>
               <th>Nome</th>
               <th>Email</th>
-              <th width="220">Ações</th>
+              <th width="150">Ações</th>
             </tr>
           </thead>
         </table>
@@ -96,7 +96,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="data_nascimento">Data de Nascimento<span class="vermelho">*</span></label>
-                <input type="date" class="form-control" name="data_nascimento" id="data_nascimento" min="{{ date('Y-m-d', strtotime('-150 years')) }}" max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required>
+                <input type="date" class="form-control" name="data_nascimento" id="data_nascimento" min="{{ date('Y-m-d', strtotime('-150 years')) }}" max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}">
                 {{-- <div class="help-block with-errors"></div> --}}
                 {{-- <input type="date" class="form-control" name="data_nascimento" id="data_nascimento"  required value="{{ old('data_nascimento') }}"> --}}
               </div>
@@ -167,7 +167,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="complemento">Complemento</label>
-                <input type="text" class="form-control campo" name="complemento" id="complemento" value="{{ old('complemento') }}" pattern="[a-zA-Z0-9]+" title="Campo alfanumérico SEM ACENTUAÇÃO e PONTUAÇÃO!">
+                <input type="text" class="form-control campo" name="complemento" id="complemento" value="{{ old('complemento') }}" title="Campo alfanumérico!">
               </div>
             </div>
             <div class="col-md-6">
@@ -400,7 +400,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Fechar</button>
+          <button type="button" class="btn btn-danger" value="" id="btn_delete_operador"><i class="fa fa-trash-o"></i>  Excluir</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Fechar</button>
         </div>
 
   		</div>
@@ -430,7 +431,8 @@
               </div>
             @endisset --}}
 
-            <form class="" action="{{ route('administrador.editar-operador') }}" id="edit_operador" name="edit_operador" method="post" data-toggle="validator">
+            {{-- <form class="" action="{{ route('administrador.editar-operador') }}" id="edit_operador" name="edit_operador" method="post" data-toggle="validator"> --}}
+            <form class="" action="{{ route('administrador.editar-operador') }}" id="edit_operador" name="edit_operador" method="post">
               {{ csrf_field() }}
               <input type="hidden" name="operador_id" id="edit_operador_id" value="{{ old('operador_id') }}">
               <div class="row">
@@ -443,15 +445,17 @@
                 <div class="col-md-8">
                   <div class="form-group">
                     <label for="nome">Nome Completo<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="name" id="edit_name" placeholder="José da Silva Filho" data-error="Esse campo é obrigatório e só aceita letras e SEM ACENTUAÇÃO!" required pattern="^[A-Za-z -]+$" value="{{ old('name') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control campo" name="name" id="edit_name" placeholder="Jose da Silva Filho" required pattern="^[A-Za-z -]+$" value="{{ old('name') }}" title="Preencha com o nome Completo, somente com letras e SEM ACENTUAÇÃO">
+                    {{-- <input type="text" class="form-control" name="name" id="edit_name" placeholder="José da Silva Filho" data-error="Esse campo é obrigatório e só aceita letras e SEM ACENTUAÇÃO!" required pattern="^[A-Za-z -]+$" value="{{ old('name') }}"> --}}
+                    {{-- <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="data_nascimento">Data de Nascimento<span class="vermelho">*</span></label>
-                    <input type="date" class="form-control" name="data_nascimento" id="edit_data_nascimento" data-error="Esse campo é obrigatório!" required value="{{ old('data_nascimento') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="date" class="form-control" name="data_nascimento" id="edit_data_nascimento" min="{{ date('Y-m-d', strtotime('-150 years')) }}" max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required>
+                    {{-- <input type="date" class="form-control" name="data_nascimento" id="edit_data_nascimento" data-error="Esse campo é obrigatório!" required value="{{ old('data_nascimento') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
               </div>
@@ -459,15 +463,17 @@
                 <div class="col-md-6">
                   <div class="form-group edit_cpf">
                     <label for="cpf">CPF<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="cpf" id="edit_cpf" placeholder="233.140.732-09" data-error="Esse campo é obrigatório!" required value="{{ old('cpf') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control" name="cpf" id="edit_cpf" placeholder="233.140.732-09" title="Preencha esse campo no seguinte formato: 000.000.000-00" value="{{ old('cpf') }}" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required>
+                    {{-- <input type="text" class="form-control" name="cpf" id="edit_cpf" placeholder="233.140.732-09" data-error="Esse campo é obrigatório!" required value="{{ old('cpf') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="rg">RG<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="rg" id="edit_rg" placeholder="2007912033" data-error="Esse campo é obrigatório e só aceita números!" required value="{{ old('rg') }}" pattern="[0-9]+">
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control" name="rg" id="edit_rg" placeholder="2007912033" title="Preencha esse campo no seguinte formato: 00000000000" value="{{ old('rg') }}" required>
+                    {{-- <input type="text" class="form-control" name="rg" id="edit_rg" placeholder="2007912033" data-error="Esse campo é obrigatório e só aceita números!" required value="{{ old('rg') }}" pattern="[0-9]+">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
               </div>
@@ -476,8 +482,9 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="email">Email<span class="vermelho">*</span></label>
-                    <input type="email" class="form-control" name="email" id="edit_email" placeholder="jose@gmail.com" data-error="Por favor, informe um email correto!" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{ old('email') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="email" class="form-control" name="email" id="edit_email" placeholder="jose@gmail.com" title="Por favor, informe um email correto, no formato: nome@mail.com!" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{ old('email') }}" required>
+                    {{-- <input type="email" class="form-control" name="email" id="edit_email" placeholder="jose@gmail.com" data-error="Por favor, informe um email correto!" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{ old('email') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
               </div>
@@ -503,15 +510,17 @@
                 <div class="col-md-9">
                   <div class="form-group">
                     <label for="rua">Rua<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="rua" id="edit_rua" placeholder="Rua Francisco da Cunha" data-error="Esse campo é obrigatório!" required value="{{ old('rua') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control campo" name="rua" id="edit_rua" placeholder="Rua Francisco da Cunha" title="Preencha esse campo somente com letras e SEM ACENTUAÇÃO!" required pattern="^[A-Za-z -]+$" value="{{ old('rua') }}">
+                    {{-- <input type="text" class="form-control" name="rua" id="edit_rua" placeholder="Rua Francisco da Cunha" data-error="Esse campo é obrigatório!" required value="{{ old('rua') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="numero">Número<span class="vermelho">*</span></label>
-                    <input type="number" class="form-control" name="numero" id="edit_numero" placeholder="233" data-error="Esse campo é obrigatório e só aceita números!" required  pattern="([0-9])+(?:-?\d){4,}" value="{{ old('numero') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control" name="numero" id="edit_numero" placeholder="233" maxlength="15" pattern="[0-9]+$" value="{{ old('numero') }}" title="Preencha esse campo somente com números" required>
+                    {{-- <input type="number" class="form-control" name="numero" id="edit_numero" placeholder="233" data-error="Esse campo é obrigatório e só aceita números!" required  pattern="([0-9])+(?:-?\d){4,}" value="{{ old('numero') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
               </div>
@@ -519,14 +528,16 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="complemento">Complemento</label>
-                    <input type="text" class="form-control" name="complemento" id="edit_complemento" value="{{ old('complemento') }}">
+                    <input type="text" class="form-control campo" name="complemento" id="edit_complemento" value="{{ old('complemento') }}" title="Campo alfanumérico!">
+                    {{-- <input type="text" class="form-control" name="complemento" id="edit_complemento" value="{{ old('complemento') }}"> --}}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="bairro">Bairro<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="bairro" id="edit_bairro" placeholder="Centro" data-error="Esse campo é obrigatório!" required value="{{ old('bairro') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control campo" name="bairro" id="edit_bairro" placeholder="Centro" title="Preencha esse campo somente com letras e SEM ACENTUAÇÃO" pattern="^[A-Za-z -]+$" value="{{ old('bairro') }}" required>
+                    {{-- <input type="text" class="form-control" name="bairro" id="edit_bairro" placeholder="Centro" data-error="Esse campo é obrigatório!" required value="{{ old('bairro') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
               </div>
@@ -534,22 +545,25 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="cidade">Cidade<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="nome_cidade" id="edit_nome_cidade" placeholder="Milagres" value="{{ old('nome_cidade') }}" data-error="Esse campo é obrigatório!" required>
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control campo" name="nome_cidade" id="edit_nome_cidade" placeholder="Milagres" value="{{ old('nome_cidade') }}" title="Preencha somente com letras e SEM ACENTUAÇÃO!" pattern="^[A-Za-z -]+$" required>
+                    {{-- <input type="text" class="form-control" name="nome_cidade" id="edit_nome_cidade" placeholder="Milagres" value="{{ old('nome_cidade') }}" data-error="Esse campo é obrigatório!" required>
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group edit_cep">
                     <label for="cep">CEP<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="cep" id="edit_cep" placeholder="632500-000" value="{{ old('cep') }}" data-error="Esse campo é obrigatório!" required>
-                    <div class="help-block with-errors"></div>
+                    <input type="text" class="form-control" name="cep" id="edit_cep" placeholder="632500-000" value="{{ old('cep') }}" pattern= "\d{5}-?\d{3}" title="Preencha no seguinte formato: 00000-000!" required>
+                    {{-- <input type="text" class="form-control" name="cep" id="edit_cep" placeholder="632500-000" value="{{ old('cep') }}" data-error="Esse campo é obrigatório!" required>
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="estado">Estado<span class="vermelho">*</span></label>
-                    <input type="text" name="nome_estado" id="edit_nome_estado" class="form-control" value="{{ old('nome_estado') }}" data-error="Esse campo é obrigatório!" required>
-                    <div class="help-block with-errors"></div>
+                    <input type="text" name="nome_estado" id="edit_nome_estado" class="form-control" value="{{ old('nome_estado') }}" title="Preencha somente com letras e SEM ACENTUAÇÃO!" pattern="^[A-Za-z -]+$" required>
+                    {{-- <input type="text" name="nome_estado" id="edit_nome_estado" class="form-control" value="{{ old('nome_estado') }}" data-error="Esse campo é obrigatório!" required>
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
               </div>
@@ -566,14 +580,16 @@
                 <div class="col-md-6">
                   <div class="form-group edit_telefone">
                     <label for="telefone_um">Telefone<span class="vermelho">*</span></label>
-                    <input type="text" class="form-control" name="telefone_um" id="edit_telefone_um" placeholder="(88) 99900-1234" data-error="Esse campo é obrigatório!" required value="{{ old('telefone_um') }}">
-                    <div class="help-block with-errors"></div>
+                    <input type="tel" maxlength="15" class="form-control" name="telefone_um" id="edit_telefone_um" placeholder="(88) 99900-1234" title="Preencha no seguinte formato: (99) 99999-9999" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}$" required value="{{ old('telefone_um') }}">
+                    {{-- <input type="text" class="form-control" name="telefone_um" id="edit_telefone_um" placeholder="(88) 99900-1234" data-error="Esse campo é obrigatório!" required value="{{ old('telefone_um') }}">
+                    <div class="help-block with-errors"></div> --}}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group edit_telefone">
                     <label for="telefone_dois">Telefone (Opcional)</label>
-                    <input type="text" class="form-control" name="telefone_dois" id="edit_telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}">
+                    <input type="text" class="form-control" name="telefone_dois" id="edit_telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}" title="Preencha no seguinte formato: (99) 99999-9999" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}$">
+                    {{-- <input type="text" class="form-control" name="telefone_dois" id="edit_telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}"> --}}
                   </div>
                 </div>
               </div>
@@ -720,6 +736,10 @@
     $('.loading').fadeIn('fast').removeClass('hidden');
   });
 
+  $('#edit_operador').submit(function() {
+    $('.loading').fadeIn('fast').removeClass('hidden');
+  });
+
   $(function() {
         $('#operadores-table').DataTable({
             "oLanguage": {
@@ -777,6 +797,8 @@
         $('#ver_estado').attr('value', operador.nome_estado);
         $('#ver_telefone_um').attr('value', operador.telefone_um);
         $('#ver_telefone_dois').attr('value', operador.telefone_dois);
+
+        $('#btn_delete_operador').attr('value', operador.id);
 
         $('.cpf input, .maskcpf').mask('000.000.000-00');
         $('.cep input, .maskcep').mask('00000-000');
@@ -846,6 +868,57 @@
     $('#btn_cancel_edit').click(function () {
       // $('#edit_operador')[0].reset();
       $('#edit_operador').trigger("reset");
+    });
+
+    $('#btn_delete_operador').click(function () {
+      let operador_id = $(this).val();
+
+      swal({
+        position: 'top',
+        title: 'Excluir Operador',
+        text: "Você tem certeza que deseja excluir esse Operador?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#5cb85c',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, excluir',
+        cancelButtonText: 'Cancelar'
+      }).then(function (result) {
+        if (result.value) {
+          $('.loading').fadeOut(700).removeClass('hidden');
+
+          $.post("{{ route('administrador.excluir-operador') }}",
+          {
+            _token: "{{ csrf_token() }}",
+             id: operador_id
+          },
+          function(result) {
+            if (result.menssage === 'error') {
+              $('.loading').fadeOut(700).addClass('hidden');
+              swal({
+                position: 'top',
+                title: 'Erro!',
+                text: 'Ocorreu um erro ao excluir o operador, tente em instantes!',
+                type: 'error',
+                confirmButtonText: 'Ok'
+              });
+            }
+            if (result.menssage === 'success') {
+              $('.loading').fadeOut(700).addClass('hidden');
+              swal({
+                position: 'top',
+                title: 'Excluído!',
+                text: 'O operador foi excluída com sucesso!',
+                type: 'success'
+              }).then(function (result) {
+                $('.loading').fadeOut(700).removeClass('hidden');
+                location.reload(true)
+              })
+            }
+          }, "json");
+
+        }
+      })
     });
 
   </script>

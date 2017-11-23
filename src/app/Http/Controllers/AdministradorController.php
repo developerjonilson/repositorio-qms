@@ -177,8 +177,8 @@ class AdministradorController extends Controller {
 
     return Datatables::of($users)->addColumn('action', function($user) {
       return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
-             '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   '.
-             '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
+             '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   ';
+            //  '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
     })->make(true);
   }
 
@@ -498,7 +498,8 @@ class AdministradorController extends Controller {
   }
 
   public function excluirOperador(Request $request) {
-    $operador_id = $request->operador_id;
+    // echo "$request";
+    $operador_id = $request->id;
 
     $operador = User::find($operador_id);
     $telefone =Telefone::find($operador->telefone_id);
@@ -519,13 +520,19 @@ class AdministradorController extends Controller {
       dd($e);
     }
 
+    $result;
+
     if ($status) {
-      $request->session()->flash('sucesso', 'Operador excluído com sucesso!');
-      return redirect('/administrador/operadores');
+      $result = ['menssage' => 'success'];
+      // $request->session()->flash('sucesso', 'Operador excluído com sucesso!');
+      // return redirect('/administrador/operadores');
     } else {
-      $request->session()->flash('erroExcluir', 'Não foi possível excluir o Operador, por favor tente em instantes!');
-      return redirect('/administrador/operadores');
+      $result = ['menssage' => 'error'];
+      // $request->session()->flash('erroExcluir', 'Não foi possível excluir o Operador, por favor tente em instantes!');
+      // return redirect('/administrador/operadores');
     }
+
+    return Response::json($result);
 
   }
 

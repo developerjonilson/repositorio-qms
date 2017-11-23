@@ -129,6 +129,7 @@
     $('#nome_especialidade').attr('value', '');
 
     swal(
+      position: 'top',
       'Sucesso!',
       '{{ $sucesso }}',
       'success'
@@ -138,6 +139,7 @@
   @isset($erro)
     $('#modal_cadastrar_especialidade').modal('show');
     swal(
+      position: 'top',
       'Erro!',
       '{{ $erro }}',
       'error'
@@ -201,6 +203,7 @@
       let id_periodo = $(this).val();
 
       swal({
+        position: 'top',
         title: 'Excluir Especialidade',
         text: "Você tem certeza que deseja excluir essa Especialidade?",
         type: 'warning',
@@ -222,6 +225,7 @@
             if (result.menssage === 'error') {
               $('.loading').fadeOut(700).addClass('hidden');
               swal({
+                position: 'top',
                 title: 'Erro!',
                 text: 'Ocorreu um erro ao excluir a especialidade, tente em instantes!',
                 type: 'error',
@@ -230,11 +234,12 @@
             }
             if (result.menssage === 'success') {
               $('.loading').fadeOut(700).addClass('hidden');
-              swal(
-                'Excluído!',
-                'A especialidade foi excluída com sucesso!',
-                'success'
-              ).then(function (result) {
+              swal({
+                position: 'top',
+                title: 'Excluído!',
+                text: 'A especialidade foi excluída com sucesso!',
+                type: 'success'
+              }).then(function (result) {
                 $('.loading').fadeOut(700).removeClass('hidden');
                 location.reload(true)
               })

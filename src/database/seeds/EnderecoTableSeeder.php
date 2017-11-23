@@ -13,55 +13,73 @@ class EnderecoTableSeeder extends Seeder
     public function run()
     {
       DB::table('enderecos')->insert([
-         'rua' => 'Av. 7 de setembro',
+         'rua' => 'AV 7 DE SETEMBRO',
          'numero' => 756,
-         'bairro' => 'Centro',
+         'bairro' => 'CENTRO',
          'cidade_id' => 1,
          'created_at'=> date("Y/m/d h:i:s"),
          'updated_at'=> date("Y/m/d h:i:s"),
       ]);
 
       DB::table('enderecos')->insert([
-         'rua' => 'Francisco da Silva Pereira Costa',
+         'rua' => 'FRANCISCO DA SILVA PEREIRA COSTA',
          'numero' => 50,
-         'bairro' => 'Bela Vista',
+         'bairro' => 'BELA VISTA',
          'cidade_id' => 2,
          'created_at'=> date("Y/m/d h:i:s"),
          'updated_at'=> date("Y/m/d h:i:s"),
       ]);
 
       DB::table('enderecos')->insert([
-         'rua' => 'Marechal Deodoro da Fonseca',
+         'rua' => 'MARECHAL DEODORIO DA FONSECA II',
          'numero' => 800,
-         'bairro' => 'Bela Vista',
+         'bairro' => 'BELA VISTA',
          'cidade_id' => 3,
          'created_at'=> date("Y/m/d h:i:s"),
          'updated_at'=> date("Y/m/d h:i:s"),
       ]);
 
       DB::table('enderecos')->insert([
-         'rua' => 'Marechal Deodoro da Fonseca II',
+         'rua' => 'MARECHAL DEODORIO DA FONSECA II',
          'numero' => 900,
-         'bairro' => 'Centro',
+         'bairro' => 'CENTRO',
          'cidade_id' => 4,
          'created_at'=> date("Y/m/d h:i:s"),
          'updated_at'=> date("Y/m/d h:i:s"),
       ]);
 
       DB::table('enderecos')->insert([
-         'rua' => 'Marechal Deodoro da Fonseca II',
+         'rua' => 'MARECHAL DEODORIO DA FONSECA II',
          'numero' => 900,
-         'bairro' => 'Centro',
+         'bairro' => 'CENTRO',
          'cidade_id' => 4,
          'created_at'=> date("Y/m/d h:i:s"),
          'updated_at'=> date("Y/m/d h:i:s"),
       ]);
 
       DB::table('enderecos')->insert([
-         'rua' => 'Francisco Arrais Maia',
+         'rua' => 'FRANCISCO ARRAIS MAIA',
          'numero' => 460,
-         'bairro' => 'Centro',
+         'bairro' => 'CENTRO',
          'cidade_id' => 5,
+         'created_at'=> date("Y/m/d h:i:s"),
+         'updated_at'=> date("Y/m/d h:i:s"),
+      ]);
+
+      DB::table('enderecos')->insert([
+         'rua' => 'FRANCISCO ARRAIS MAIA',
+         'numero' => 70,
+         'bairro' => 'CENTRO',
+         'cidade_id' => 6,
+         'created_at'=> date("Y/m/d h:i:s"),
+         'updated_at'=> date("Y/m/d h:i:s"),
+      ]);
+
+      DB::table('enderecos')->insert([
+         'rua' => 'FRANCISCO ARRAIS MAIA',
+         'numero' => 90,
+         'bairro' => 'CENTRO',
+         'cidade_id' => 7,
          'created_at'=> date("Y/m/d h:i:s"),
          'updated_at'=> date("Y/m/d h:i:s"),
       ]);
