@@ -155,9 +155,7 @@
 	<script src="/scripts/moment.js"></script>
 	{{-- <script src="/scripts/moment-with-locales.js"></script> --}}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>
-	<script src="/scripts/script.js"></script>
 	<script src="/scripts/datatables/jquery.dataTables.min.js"></script>
 	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
 	<script src="/scripts/calendar/fullcalendar.min.js"></script>
@@ -165,12 +163,33 @@
 	<script src="/scripts/sweetalert2.min.js"></script>
 	<script src="/scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script src="/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="/scripts/validation.js"></script>
+	<script src="/scripts/script.js"></script>
 
 	@yield('pos-script')
 	<script>
 		moment.locale('pt-br');
 
 		$('.hora').html(moment().format('llll'));
+
+		$('div[data-toggle="datepicker"]').datepicker({
+	    language: 'pt-BR',
+	    autoclose: true,
+	    format: 'dd/mm/yyyy',
+			startDate: '{{ date("d-m-Y", strtotime("-150 years")) }}',
+			endDate: "{{ date("d-m-Y") }}"
+	  });
+
+		$('input[name="cpf"]').mask('000.000.000-00'),
+	  $('input[name="rg"]').mask('000000000000000'),
+	  $('input[name="cep"]').mask("00000-000"),
+	  $('input[name="telefone_um"]').mask("(00) 00000-0009"),
+	  $('input[name="telefone_dois"]').mask("(00) 00000-0009"),
+		$('input[name="numero"]').mask('000000000000'),
+		// $('input[name="name"]').mask('SSSS');
+		$('input[name="data_nascimento"]').mask("00/00/0000", {placeholder: "__/__/____"});
+
+		@yield('scripts')
 	</script>
 
 </body>

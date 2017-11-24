@@ -176,7 +176,7 @@ class AdministradorController extends Controller {
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
-      return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_general_operator" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_actions_operator" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
       // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   ';
             //  '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   ';
             //  '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
@@ -255,7 +255,9 @@ class AdministradorController extends Controller {
       $request->nome_cidade != null && $request->cep != null &&
       $request->nome_estado != null && $request->telefone_um != null) {
 
-      $data = $request->data_nascimento;
+      // $data = $request->data_nascimento;
+      $data_pt = str_replace("/", "-", $request->data_nascimento);
+      $data = date('Y-m-d', strtotime($data_pt));
       // Separa em dia, mês e ano
       list($ano, $mes, $dia,) = explode('-', $data);
       // Descobre que dia é hoje e retorna a unix timestamp
@@ -321,7 +323,7 @@ class AdministradorController extends Controller {
 
       $user = new User();
       $user->name = strtoupper($request->name);
-      $user->data_nascimento = $request->data_nascimento;
+      $user->data_nascimento = $data;
       $user->cpf = $cpf;
       $user->rg = $request->rg;
       $user->email = $request->email;
