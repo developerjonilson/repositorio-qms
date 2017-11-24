@@ -176,7 +176,8 @@ class AdministradorController extends Controller {
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
-      return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_actions_operator" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
+      // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_actions_operator" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
       // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   ';
             //  '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   ';
             //  '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
@@ -269,9 +270,7 @@ class AdministradorController extends Controller {
       // dd($idade);
 
       if ($idade < 18) {
-        $request->session()->flash('erro', 'O Operador não pode ser menor (não tem 18 anos),
-                                        por favor verifique a data informada!');
-
+        $request->session()->flash('erro', 'O Operador não pode ser menor de idade, verifique a data informada!');
         return redirect('/administrador/operadores')->withInput();
       }
 

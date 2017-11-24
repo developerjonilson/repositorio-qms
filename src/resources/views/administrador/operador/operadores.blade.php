@@ -19,7 +19,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-md-12">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_general_operator">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_create_operator">
               <i class="fa fa-plus-square-o"></i> Adicionar Operador
             </button>
           </div>
@@ -40,10 +40,10 @@
 
   </div>
 
-  <form class="" action="{{ route('administrador.cadastrar-operador') }}" method="post" id="form_operator">
+  <form class="" action="{{ route('administrador.cadastrar-operador') }}" method="post" id="form_create_operator">
     {{ csrf_field() }}
     {{--           --------- Modal operator -----------                --}}
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalGeneralOperator" id="modal_general_operator" data-backdrop="static">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalCreateOperator" id="modal_create_operator" data-backdrop="static">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -224,9 +224,9 @@
             </div>
 
           </div>
-          <div class="modal-footer" id="btn_actions_modal_operador">
+          <div class="modal-footer" id="btn_actions_modal_create_operador">
             <button type="submit" class="btn btn-success" id="btn_save_operator" value=""><i class="fa fa-check"></i>  Salvar</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Cancelar</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_cancel_create_operator"><i class="fa fa-times-circle"></i>  Cancelar</button>
           </div>
         </div>
         </div>
@@ -419,9 +419,11 @@
 
           </div>
           <div class="modal-footer" id="btn_actions_modal_operador">
-            <button type="button" class="btn btn-warning" id="btn_edit_operator" value=""><i class="fa fa-pencil-square-o"></i>  Editar</button>
-            <button type="button" class="btn btn-danger" id="btn_delete_operator" value=""><i class="fa fa-trash-o"></i>  Excluir</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Fechar</button>
+            <div class="" id="btn_group">
+              <button type="button" class="btn btn-warning" id="btn_edit_operator" value=""><i class="fa fa-pencil-square-o"></i>  Editar</button>
+              <button type="button" class="btn btn-danger" id="btn_delete_operator" value=""><i class="fa fa-trash-o"></i>  Excluir</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Fechar</button>
+            </div>
           </div>
         </div>
         </div>
@@ -472,13 +474,13 @@
   });
 
   @isset($erro)
-    $('#modal_general_operator').modal('show');
     swal({
       position: 'top',
       title: 'Erro!',
       text: '{{ $erro }}',
       type: 'error'
     });
+    $('#modal_create_operator').modal('show');
   @endisset
 
   @isset($sucesso)
@@ -496,7 +498,7 @@
 
     $.get('/administrador/ver-operador/' + id, function (operador) {
       $('#form_actions_operator input[name="name"]').attr('value', operador.name).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="data_nascimento"]').attr('value', operador.data_nascimento).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="data_nascimento"]').attr('value', moment(operador.data_nascimento).format('DD/MM/YYYY')).attr('disabled', 'disabled');
       $('#form_actions_operator input[name="cpf"]').attr('value', operador.cpf).attr('disabled', 'disabled');
       $('#form_actions_operator input[name="rg"]').attr('value', operador.rg).attr('disabled', 'disabled');
       $('#form_actions_operator input[name="email"]').attr('value', operador.email).attr('disabled', 'disabled');
@@ -510,70 +512,13 @@
       $('#form_actions_operator input[name="telefone_um"]').attr('value', operador.telefone_um).attr('disabled', 'disabled');
       $('#form_actions_operator input[name="telefone_dois"]').attr('value', operador.telefone_dois).attr('disabled', 'disabled');
 
-      {{-- $('#btn_actions_modal_operador').empty(); --}}
-      {{-- $('#btn_actions_modal_operador').append(
-        '<button type="button" class="btn btn-warning" id="btn_edit_operator" value=""><i class="fa fa-pencil-square-o"></i>  Editar</button>'+
-        '<button type="button" class="btn btn-danger" id="btn_delete_operator" onclick="deleteOperator(this.value)" value=""><i class="fa fa-trash-o"></i>  Excluir</button>'+
-        '<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i>  Fechar</button>'
-      ); --}}
-
       $('#btn_delete_operator').attr('value', operador.id);
 
+      $('#modal_actions_operator').modal('show');
     });
 
     $('.loading').fadeOut(700).addClass('hidden');
   };
-
-  {{-- function deleteOperator(id) {
-    let operador_id = id;
-
-    swal({
-      position: 'top',
-      title: 'Excluir Operador',
-      text: "Você tem certeza que deseja excluir esse Operador?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#5cb85c',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar'
-    }).then(function (result) {
-      if (result.value) {
-        $('.loading').fadeOut(700).removeClass('hidden');
-
-        $.post("{{ route('administrador.excluir-operador') }}",
-        {
-          _token: "{{ csrf_token() }}",
-           id: operador_id
-        },
-        function(result) {
-          if (result.menssage === 'error') {
-            $('.loading').fadeOut(700).addClass('hidden');
-            swal({
-              position: 'top',
-              title: 'Erro!',
-              text: 'Ocorreu um erro ao excluir o operador, tente em instantes!',
-              type: 'error',
-              confirmButtonText: 'Ok'
-            });
-          }
-          if (result.menssage === 'success') {
-            $('.loading').fadeOut(700).addClass('hidden');
-            swal({
-              position: 'top',
-              title: 'Excluído!',
-              text: 'O operador foi excluída com sucesso!',
-              type: 'success'
-            }).then(function (result) {
-              $('.loading').fadeOut(700).removeClass('hidden');
-              location.reload(true)
-            })
-          }
-        }, "json");
-
-      }
-    })
-  }; --}}
 
   $('#btn_delete_operator').click(function () {
     let operador_id = $(this).val();
@@ -599,7 +544,6 @@
         },
         function(result) {
           if (result.menssage === 'error') {
-            $('.loading').fadeOut(700).addClass('hidden');
             swal({
               position: 'top',
               title: 'Erro!',
@@ -607,6 +551,7 @@
               type: 'error',
               confirmButtonText: 'Ok'
             });
+            $('.loading').fadeOut(700).addClass('hidden');
           }
           if (result.menssage === 'success') {
             $('.loading').fadeOut(700).addClass('hidden');
@@ -626,58 +571,84 @@
     })
   });
 
-  {{-- function detalhesOperator(id) {
+  $('#modal_create_operator').on('hidden.bs.modal', function (event) {
+    $("#form_create_operator")[0].reset();
+
+    $('#form_create_operator input[name="name"]').attr('value','');
+    $('#form_create_operator input[name="data_nascimento"]').attr('value','');
+    $('#form_create_operator input[name="cpf"]').attr('value','');
+    $('#form_create_operator input[name="rg"]').attr('value','');
+    $('#form_create_operator input[name="email"]').attr('value','');
+    $('#form_create_operator input[name="rua"]').attr('value','');
+    $('#form_create_operator input[name="numero"]').attr('value','');
+    $('#form_create_operator input[name="complemento"]').attr('value','');
+    $('#form_create_operator input[name="bairro"]').attr('value','');
+    $('#form_create_operator input[name="nome_cidade"]').attr('value','');
+    $('#form_create_operator input[name="cep"]').attr('value','');
+    $('#form_create_operator select[name="nome_estado"]').attr('value','');
+    $('#form_create_operator input[name="telefone_um"]').attr('value','');
+    $('#form_create_operator input[name="telefone_dois"]').attr('value','');
+  });
+
+  $('#btn_edit_operator').click(function(){
+    var id = $('#btn_delete_operator').val();
+    $('#btn_group').addClass('hidden');
+
+    $('#btn_actions_modal_operador').append(
+      '<div class="" id="btn_group_edit">'+
+      '<button type="submit" class="btn btn-success" id="btn_edit_operator" value=""><i class="fa fa-check"></i>  Salvar Alterações</button>'+
+      '<button type="button" class="btn btn-danger" id="btn_cancel_edit"><i class="fa fa-times-circle"></i>  Cancelar</button>'+
+      {{-- '<button type="button" class="btn btn-danger" data-dismiss="modal" id=""><i class="fa fa-times-circle"></i>  Cancelar</button>'+ --}}
+      '</div>'
+    );
+  });
+
+  $('#btn_cancel_edit').click(function() {
+    alert('Deu certo!');
+
+    {{-- var id = $('#btn_delete_operator').val();
+    cancelEdit(id);
+    $('#btn_group').removeClass('hidden');
+    $('#btn_group_edit').remove(); --}}
+  });
+
+  $('#modal_actions_operator').on('hidden.bs.modal', function (event) {
+    if ($('#btn_group').hasClass("hidden")) {
+      $('#btn_group').removeClass('hidden');
+
+      $('#btn_group_edit').remove();
+    }
+  });
+
+  function cancelEdit(id) {
     $('.loading').fadeOut(700).removeClass('hidden');
 
     $.get('/administrador/ver-operador/' + id, function (operador) {
-      $('input[name="name"]').attr('value', operador.name);
-      $('input[name="data_nascimento"]').attr('value', operador.data_nascimento);
-      $('input[name="cpf"]').attr('value', operador.cpf);
-      $('input[name="rg"]').attr('value', operador.rg);
-      $('input[name="email"]').attr('value', operador.email);
-      $('input[name="rua"]').attr('value', operador.rua);
-      $('input[name="numero"]').attr('value', operador.numero);
-      $('input[name="complemento"]').attr('value', operador.complemento);
-      $('input[name="bairro"]').attr('value', operador.bairro);
-      $('input[name="nome_cidade"]').attr('value', operador.nome_cidade);
-      $('input[name="cep"]').attr('value', operador.cep);
-      $('input[name="nome_estado"]').attr('value', operador.nome_estado);
-      $('input[name="telefone_um"]').attr('value', operador.telefone_um);
-      $('input[name="telefone_dois"]').attr('value', operador.telefone_dois);
-
-      // $('#btn_delete_operador').attr('value', operador.id);
-
-      // $('.cpf input, .maskcpf').mask('000.000.000-00');
-      // $('.cep input, .maskcep').mask('00000-000');
-      // $(".telefone input, .masktel").mask("(99) 99999-9999");
+      $('#form_actions_operator input[name="name"]').attr('value', operador.name).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="data_nascimento"]').attr('value', moment(operador.data_nascimento).format('DD/MM/YYYY')).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="cpf"]').attr('value', operador.cpf).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="rg"]').attr('value', operador.rg).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="email"]').attr('value', operador.email).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="rua"]').attr('value', operador.rua).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="numero"]').attr('value', operador.numero).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="complemento"]').attr('value', operador.complemento).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="bairro"]').attr('value', operador.bairro).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="nome_cidade"]').attr('value', operador.nome_cidade).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="cep"]').attr('value', operador.cep).attr('disabled', 'disabled');
+      $('#form_actions_operator select[name="nome_estado"]').attr('value', operador.nome_estado).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="telefone_um"]').attr('value', operador.telefone_um).attr('disabled', 'disabled');
+      $('#form_actions_operator input[name="telefone_dois"]').attr('value', operador.telefone_dois).attr('disabled', 'disabled');
     });
 
     $('.loading').fadeOut(700).addClass('hidden');
-  }; --}}
+  };
 
 
 
 
 
 
-  {{-- @isset($erro)
-    swal({
-      position: 'top',
-      title: 'Erro!',
-      text: '{{ $erro }}',
-      type: 'error'
-    });
-  @endisset
-
-  @isset($sucesso)
-    swal({
-      position: 'top',
-      title: 'Sucesso!',
-      text: '{{ $sucesso }}',
-      type: 'success',
-      timer: 4000
-    });
-  @endisset
+  {{--
 
   @isset($erroExcluir)
     swal({
@@ -696,51 +667,6 @@
       type: 'error'
     });
   @endisset
-
-  $('#cpf').blur(function () {
-    var valor = $(this).val();
-
-    if (valor != "") {
-      var status = verificaoCpf(valor);
-
-      function verificaoCpf(value) {
-        value = jQuery.trim(value);
-
-       value = value.replace('.','');
-       value = value.replace('.','');
-       cpf = value.replace('-','');
-       while(cpf.length < 11) cpf = "0"+ cpf;
-       var expReg = /^0+$|^1+$|^2+$|^3+$|^4+$|^5+$|^6+$|^7+$|^8+$|^9+$/;
-       var a = [];
-       var b = new Number;
-       var c = 11;
-       for (i=0; i<11; i++){
-         a[i] = cpf.charAt(i);
-         if (i < 9) b += (a[i] * --c);
-       }
-       if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11-x }
-       b = 0;
-       c = 11;
-       for (y=0; y<10; y++) b += (a[y] * c--);
-       if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
-
-       var retorno = true;
-       if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10]) || cpf.match(expReg)) retorno = false;
-
-       return retorno;
-      }
-
-      if (status == false) {
-        swal({
-          title: 'Erro no Campo CPF!',
-          text: 'O CPF informado é invalido, tente novamente!',
-          type: 'error',
-          confirmButtonText: 'Ok. Já entendi...'
-        });
-      }
-    }
-
-  });
 
   @isset($erro)
     $('#modal_cadastrar_operador').modal('show');

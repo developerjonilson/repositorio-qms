@@ -187,7 +187,7 @@
 	  $('input[name="telefone_dois"]').mask("(00) 00000-0009"),
 		$('input[name="numero"]').mask('000000000000'),
 		// $('input[name="name"]').mask('SSSS');
-		$('input[name="data_nascimento"]').mask("00/00/0000", {placeholder: "__/__/____"});
+		// $('input[name="data_nascimento"]').mask("00/00/0000", {placeholder: "__/__/____"});
 
 		@yield('scripts')
 	</script>

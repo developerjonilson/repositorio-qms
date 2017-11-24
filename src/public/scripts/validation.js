@@ -424,7 +424,7 @@ $.validator.setDefaults({
     }
 });
 
-$("#form_operator").validate({
+$("#form_create_operator").validate({
         // Define as regras
         rules: {
             name: {
