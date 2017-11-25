@@ -519,14 +519,140 @@ $("#form_create_operator").validate({
 
   function postFormOperador(form) {
       $('.loading').fadeIn('fast').removeClass('hidden');
-      // $('#cpf').unmask();
-      // $('#cep').unmask();
-      // $("#numero_cns").unmask();
-      // $('#telefone_um').unmask();
-      // $('#telefone_dois').unmask();
       form.submit();
 
   };
+
+  $("#form_actions_operator").validate({
+          // Define as regras
+          rules: {
+              name: {
+                required: true,
+                lettersonlys: true
+              },
+              data_nascimento: {
+                required: true
+              },
+              cpf: {
+                required: true,
+                verificarCpf: true
+              },
+              rg: {
+                required: true,
+                digits: true
+              },
+              email: {
+                 required: true,
+                 email: true
+              },
+              rua: {
+                 required: true
+              },
+              numero: {
+                required: true,
+                number: true
+              },
+              bairro: {
+                required: true
+              },
+              nome_cidade: {
+                required: true
+              },
+              cep: {
+                required: true,
+              },
+              nome_estado: {
+                required: true
+              },
+              telefone_um: {
+                required: true
+              },
+          },
+          // Define as mensagens de erro para cada regra
+          messages: {
+                name: {
+                  required: "Campo Obrigatório!",
+                },
+                data_nascimento: {
+                  required: "Campo Obrigatório!",
+                },
+                cpf: {
+                  required: "Campo Obrigatório!",
+                  verificarCpf: "CPF inválido!"
+                },
+                rg: {
+                  required: "Campo Obrigatório!",
+                  digits: "Campo numérico!"
+                },
+                email: {
+                   required: "Campo Obrigatório!",
+                   email: "Informe um email correto!"
+                },
+                rua: {
+                   required: "Campo Obrigatório!"
+                },
+                numero: {
+                  required: "Campo Obrigatório!",
+                  number: "Este campo só pode conter numeros!"
+                },
+                bairro: {
+                  required: "Campo Obrigatório!"
+                },
+                nome_cidade: {
+                  required: "Campo Obrigatório!"
+                },
+                cep: {
+                  required: "Campo Obrigatório!"
+                },
+                nome_estado: {
+                  required: "Campo Obrigatório!"
+                },
+                telefone_um: {
+                  required: "Campo Obrigatório!"
+                },
+          },
+
+        submitHandler: postFormEditOperador,
+      }
+    );
+
+    function postFormEditOperador(form) {
+        $('.loading').fadeIn('fast').removeClass('hidden');
+        form.submit();
+    };
+
+    $("#new_especialidade").validate({
+            // Define as regras
+            rules: {
+                codigo_especialidade: {
+                  required: true,
+                  number: true
+                },
+                nome_especialidade: {
+                  required: true,
+                  lettersonlys: true
+                },
+            },
+            // Define as mensagens de erro para cada regra
+            messages: {
+                  codigo_especialidade: {
+                    required: "Campo Obrigatório!",
+                    number: "Este campo só pode conter numeros!"
+                  },
+                  nome_especialidade: {
+                    required: "Campo Obrigatório!",
+                  },
+            },
+
+          submitHandler: postFormEspecialidade,
+        }
+      );
+
+      function postFormEspecialidade(form) {
+          $('.loading').fadeIn('fast').removeClass('hidden');
+          form.submit();
+
+      };
 
 });
 

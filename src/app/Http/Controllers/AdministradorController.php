@@ -176,11 +176,7 @@ class AdministradorController extends Controller {
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
-      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
-      // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_actions_operator" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button>   ';
-      // return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   ';
-            //  '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   ';
-            //  '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
     })->make(true);
   }
 
@@ -379,15 +375,15 @@ class AdministradorController extends Controller {
 
         $operador_id = $request->operador_id;
 
-        $data = $request->data_nascimento;
+        $data_pt = str_replace("/", "-", $request->data_nascimento);
+        $data = date('Y-m-d', strtotime($data_pt));
         list($ano, $mes, $dia,) = explode('-', $data);
         $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
         $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
         $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
 
         if ($idade < 18) {
-          $request->session()->flash('erroEdit', 'O Operador não pode ser menor (não tem 18 anos),
-                                          por favor verifique a data informada!');
+          $request->session()->flash('erroEdit', 'O Operador não pode ser menor de idade, verifique a data informada!');
           return redirect('/administrador/operadores')->withInput();
         }
 
@@ -444,8 +440,6 @@ class AdministradorController extends Controller {
         $telefone_dois = str_replace(" ", "", $telefone_dois);
         $telefone_dois = str_replace("-", "", $telefone_dois);
 
-        // $operador_id = $request->operador_id;
-
         $user = User::find($operador_id);
         $telefone =Telefone::find($user->telefone_id);
         $endereco = Endereco::find($user->endereco_id);
@@ -455,18 +449,18 @@ class AdministradorController extends Controller {
         $telefone->telefone_um = $telefone_um;
         $telefone->telefone_dois = $telefone_dois;
 
-        $estado->nome_estado = $request->nome_estado;
+        $estado->nome_estado = strtoupper($request->nome_estado);
 
-        $cidade->nome_cidade = $request->nome_cidade;
+        $cidade->nome_cidade = strtoupper($request->nome_cidade);
         $cidade->cep = $request->cep;
 
-        $endereco->rua = $request->rua;
+        $endereco->rua = strtoupper($request->rua);
         $endereco->numero = $request->numero;
-        $endereco->bairro = $request->bairro;
-        $endereco->complemento = $request->complemento;
+        $endereco->bairro = strtoupper($request->bairro);
+        $endereco->complemento = strtoupper($request->complemento);
 
-        $user->name = $request->name;
-        $user->data_nascimento = $request->data_nascimento;
+        $user->name = strtoupper($request->name);
+        $user->data_nascimento = $data;
         $user->cpf = $cpf;
         $user->rg = $request->rg;
         $user->email = $request->email;

@@ -168,28 +168,37 @@
 
 	@yield('pos-script')
 	<script>
-		moment.locale('pt-br');
 
-		$('.hora').html(moment().format('llll'));
+	moment.locale('pt-br');
 
-		$('div[data-toggle="datepicker"]').datepicker({
-	    language: 'pt-BR',
-	    autoclose: true,
-	    format: 'dd/mm/yyyy',
-			startDate: '{{ date("d-m-Y", strtotime("-150 years")) }}',
-			endDate: "{{ date("d-m-Y") }}"
-	  });
+	$('.hora').html(moment().format('llll'));
 
-		$('input[name="cpf"]').mask('000.000.000-00'),
-	  $('input[name="rg"]').mask('000000000000000'),
-	  $('input[name="cep"]').mask("00000-000"),
-	  $('input[name="telefone_um"]').mask("(00) 00000-0009"),
-	  $('input[name="telefone_dois"]').mask("(00) 00000-0009"),
-		$('input[name="numero"]').mask('000000000000'),
-		// $('input[name="name"]').mask('SSSS');
-		// $('input[name="data_nascimento"]').mask("00/00/0000", {placeholder: "__/__/____"});
+	$('div[data-toggle="datepicker"]').datepicker({
+		language: 'pt-BR',
+		autoclose: true,
+		format: 'dd/mm/yyyy',
+		startDate: '{{ date("d-m-Y", strtotime("-150 years")) }}',
+		endDate: "{{ date("d-m-Y") }}"
+	});
 
-		@yield('scripts')
+	function revalidateDate(form) {
+		if (form === 'form_create_operator') {
+			$('#'+form+' input[name="data_nascimento"]').valid();
+		}
+		if (form === 'form_actions_operator') {
+			$('#'+form+' input[name="data_nascimento"]').valid();
+		}
+	}
+
+	$('input[name="cpf"]').mask('000.000.000-00'),
+	$('input[name="rg"]').mask('000000000000000'),
+	$('input[name="cep"]').mask("00000-000"),
+	$('input[name="telefone_um"]').mask("(00) 00000-0009"),
+	$('input[name="telefone_dois"]').mask("(00) 00000-0009"),
+	$('input[name="numero"]').mask('000000000000');
+
+	@yield('scripts')
+
 	</script>
 
 </body>

@@ -39,7 +39,7 @@
       <form class="" action="{{ route('administrador.especialidade.cadastrar') }}" method="post" id="new_especialidade" name="new_especialidade">
         {{ csrf_field() }}
         {{--           --------- Modal para cadastrar especialidade -----------                --}}
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal_cadastrar_especialidade" data-backdrop="static">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal_cadastrar_especialidade" data-backdrop="static" data-keyboard="false">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -52,7 +52,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="ver_descricao_especialidade">Código de Identificação da Especialidade</label>
-                      <input type="number" name="codigo_especialidade" id="codigo_especialidade" value="{{ old('codigo_especialidade') }}" class="form-control" required>
+                      <input type="number" name="codigo_especialidade" id="codigo_especialidade" value="{{ old('codigo_especialidade') }}" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -61,7 +61,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nome_especialidade">Nome da Especialidade</label>
-                      <input type="text" class="form-control" id="nome_especialidade" name="nome_especialidade" value="{{ old('nome_especialidade') }}" required>
+                      <input type="text" class="form-control" id="nome_especialidade" name="nome_especialidade" value="{{ old('nome_especialidade') }}">
                     </div>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
       </form>
 
       {{--           --------- Modal para ver especialidade -----------                --}}
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal_ver_especialidade" data-backdrop="static">
+      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal_ver_especialidade" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -122,33 +122,29 @@
 
 @endsection
 
-@section('pos-script')
-  <script type="text/javascript">
+@section('scripts')
   @isset($sucesso)
     $('#codigo_especialidade').attr('value', '');
     $('#nome_especialidade').attr('value', '');
 
-    swal(
+    swal({
       position: 'top',
-      'Sucesso!',
-      '{{ $sucesso }}',
-      'success'
-    )
+      title: 'Sucesso!',
+      text: '{{ $sucesso }}',
+      type: 'success',
+      timer: 4000
+    });
   @endisset
 
   @isset($erro)
     $('#modal_cadastrar_especialidade').modal('show');
-    swal(
+    swal({
       position: 'top',
-      'Erro!',
-      '{{ $erro }}',
-      'error'
-    )
+      title: 'Erro!',
+      text: '{{ $erro }}',
+      type: 'error'
+    });
   @endisset
-
-  $('#enviar_especialidade').click(function() {
-    $('.loading').fadeIn('fast').removeClass('hidden');
-  });
 
   $(function() {
         $('#especialidades_table').DataTable({
@@ -254,6 +250,4 @@
     $('.btn_cancelar_especialidade').click(function() {
       $('#new_especialidade')[0].reset();
     });
-
-  </script>
 @endsection

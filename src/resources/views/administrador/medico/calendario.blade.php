@@ -75,7 +75,7 @@
 
   <form class="" action="{{ route('administrador.calendario.cadastrar') }}" method="post" id="cadastrar_atendimento" name="cadastrar_atendimento">
     {{ csrf_field() }}
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"  id="model_new_atendimento" data-backdrop="static">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"  id="model_new_atendimento" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">

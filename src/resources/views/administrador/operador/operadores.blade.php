@@ -40,10 +40,10 @@
 
   </div>
 
-  <form class="" action="{{ route('administrador.cadastrar-operador') }}" method="post" id="form_create_operator">
+  <form class="" action="{{ route('administrador.cadastrar-operador') }}" method="post" id="form_create_operator" novalidate>
     {{ csrf_field() }}
     {{--           --------- Modal operator -----------                --}}
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalCreateOperator" id="modal_create_operator" data-backdrop="static">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalCreateOperator" id="modal_create_operator" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -71,9 +71,9 @@
                   <label for="data_nascimento">Data de Nascimento<span class="vermelho">*</span></label>
                   <div class="form-group">
                     <div class="input-group date" data-toggle="datepicker">
-                      <input type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}">
+                      <input type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" placeholder="01/01/1998" onchange="revalidateDate(form.id)">
                       <div class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
+                        <i class="fa fa-calendar"></i>
                       </div>
                     </div>
                   </div>
@@ -212,7 +212,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="telefone_um">Telefone<span class="vermelho">*</span></label>
-                  <input type="tel" maxlength="15" class="form-control" name="telefone_um" placeholder="(88) 99900-1234" value="{{ old('telefone_um') }}">
+                  <input type="text" class="form-control" name="telefone_um" placeholder="(88) 99900-1234" value="{{ old('telefone_um') }}">
                 </div>
               </div>
               <div class="col-md-6">
@@ -234,10 +234,11 @@
 
   </form>
 
-  <form class="" action="" method="post" id="form_actions_operator">
+  <form class="" action="{{ route('administrador.editar-operador') }}" method="post" id="form_actions_operator" novalidate>
+    <input type="hidden" name="operador_id" value="{{ old('operador_id') }}">
     {{ csrf_field() }}
     {{--           --------- Modal operator -----------                --}}
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalActionsOperator" id="modal_actions_operator" data-backdrop="static">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalActionsOperator" id="modal_actions_operator" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -257,7 +258,7 @@
               <div class="col-md-8">
                 <div class="form-group">
                   <label for="name">Nome<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control campo" name="name" value="{{ old('name') }}" placeholder="JOSE DA SILVA FILHO">
+                  <input type="text" class="form-control campo" name="name" value="{{ old('name') }}" placeholder="JOSE DA SILVA FILHO" disabled>
                 </div>
               </div>
               <div class="col-md-4">
@@ -265,7 +266,7 @@
                   <label for="data_nascimento">Data de Nascimento<span class="vermelho">*</span></label>
                   <div class="form-group">
                     <div class="input-group date" data-toggle="datepicker">
-                      <input type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}">
+                      <input type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" placeholder="01/01/1998" onchange="revalidateDate(form.id)" disabled>
                       <div class="input-group-addon">
                         <span class="fa fa-calendar"></span>
                       </div>
@@ -279,13 +280,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="cpf">CPF<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control" name="cpf" placeholder="233.140.732-09" value="{{ old('cpf') }}">
+                  <input type="text" class="form-control" name="cpf" id="cpf" placeholder="233.140.732-09" value="{{ old('cpf') }}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="rg">RG<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control" name="rg" placeholder="2007912033" value="{{ old('rg') }}">
+                  <input type="text" class="form-control" name="rg" placeholder="2007912033" value="{{ old('rg') }}" disabled>
                   <div class="help-block with-errors"></div>
                 </div>
               </div>
@@ -295,16 +296,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="email">Email<span class="vermelho">*</span></label>
-                  <input type="email" class="form-control" name="email" placeholder="jose@gmail.com" value="{{ old('email') }}">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Senha</label>
-                  <input type="text" class="form-control campo" value='Será adiciona a senha padrão ( QMS12345678 ), que será obrigatório a alteração da mesma no primeiro acesso!' disabled>
+                  <input type="email" class="form-control" name="email" placeholder="jose@gmail.com" value="{{ old('email') }}" disabled>
                 </div>
               </div>
             </div>
@@ -321,13 +313,13 @@
               <div class="col-md-9">
                 <div class="form-group">
                   <label for="rua">Rua<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control campo" name="rua" placeholder="RUA FRANCISCO DA CUNHA" value="{{ old('rua') }}">
+                  <input type="text" class="form-control campo" name="rua" placeholder="RUA FRANCISCO DA CUNHA" value="{{ old('rua') }}" disabled>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="numero">Número<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control" name="numero" placeholder="555" value="{{ old('numero') }}">
+                  <input type="text" class="form-control" name="numero" placeholder="555" value="{{ old('numero') }}" disabled>
                 </div>
               </div>
             </div>
@@ -335,13 +327,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="complemento">Complemento</label>
-                  <input type="text" class="form-control campo" name="complemento" placeholder="CASA A1" value="{{ old('complemento') }}">
+                  <input type="text" class="form-control campo" name="complemento" placeholder="CASA A1" value="{{ old('complemento') }}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="bairro">Bairro<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control campo" name="bairro" placeholder="CENTRO" value="{{ old('bairro') }}">
+                  <input type="text" class="form-control campo" name="bairro" placeholder="CENTRO" value="{{ old('bairro') }}" disabled>
                 </div>
               </div>
             </div>
@@ -349,19 +341,19 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="cidade">Cidade<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control campo" name="nome_cidade" placeholder="MILAGRES" value="{{ old('nome_cidade') }}">
+                  <input type="text" class="form-control campo" name="nome_cidade" placeholder="MILAGRES" value="{{ old('nome_cidade') }}" disabled>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="cep">CEP<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control" name="cep" placeholder="632500-000" value="{{ old('cep') }}">
+                  <input type="text" class="form-control" name="cep" placeholder="632500-000" value="{{ old('cep') }}" pattern= "\d{5}-?\d{3}" disabled>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="estado">Estado<span class="vermelho">*</span></label>
-                  <select name="nome_estado" class="form-control">
+                  <select name="nome_estado" class="form-control" disabled>
                     <option value="ACRE">ACRE</option>
                     <option value="ALAGOAS">ALAGOAS</option>
                     <option value="AMAPA">AMAPA</option>
@@ -406,13 +398,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="telefone_um">Telefone<span class="vermelho">*</span></label>
-                  <input type="tel" maxlength="15" class="form-control" name="telefone_um" placeholder="(88) 99900-1234" value="{{ old('telefone_um') }}">
+                  <input type="text" class="form-control" name="telefone_um" placeholder="(88) 99900-1234" value="{{ old('telefone_um') }}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="telefone_dois">Telefone (Opcional)</label>
-                  <input type="text" class="form-control" name="telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}">
+                  <input type="text" class="form-control" name="telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}" disabled>
                 </div>
               </div>
             </div>
@@ -473,6 +465,18 @@
     });
   });
 
+  function editing(id) {
+    $('#btn_group').addClass('hidden');
+
+    $('#btn_actions_modal_operador').append(
+      '<div class="" id="btn_group_edit">'+
+      '<button type="submit" class="btn btn-success" id="btn_edit_operator" value=""><i class="fa fa-check"></i>  Salvar Alterações</button>'+
+      '<button type="button" class="btn btn-danger" data-dismiss="modal" id=""><i class="fa fa-times-circle"></i>  Cancelar</button>'+
+      '</div>'
+    );
+    enabledForm('#form_actions_operator')
+  };
+
   @isset($erro)
     swal({
       position: 'top',
@@ -493,32 +497,67 @@
     });
   @endisset
 
+  @isset($erroExcluir)
+    swal({
+      position: 'top',
+      title: 'Erro!',
+      text: '{{ $erroExcluir }}',
+      type: 'error'
+    });
+  @endisset
+
+  @isset($erroEdit)
+    let id = $('input[name="operador_id"]').val();
+    swal({
+      position: 'top',
+      title: 'Erro!',
+      text: '{{ $erroEdit }}',
+      type: 'error'
+    });
+
+    editing(id);
+
+    $('#modal_actions_operator').modal('show');
+  @endisset
+
+  function enabledForm(formSelector) {
+    $(formSelector).find('input,select,textarea').attr('disabled', false)
+  }
+  function disabledForm(formSelector) {
+    $(formSelector).find('input,select,textarea').attr('disabled', true)
+  }
+
   function detalhesOperator(id) {
     $('.loading').fadeOut(700).removeClass('hidden');
 
     $.get('/administrador/ver-operador/' + id, function (operador) {
-      $('#form_actions_operator input[name="name"]').attr('value', operador.name).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="data_nascimento"]').attr('value', moment(operador.data_nascimento).format('DD/MM/YYYY')).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="cpf"]').attr('value', operador.cpf).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="rg"]').attr('value', operador.rg).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="email"]').attr('value', operador.email).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="rua"]').attr('value', operador.rua).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="numero"]').attr('value', operador.numero).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="complemento"]').attr('value', operador.complemento).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="bairro"]').attr('value', operador.bairro).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="nome_cidade"]').attr('value', operador.nome_cidade).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="cep"]').attr('value', operador.cep).attr('disabled', 'disabled');
-      $('#form_actions_operator select[name="nome_estado"]').attr('value', operador.nome_estado).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="telefone_um"]').attr('value', operador.telefone_um).attr('disabled', 'disabled');
-      $('#form_actions_operator input[name="telefone_dois"]').attr('value', operador.telefone_dois).attr('disabled', 'disabled');
+
+      $('#form_actions_operator input[name="operador_id"]').attr('value', operador.id);
+      $('#form_actions_operator input[name="name"]').attr('value', operador.name);
+      $('#form_actions_operator input[name="data_nascimento"]').attr('value', moment(operador.data_nascimento).format('DD/MM/YYYY'));
+      $('#form_actions_operator input[name="cpf"]').attr('value', operador.cpf).trigger('input');
+      $('#form_actions_operator input[name="rg"]').attr('value', operador.rg).trigger('input');
+      $('#form_actions_operator input[name="email"]').attr('value', operador.email);
+      $('#form_actions_operator input[name="rua"]').attr('value', operador.rua);
+      $('#form_actions_operator input[name="numero"]').attr('value', operador.numero);
+      $('#form_actions_operator input[name="complemento"]').attr('value', operador.complemento);
+      $('#form_actions_operator input[name="bairro"]').attr('value', operador.bairro);
+      $('#form_actions_operator input[name="nome_cidade"]').attr('value', operador.nome_cidade);
+      $('#form_actions_operator input[name="cep"]').attr('value', operador.cep).trigger('input');
+      $('#form_actions_operator select[name="nome_estado"]').attr('value', operador.nome_estado);
+      $('#form_actions_operator input[name="telefone_um"]').attr('value', operador.telefone_um).trigger('input');
+      $('#form_actions_operator input[name="telefone_dois"]').attr('value', operador.telefone_dois).trigger('input');
+
+      disabledForm('#form_actions_operator')
 
       $('#btn_delete_operator').attr('value', operador.id);
 
       $('#modal_actions_operator').modal('show');
     });
-
     $('.loading').fadeOut(700).addClass('hidden');
+
   };
+
 
   $('#btn_delete_operator').click(function () {
     let operador_id = $(this).val();
@@ -592,25 +631,10 @@
 
   $('#btn_edit_operator').click(function(){
     var id = $('#btn_delete_operator').val();
-    $('#btn_group').addClass('hidden');
 
-    $('#btn_actions_modal_operador').append(
-      '<div class="" id="btn_group_edit">'+
-      '<button type="submit" class="btn btn-success" id="btn_edit_operator" value=""><i class="fa fa-check"></i>  Salvar Alterações</button>'+
-      '<button type="button" class="btn btn-danger" id="btn_cancel_edit"><i class="fa fa-times-circle"></i>  Cancelar</button>'+
-      {{-- '<button type="button" class="btn btn-danger" data-dismiss="modal" id=""><i class="fa fa-times-circle"></i>  Cancelar</button>'+ --}}
-      '</div>'
-    );
+    editing(id);
   });
 
-  $('#btn_cancel_edit').click(function() {
-    alert('Deu certo!');
-
-    {{-- var id = $('#btn_delete_operator').val();
-    cancelEdit(id);
-    $('#btn_group').removeClass('hidden');
-    $('#btn_group_edit').remove(); --}}
-  });
 
   $('#modal_actions_operator').on('hidden.bs.modal', function (event) {
     if ($('#btn_group').hasClass("hidden")) {
@@ -650,23 +674,7 @@
 
   {{--
 
-  @isset($erroExcluir)
-    swal({
-      position: 'top',
-      title: 'Erro!',
-      text: '{{ $erroExcluir }}',
-      type: 'error'
-    });
-  @endisset
 
-  @isset($erroEdit)
-    swal({
-      position: 'top',
-      title: 'Erro!',
-      text: '{{ $erroEdit }}',
-      type: 'error'
-    });
-  @endisset
 
   @isset($erro)
     $('#modal_cadastrar_operador').modal('show');
