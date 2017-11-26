@@ -327,7 +327,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="complemento">Complemento</label>
-                  <input type="text" class="form-control campo" name="complemento" placeholder="CASA A1" value="{{ old('complemento') }}" disabled>
+                  <input type="text" class="form-control campo" name="complemento" value="{{ old('complemento') }}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
@@ -347,7 +347,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="cep">CEP<span class="vermelho">*</span></label>
-                  <input type="text" class="form-control" name="cep" placeholder="632500-000" value="{{ old('cep') }}" pattern= "\d{5}-?\d{3}" disabled>
+                  <input type="text" class="form-control" name="cep" placeholder="632500-000" value="{{ old('cep') }}"disabled>
                 </div>
               </div>
               <div class="col-md-4">
@@ -404,7 +404,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="telefone_dois">Telefone (Opcional)</label>
-                  <input type="text" class="form-control" name="telefone_dois" placeholder="(88) 99900-1234" value="{{ old('telefone_dois') }}" disabled>
+                  <input type="text" class="form-control" name="telefone_dois" value="{{ old('telefone_dois') }}" disabled>
                 </div>
               </div>
             </div>
@@ -519,13 +519,6 @@
 
     $('#modal_actions_operator').modal('show');
   @endisset
-
-  function enabledForm(formSelector) {
-    $(formSelector).find('input,select,textarea').attr('disabled', false)
-  }
-  function disabledForm(formSelector) {
-    $(formSelector).find('input,select,textarea').attr('disabled', true)
-  }
 
   function detalhesOperator(id) {
     $('.loading').fadeOut(700).removeClass('hidden');
@@ -666,143 +659,5 @@
 
     $('.loading').fadeOut(700).addClass('hidden');
   };
-
-
-
-
-
-
-  {{--
-
-
-
-  @isset($erro)
-    $('#modal_cadastrar_operador').modal('show');
-  @endisset
-
-  @isset($erroEdit)
-    $('#modal_editar_operador').modal('show');
-  @endisset
-
-  $('#new_operador').submit(function() {
-    $('.loading').fadeIn('fast').removeClass('hidden');
-  });
-
-  $('#edit_operador').submit(function() {
-    $('.loading').fadeIn('fast').removeClass('hidden');
-  });
-
-
-    function operadorParaEditar(id) {
-      $('.loading').fadeOut(700).removeClass('hidden');
-      $.get('/administrador/ver-operador/' + id, function (operador) {
-        $('#edit_operador_id').attr('value', operador.id);
-        $('#edit_name').attr('value', operador.name);
-        $('#edit_data_nascimento').attr('value', operador.data_nascimento);
-        $(' #edit_cpf').attr('value', operador.cpf);
-        $('#edit_rg').attr('value', operador.rg);
-        $('#edit_email').attr('value', operador.email);
-        $('#edit_rua').attr('value', operador.rua);
-        $('#edit_numero').attr('value', operador.numero);
-        $('#edit_complemento').attr('value', operador.complemento);
-        $('#edit_bairro').attr('value', operador.bairro);
-        $('#edit_nome_cidade').attr('value', operador.nome_cidade);
-        $('#edit_cep').attr('value', operador.cep);
-        $('#edit_nome_estado').attr('value', operador.nome_estado);
-        $('#edit_telefone_um').attr('value', operador.telefone_um);
-        $('#edit_telefone_dois').attr('value', operador.telefone_dois);
-
-        $('.edit_cpf input, .maskcpf').mask('000.000.000-00');
-        $('.edit_cep input, .maskcep').mask('00000-000');
-        $(".edit_telefone input, .masktel").mask("(99) 99999-9999");
-      });
-      $('.loading').fadeOut(700).addClass('hidden');
-    };
-
-    function operadorParaExcluir(id) {
-      $('.loading').fadeOut(700).removeClass('hidden');
-      $.get('/administrador/ver-operador/' + id, function (operador) {
-        $('#operador_id').empty();
-        $('#nome_operador').empty();
-        $("#operador_id").attr('value', operador.id);
-        $("#nome_operador").append( "<b>"+operador.name+"</b>");
-      });
-      $('.loading').fadeOut(700).addClass('hidden');
-    };
-
-    $('#btn_cancel_new').click(function () {
-        $("#new_operador")[0].reset();
-
-        $('#new_operador #name').attr('value','');
-        $('#new_operador #data_nascimento').attr('value','');
-        $('#new_operador #cpf').attr('value','');
-        $('#new_operador #rg').attr('value','');
-        $('#new_operador #email').attr('value','');
-        $('#new_operador #rua').attr('value','');
-        $('#new_operador #numero').attr('value','');
-        $('#new_operador #complemento').attr('value','');
-        $('#new_operador #bairro').attr('value','');
-        $('#new_operador #cidade').attr('value','');
-        $('#new_operador #cep').attr('value','');
-        $('#new_operador #telefone_um').attr('value','');
-        $('#new_operador #telefone_dois').attr('value','');
-
-    });
-
-    $('#btn_cancel_edit').click(function () {
-      // $('#edit_operador')[0].reset();
-      $('#edit_operador').trigger("reset");
-    });
-
-    $('#btn_delete_operador').click(function () {
-      let operador_id = $(this).val();
-
-      swal({
-        position: 'top',
-        title: 'Excluir Operador',
-        text: "Você tem certeza que deseja excluir esse Operador?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#5cb85c',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, excluir',
-        cancelButtonText: 'Cancelar'
-      }).then(function (result) {
-        if (result.value) {
-          $('.loading').fadeOut(700).removeClass('hidden');
-
-          $.post("{{ route('administrador.excluir-operador') }}",
-          {
-            _token: "{{ csrf_token() }}",
-             id: operador_id
-          },
-          function(result) {
-            if (result.menssage === 'error') {
-              $('.loading').fadeOut(700).addClass('hidden');
-              swal({
-                position: 'top',
-                title: 'Erro!',
-                text: 'Ocorreu um erro ao excluir o operador, tente em instantes!',
-                type: 'error',
-                confirmButtonText: 'Ok'
-              });
-            }
-            if (result.menssage === 'success') {
-              $('.loading').fadeOut(700).addClass('hidden');
-              swal({
-                position: 'top',
-                title: 'Excluído!',
-                text: 'O operador foi excluída com sucesso!',
-                type: 'success'
-              }).then(function (result) {
-                $('.loading').fadeOut(700).removeClass('hidden');
-                location.reload(true)
-              })
-            }
-          }, "json");
-
-        }
-      })
-    }); --}}
 
 @endsection

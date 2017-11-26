@@ -197,6 +197,13 @@
 	$('input[name="telefone_dois"]').mask("(00) 00000-0009"),
 	$('input[name="numero"]').mask('000000000000');
 
+	function enabledForm(formSelector) {
+    $(formSelector).find('input,select,textarea').attr('disabled', false)
+  }
+  function disabledForm(formSelector) {
+    $(formSelector).find('input,select,textarea').attr('disabled', true)
+  }
+
 	@yield('scripts')
 
 	</script>

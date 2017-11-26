@@ -654,6 +654,182 @@ $("#form_create_operator").validate({
 
       };
 
+      $("#create_doctor").validate({
+              // Define as regras
+              rules: {
+                  numero_crm: {
+                    required: true,
+                    number: true
+                  },
+                  nome_medico: {
+                    required: true,
+                    lettersonlys: true
+                  },
+                  rua: {
+                     required: true
+                  },
+                  numero: {
+                    required: true,
+                    number: true
+                  },
+                  bairro: {
+                    required: true
+                  },
+                  nome_cidade: {
+                    required: true
+                  },
+                  cep: {
+                    required: true,
+                  },
+                  nome_estado: {
+                    required: true
+                  },
+                  telefone_um: {
+                    required: true
+                  },
+              },
+              // Define as mensagens de erro para cada regra
+              messages: {
+                    numero_crm: {
+                      required: "Campo Obrigatório!",
+                      number: "Este campo só pode conter numeros!"
+                    },
+                    nome_medico: {
+                      required: "Campo Obrigatório!",
+                    },
+                    rua: {
+                       required: "Campo Obrigatório!"
+                    },
+                    numero: {
+                      required: "Campo Obrigatório!",
+                      number: "Este campo só pode conter numeros!"
+                    },
+                    bairro: {
+                      required: "Campo Obrigatório!"
+                    },
+                    nome_cidade: {
+                      required: "Campo Obrigatório!"
+                    },
+                    cep: {
+                      required: "Campo Obrigatório!"
+                    },
+                    nome_estado: {
+                      required: "Campo Obrigatório!"
+                    },
+                    telefone_um: {
+                      required: "Campo Obrigatório!"
+                    },
+              },
+
+            submitHandler: postFormCreateDoctor,
+          }
+        );
+
+        function postFormCreateDoctor(form) {
+            $('.loading').fadeIn('fast').removeClass('hidden');
+            form.submit();
+        };
+
+        $("#form_actions_doctor").validate({
+                // Define as regras
+                rules: {
+                    numero_crm: {
+                      required: true,
+                      number: true
+                    },
+                    nome_medico: {
+                      required: true,
+                      lettersonlys: true
+                    },
+                    rua: {
+                       required: true
+                    },
+                    numero: {
+                      required: true,
+                      number: true
+                    },
+                    bairro: {
+                      required: true
+                    },
+                    nome_cidade: {
+                      required: true
+                    },
+                    cep: {
+                      required: true,
+                    },
+                    nome_estado: {
+                      required: true
+                    },
+                    telefone_um: {
+                      required: true
+                    },
+                },
+                // Define as mensagens de erro para cada regra
+                messages: {
+                      numero_crm: {
+                        required: "Campo Obrigatório!",
+                        number: "Este campo só pode conter numeros!"
+                      },
+                      nome_medico: {
+                        required: "Campo Obrigatório!",
+                      },
+                      rua: {
+                         required: "Campo Obrigatório!"
+                      },
+                      numero: {
+                        required: "Campo Obrigatório!",
+                        number: "Este campo só pode conter numeros!"
+                      },
+                      bairro: {
+                        required: "Campo Obrigatório!"
+                      },
+                      nome_cidade: {
+                        required: "Campo Obrigatório!"
+                      },
+                      cep: {
+                        required: "Campo Obrigatório!"
+                      },
+                      nome_estado: {
+                        required: "Campo Obrigatório!"
+                      },
+                      telefone_um: {
+                        required: "Campo Obrigatório!"
+                      },
+                },
+
+              submitHandler: postFormActionsDoctor,
+            }
+          );
+
+          function postFormActionsDoctor(form) {
+              $('.loading').fadeIn('fast').removeClass('hidden');
+              form.submit();
+          };
+
+
+          $("#add_especialdiades").validate({
+                  // Define as regras
+                  rules: {
+                      codigo_especialidade: {
+                        required: true,
+                      },
+                  },
+                  // Define as mensagens de erro para cada regra
+                  messages: {
+                        codigo_especialidade: {
+                          required: "Campo Obrigatório!",
+                        },
+                  },
+
+                submitHandler: postFormCadastrarEspecialidadeMedico,
+              }
+            );
+
+            function postFormCadastrarEspecialidadeMedico(form) {
+                $('.loading').fadeIn('fast').removeClass('hidden');
+                form.submit();
+            };
+
 });
 
 
