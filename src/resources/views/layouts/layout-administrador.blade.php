@@ -105,7 +105,8 @@
 						<li><a href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
 						<li><a href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
 						<li><a href="{{ action('AdministradorController@especialidades') }}" class=""><i class="fa fa-medkit"></i> <span>Especialidades</span></a></li>
-						<li>
+						<li><a href="{{ action('AdministradorController@relatorios') }}" class=""><i class="fa fa-bar-chart"></i> <span>Relatórios</span></a></li>
+						{{-- <li>
 							<a href="#subRelatios" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subRelatios" class="collapse ">
 								<ul class="nav">
@@ -113,7 +114,7 @@
 									<li><a href="#" class="">Mensal</a></li>
 								</ul>
 							</div>
-						</li>
+						</li> --}}
 					</ul>
 
 				</nav>

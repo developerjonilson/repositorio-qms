@@ -57,6 +57,12 @@ Route::get('/administrador/medicos/calendario-atendimento/ver/{medico_id}', 'Adm
 Route::post('/administrador/medicos/calendario-atendimento/cadastrar', 'AdministradorController@calendarioCadastrar')->name('administrador.calendario.cadastrar');
 Route::post('/administrador/medicos/calendario-atendimento/excluir', 'AdministradorController@calendarioExcluir')->name('administrador.calendario.excluir');
 
+//rotas de relatorios:
+// Route::get('/administrador/relatorios/diario', 'AdministradorController@relatorioDiario')->name('administrador.relatorio.diario');
+// Route::get('/administrador/relatorios/mensal', 'AdministradorController@relatorioMensal')->name('administrador.relatorio.mensal');
+
+Route::get('/administrador/relatorios', 'AdministradorController@relatorios')->name('administrador.relatorio');
+
 
 
 

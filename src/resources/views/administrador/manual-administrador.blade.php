@@ -2,7 +2,13 @@
 
 @section('conteudo')
 
-	{{-- <h3 class="page-title">Buscar paciente</h3> --}}
+	<div class="row">
+    <ol class="breadcrumb">
+      <li><a href="{{ action('AdministradorController@index') }}">Administrador</a></li>
+      <li class="active">Manual do Administrador</li>
+    </ol>
+  </div>
+
 	<div class="row">
 		<div class="col-md-12">
 			<!-- PANEL HEADLINE -->

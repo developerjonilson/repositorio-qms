@@ -1184,6 +1184,14 @@ class AdministradorController extends Controller {
     return Response::json($result);
   }
 
+  public function relatorios() {
+    return view('administrador.relatorios.relatorio');
+  }
+
+  // public function relatorioMensal() {
+  //   return view('administrador.manual-administrador');
+  // }
+
   public function manualAdministrador() {
     return view('administrador.manual-administrador');
   }

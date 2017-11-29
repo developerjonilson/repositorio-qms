@@ -57,4 +57,24 @@
 		</div>
 	</div>
 
+	{{-- <div class="panel panel-headline">
+		<div class="panel-heading">
+			<h3 class="panel-title">Visão Geral</h3>
+			<p class="panel-subtitle">Período: Desde da implantação do QMS</p>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+
+			</div>
+		</div>
+
+		<div class="">
+	    <div class="overlay"></div>
+	    <div class="content text">
+	      <h1 class="heading">QMS - Sistema de Gestão de Consultas Médicas</h1>
+	      <p>Desenvolvido por StarTech</p>
+	    </div>
+	  </div>
+	</div> --}}
+
 @endsection
