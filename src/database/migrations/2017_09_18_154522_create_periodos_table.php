@@ -16,6 +16,8 @@ class CreatePeriodosTable extends Migration
         Schema::create('periodos', function (Blueprint $table) {
             $table->increments('id_periodo');
             $table->string('nome');
+            $table->string('title');
+            $table->date('start');
             $table->integer('total_consultas');
             $table->integer('vagas_disponiveis');
             $table->integer('calendario_id')->unsigned();

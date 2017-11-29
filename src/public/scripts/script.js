@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+  // $('div[data-toggle="datepicker"]').datepicker({
+  //   language: 'pt-BR',
+  //   autoclose: true,
+  //   format: 'dd/mm/yyyy'
+  // });
+
   $(window).on('load', function() {
     let pathname = window.location.pathname.split('/')
     // console.log(pathname)

@@ -13,6 +13,8 @@ class PeriodoTableSeeder extends Seeder
     {
       DB::table('periodos')->insert([
         'nome' => 'Manhã',
+        'title' => 'Manhã - ALERGIA E IMUNOLOGIA',
+        'start' => '2017-11-28',
         'total_consultas' => 20,
         'vagas_disponiveis' => 20,
         'calendario_id' => 1,
@@ -23,6 +25,8 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Manhã',
+        'title' => 'Manhã - ALERGIA E IMUNOLOGIA',
+        'start' => '2017-11-29',
         'total_consultas' => 20,
         'vagas_disponiveis' => 20,
         'calendario_id' => 2,
@@ -33,6 +37,8 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Tarde',
+        'title' => 'Tarde - ALERGIA E IMUNOLOGIA',
+        'start' => '2017-11-28',
         'total_consultas' => 20,
         'vagas_disponiveis' => 18,
         'calendario_id' => 1,
@@ -43,6 +49,8 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Tarde',
+        'title' => 'Tarde - ALERGIA E IMUNOLOGIA',
+        'start' => '2017-11-29',
         'total_consultas' => 20,
         'vagas_disponiveis' => 15,
         'calendario_id' => 2,
@@ -53,6 +61,8 @@ class PeriodoTableSeeder extends Seeder
 
       DB::table('periodos')->insert([
         'nome' => 'Noite',
+        'title' => 'Noite - ALERGIA E IMUNOLOGIA',
+        'start' => '2017-11-30',
         'total_consultas' => 20,
         'vagas_disponiveis' => 10,
         'calendario_id' => 3,

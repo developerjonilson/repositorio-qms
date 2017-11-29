@@ -13,15 +13,19 @@
 	<link rel="stylesheet" href="/vend/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/vend/linearicons/style.css">
 	<link rel="stylesheet" href="/vend/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="/vend/toastr/toastr.min.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/css/my-style.css">
-	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-	<link rel="stylesheet" href="/css/demo.css">
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 
 	<link href="/css/datatables/datatables.bootstrap.css" rel="stylesheet">
+	<link href="/css/calendar/fullcalendar.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/sweetalert2.min.css">
+	<link  href="/css/bootstrap-datepicker/bootstrap-datepicker3.css" rel="stylesheet">
+
+
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.png">
@@ -58,6 +62,9 @@
 				</div>
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
+						<li class="">
+							<a><i class="lnr lnr-clock"></i> <span class="hora"></span></a>
+						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
@@ -97,15 +104,18 @@
 						<li><a href="{{ action('AdministradorController@operadores') }}" class=""><i class="lnr lnr-users"></i> <span>Operadores</span></a></li>
 						<li><a href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
 						<li><a href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
+						<li><a href="{{ action('AdministradorController@especialidades') }}" class=""><i class="fa fa-medkit"></i> <span>Especialidades</span></a></li>
 						<li>
-							<a href="#subCalendario" data-toggle="collapse" class="collapsed"><i class="lnr lnr-calendar-full"></i> <span>Calendários</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subCalendario" class="collapse ">
+							<a href="#subRelatios" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subRelatios" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{ action('AdministradorController@cadastrarHorario') }}">Alterar Horários</a></li>
+									<li><a href="#" class="">Diário</a></li>
+									<li><a href="#" class="">Mensal</a></li>
 								</ul>
 							</div>
 						</li>
 					</ul>
+
 				</nav>
 			</div>
 		</div>
@@ -136,21 +146,67 @@
 	<script src="/vend/jquery/jquery.min.js"></script>
 	<script src="/vend/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/vend/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-	<script src="/vend/chartist/js/chartist.min.js"></script>
+	<script src="/vend/toastr/toastr.min.js"></script>
+	{{-- <script src="/vend/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="/vend/chartist/js/chartist.min.js"></script> --}}
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
 	<script src="/scripts/moment.js"></script>
-	<script src="/scripts/moment-with-locales.js"></script>
+	{{-- <script src="/scripts/moment-with-locales.js"></script> --}}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>
-	<script src="/scripts/script.js"></script>
 	<script src="/scripts/datatables/jquery.dataTables.min.js"></script>
 	<script src="/scripts/datatables/datatables.bootstrap.js"></script>
+	<script src="/scripts/calendar/fullcalendar.min.js"></script>
+	<script src="/scripts/calendar/pt-br.js"></script>
+	<script src="/scripts/sweetalert2.min.js"></script>
+	<script src="/scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="/scripts/validation.js"></script>
+	<script src="/scripts/script.js"></script>
 
 	@yield('pos-script')
+	<script>
+
+	moment.locale('pt-br');
+
+	$('.hora').html(moment().format('llll'));
+
+	$('div[data-toggle="datepicker"]').datepicker({
+		language: 'pt-BR',
+		autoclose: true,
+		format: 'dd/mm/yyyy',
+		startDate: '{{ date("d-m-Y", strtotime("-150 years")) }}',
+		endDate: "{{ date("d-m-Y") }}"
+	});
+
+	function revalidateDate(form) {
+		if (form === 'form_create_operator') {
+			$('#'+form+' input[name="data_nascimento"]').valid();
+		}
+		if (form === 'form_actions_operator') {
+			$('#'+form+' input[name="data_nascimento"]').valid();
+		}
+	}
+
+	$('input[name="cpf"]').mask('000.000.000-00'),
+	$('input[name="rg"]').mask('000000000000000'),
+	$('input[name="cep"]').mask("00000-000"),
+	$('input[name="telefone_um"]').mask("(00) 00000-0009"),
+	$('input[name="telefone_dois"]').mask("(00) 00000-0009"),
+	$('input[name="numero"]').mask('000000000000');
+
+	function enabledForm(formSelector) {
+    $(formSelector).find('input,select,textarea').attr('disabled', false)
+  }
+  function disabledForm(formSelector) {
+    $(formSelector).find('input,select,textarea').attr('disabled', true)
+  }
+
+	@yield('scripts')
+
+	</script>
 
 </body>
 

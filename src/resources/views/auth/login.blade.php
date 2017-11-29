@@ -5,7 +5,7 @@
     <div class="content">
       <div class="header">
         <div class="logo text-center"><img src="/img/logo-dark.png" alt="QMS Logo"></div>
-        <p class="lead">Faça o login com seus dados</p>
+        <p class="lead">Faça o login</p>
       </div>
       <div class="erros">
         @if ($errors->has('email') || $errors->has('password'))

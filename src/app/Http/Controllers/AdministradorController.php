@@ -17,6 +17,9 @@ use \qms\Models\Paciente;
 use \qms\Models\Especialidade;
 use \qms\Models\Medico;
 use \qms\Models\Consulta;
+use \qms\Models\Periodo;
+use \qms\Models\Calendario;
+use \qms\Models\Local;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
@@ -173,9 +176,7 @@ class AdministradorController extends Controller {
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
-      return '<button type="button" id="ver" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_operador" value="'.$user->id.'" onclick="verOperador(this.value)"><i class="fa fa-eye"></i> Ver</button>   '.
-             '<button type="button" id="editar" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal_editar_operador" value="'.$user->id.'" onclick="operadorParaEditar(this.value)"><i class="fa fa-pencil-square-o"></i> Editar</button>   '.
-             '<button type="button" id="exclir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal_excluir_operador" value="'.$user->id.'" onclick="operadorParaExcluir(this.value)"><i class="fa fa-trash-o"></i> Excluir</button>   ';
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
     })->make(true);
   }
 
@@ -251,7 +252,9 @@ class AdministradorController extends Controller {
       $request->nome_cidade != null && $request->cep != null &&
       $request->nome_estado != null && $request->telefone_um != null) {
 
-      $data = $request->data_nascimento;
+      // $data = $request->data_nascimento;
+      $data_pt = str_replace("/", "-", $request->data_nascimento);
+      $data = date('Y-m-d', strtotime($data_pt));
       // Separa em dia, mês e ano
       list($ano, $mes, $dia,) = explode('-', $data);
       // Descobre que dia é hoje e retorna a unix timestamp
@@ -263,9 +266,7 @@ class AdministradorController extends Controller {
       // dd($idade);
 
       if ($idade < 18) {
-        $request->session()->flash('erro', 'O Operador não pode ser menor (não tem 18 anos),
-                                        por favor verifique a data informada!');
-
+        $request->session()->flash('erro', 'O Operador não pode ser menor de idade, verifique a data informada!');
         return redirect('/administrador/operadores')->withInput();
       }
 
@@ -314,9 +315,10 @@ class AdministradorController extends Controller {
       $telefone = Telefone::create(['telefone_um' => $telefone_um,
                                       'telefone_dois' => $telefone_dois, ]);
 
+
       $user = new User();
-      $user->name = $request->name;
-      $user->data_nascimento = $request->data_nascimento;
+      $user->name = strtoupper($request->name);
+      $user->data_nascimento = $data;
       $user->cpf = $cpf;
       $user->rg = $request->rg;
       $user->email = $request->email;
@@ -330,17 +332,17 @@ class AdministradorController extends Controller {
       $cidade = new Cidade($request->all());
       $cidade->estado_id = $estado->id_estado;
 
-      $cidadeCreate = Cidade::create(['nome_cidade' => $cidade->nome_cidade,
+      $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
                                       'cep' => $cep,
                                       'estado_id' => $cidade->estado_id, ]);
       $endereco = new Endereco($request->all());
 
       $endereco->cidade_id = $cidadeCreate->id_cidade;
 
-      $enderecoCreate = Endereco::create(['rua' => $endereco->rua,
+      $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
                                       'numero' => $endereco->numero,
-                                      'complemento' => $endereco->complemento,
-                                      'bairro' => $endereco->bairro,
+                                      'complemento' => strtoupper($endereco->complemento),
+                                      'bairro' => strtoupper($endereco->bairro),
                                       'cidade_id' => $endereco->cidade_id, ]);
       $user->endereco_id = $enderecoCreate->id_endereco;
 
@@ -373,15 +375,15 @@ class AdministradorController extends Controller {
 
         $operador_id = $request->operador_id;
 
-        $data = $request->data_nascimento;
+        $data_pt = str_replace("/", "-", $request->data_nascimento);
+        $data = date('Y-m-d', strtotime($data_pt));
         list($ano, $mes, $dia,) = explode('-', $data);
         $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
         $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
         $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
 
         if ($idade < 18) {
-          $request->session()->flash('erroEdit', 'O Operador não pode ser menor (não tem 18 anos),
-                                          por favor verifique a data informada!');
+          $request->session()->flash('erroEdit', 'O Operador não pode ser menor de idade, verifique a data informada!');
           return redirect('/administrador/operadores')->withInput();
         }
 
@@ -438,8 +440,6 @@ class AdministradorController extends Controller {
         $telefone_dois = str_replace(" ", "", $telefone_dois);
         $telefone_dois = str_replace("-", "", $telefone_dois);
 
-        // $operador_id = $request->operador_id;
-
         $user = User::find($operador_id);
         $telefone =Telefone::find($user->telefone_id);
         $endereco = Endereco::find($user->endereco_id);
@@ -449,18 +449,18 @@ class AdministradorController extends Controller {
         $telefone->telefone_um = $telefone_um;
         $telefone->telefone_dois = $telefone_dois;
 
-        $estado->nome_estado = $request->nome_estado;
+        $estado->nome_estado = strtoupper($request->nome_estado);
 
-        $cidade->nome_cidade = $request->nome_cidade;
+        $cidade->nome_cidade = strtoupper($request->nome_cidade);
         $cidade->cep = $request->cep;
 
-        $endereco->rua = $request->rua;
+        $endereco->rua = strtoupper($request->rua);
         $endereco->numero = $request->numero;
-        $endereco->bairro = $request->bairro;
-        $endereco->complemento = $request->complemento;
+        $endereco->bairro = strtoupper($request->bairro);
+        $endereco->complemento = strtoupper($request->complemento);
 
-        $user->name = $request->name;
-        $user->data_nascimento = $request->data_nascimento;
+        $user->name = strtoupper($request->name);
+        $user->data_nascimento = $data;
         $user->cpf = $cpf;
         $user->rg = $request->rg;
         $user->email = $request->email;
@@ -494,7 +494,7 @@ class AdministradorController extends Controller {
   }
 
   public function excluirOperador(Request $request) {
-    $operador_id = $request->operador_id;
+    $operador_id = $request->id;
 
     $operador = User::find($operador_id);
     $telefone =Telefone::find($operador->telefone_id);
@@ -515,13 +515,15 @@ class AdministradorController extends Controller {
       dd($e);
     }
 
+    $result;
+
     if ($status) {
-      $request->session()->flash('sucesso', 'Operador excluído com sucesso!');
-      return redirect('/administrador/operadores');
+      $result = ['menssage' => 'success'];
     } else {
-      $request->session()->flash('erroExcluir', 'Não foi possível excluir o Operador, por favor tente em instantes!');
-      return redirect('/administrador/operadores');
+      $result = ['menssage' => 'error'];
     }
+
+    return Response::json($result);
 
   }
 
@@ -553,38 +555,633 @@ class AdministradorController extends Controller {
     }
   }
 
-  public function medicos(Request $request) {
+  public function especialidades(Request $request) {
     if ($request->session()->has('erro')) {
       $erro = $request->session()->get('erro');
-      return view('administrador.operador.operadores', compact('erro'));
+      return view('administrador.medico.especialidades', compact('erro'));
     } else {
       if ($request->session()->has('sucesso')) {
         $sucesso = $request->session()->get('sucesso');
-        return view('administrador.operador.operadores', compact('sucesso'));
+        return view('administrador.medico.especialidades', compact('sucesso'));
       } else {
-        return view('administrador.operador.operadores');
+        return view('administrador.medico.especialidades');
       }
     }
   }
 
-  public function cadastrarMedico() {
-    return view('administrador.cadastrar-medico');
+  public function cadastrarEspecialidade(Request $request) {
+    $codigo_especialidade = $request->codigo_especialidade;
+    $nome_especialidade = $request->nome_especialidade;
+
+    $especialidadeBanco = DB::table('especialidades')
+                                    ->where('codigo_especialidade', '=', $codigo_especialidade)
+                                    ->where('nome_especialidade', '=', $nome_especialidade)
+                                    ->get()->first();
+
+    if ($especialidadeBanco != null) {
+      $request->session()->flash('erro', 'O código ou especialidade já cadastrados!');
+      return back()->withInput();
+    } else {
+      $especialidadeCodigo = DB::table('especialidades')
+                                      ->where('codigo_especialidade', '=', $codigo_especialidade)
+                                      ->get()->first();
+
+      if ($especialidadeCodigo != null) {
+        $request->session()->flash('erro', 'O código já está cadastrado!');
+        return back()->withInput();
+      } else {
+        $especialidadeNome = DB::table('especialidades')
+                                        ->where('nome_especialidade', '=', $nome_especialidade)
+                                        ->get()->first();
+
+        if ($especialidadeNome != null) {
+          $request->session()->flash('erro', 'Esse nome da especialidade já está cadastrado!');
+          return back()->withInput();
+        } else {
+          $especialidade_salvar = new Especialidade();
+          $especialidade_salvar->codigo_especialidade = $codigo_especialidade;
+          $especialidade_salvar->nome_especialidade = $nome_especialidade;
+
+          if ($especialidade_salvar->save()) {
+            $request->session()->flash('sucesso', 'A especialidade foi cadastrada com sucesso!');
+            return back()->withInput();
+          } else {
+            $request->session()->flash('erro', 'Erro inesperado, tente em instantes!');
+            return back()->withInput();
+          }
+        }
+      }
+    }
+
+    dd($codigo_especialidade, $nome_especialidade);
   }
 
-  public function alterarMedico() {
-    return 'Essa pagina ainda não foi criada, se está achando ruim faça ela';
+  public function getEspecialidades() {
+    $especialidades = Especialidade::all();
+
+    return Datatables::of($especialidades)
+    ->addColumn('action', function($especialidade) {
+      return '<button type="button" id="ver_especialidade" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal_ver_especialidade" value="'.$especialidade->id_especialidade.'" onclick="verEspecialidade(this.value)"><i class="fa fa-eye"></i> Ver</button>   ';
+    })->make(true);
   }
 
-  public function removerOperador() {
-    return view('administrador.remover-operador');
+  public function verEspecialidade($id_especialidade) {
+    $especialidade = Especialidade::find($id_especialidade);
+
+    return Response::json($especialidade);
   }
 
-  public function removerMedico() {
-    return view('administrador.remover-medico');
+  public function excluirEspecialidade(Request $request) {
+    $especialidade_id = $request->id;
+    $especialidade = Especialidade::find($especialidade_id);
+
+    $status = false;
+
+    try {
+      $especialidade->delete();
+      $status = true;
+    } catch (Exception $e) {
+      $e;
+    }
+
+    $result;
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
   }
 
-  public function cadastrarHorario() {
-    return view('administrador.cadastrar-horario');
+  public function medicosEspecialidades($id) {
+    $medico = Medico::where('id_medico', $id)->get()->first();
+
+    $especialidades_medico = $medico->especialidades;
+
+    return Response::json($especialidades_medico);
+  }
+
+  public function cadastrarEspecialidadeMedico(Request $request) {
+    if ($request->especialidade_id != null && $request->medico_id != null) {
+
+      $especialidade = Especialidade::find($request->especialidade_id);
+      $especialidade_id = $especialidade->id_especialidade;
+      $medico = Medico::find($request->medico_id);
+      $medico_id = $medico->id_medico;
+
+      $list_especialidades = $medico->especialidades;
+      foreach ($list_especialidades as $ep) {
+        if ($ep->id_especialidade == $especialidade_id) {
+          $request->session()->flash('erroEspecialidade', 'O médico já está vinculado a especialidade!');
+          return back();
+        }
+      }
+
+      $status = false;
+      try {
+        DB::table('especialidade_medico')->insert([
+            'id_especialidade' => $especialidade_id,
+            'id_medico' => $medico_id,
+        ]);
+
+        $status = true;
+      } catch (Exception $e) {
+        dd($e);
+      }
+
+      if ($status) {
+        $request->session()->flash('sucessoEspecialidade', 'Médico vinculado a especialidade com sucesso!');
+        return back();
+      } else {
+        $request->session()->flash('erroEspecialidade', 'Erro inesperado!');
+        return back();
+      }
+
+    } else {
+      $request->session()->flash('erroEspecialidade', 'Por favor preencha os campos obrigatórios!');
+      return back();
+    }
+
+  }
+
+  public function excluirEspecialidadeDeMedico(Request $request) {
+    $medico = Medico::find($request->medico_id);
+    $especialidade = Especialidade::find($request->especialidade_id);
+
+    $calendarios_busca = DB::table('calendarios')->where('especialidade_id', '=', $especialidade->id_especialidade)->get();
+    $calendarios_delete = DB::table('calendarios')->where('especialidade_id', '=', $especialidade->id_especialidade);
+
+    $consultas = DB::table('consultas')->where('especialidade_id', '=', $especialidade->id_especialidade);
+
+    $status = false;
+
+    try {
+      DB::table('especialidade_medico')
+                ->where('id_especialidade', $especialidade->id_especialidade)
+                ->where('id_medico', $medico->id_medico)
+                ->delete();
+
+      $consultas->delete();
+      foreach ($calendarios_busca as $calendario) {
+        DB::table('periodos')->where('start', '=', $calendario->data)->delete();
+      }
+      $calendarios_delete->delete();
+      $status = true;
+    } catch (Exception $e) {
+      dd($e);
+    }
+
+    $result;
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
+  }
+
+  public function medicos(Request $request) {
+    $especialidades = Especialidade::all();
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.medico.medicos', compact('erro', 'especialidades'));
+    } else {
+      if ($request->session()->has('sucesso')) {
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.medico.medicos', compact('sucesso', 'especialidades'));
+      } else {
+        if ($request->session()->has('erroEdit')) {
+          $erroEdit = $request->session()->get('erroEdit');
+          return view('administrador.medico.medicos', compact('erroEdit', 'especialidades'));
+        } else {
+          if ($request->session()->has('erroExcluir')) {
+            $erroExcluir = $request->session()->get('erroExcluir');
+            return view('administrador.medico.medicos', compact('erroExcluir', 'especialidades'));
+          } else {
+            if ($request->session()->has('erroEspecialidade')) {
+              $erroEspecialidade = $request->session()->get('erroEspecialidade');
+              return view('administrador.medico.medicos', compact('erroEspecialidade', 'especialidades'));
+            } else {
+              if ($request->session()->has('sucessoEspecialidade')) {
+                $sucessoEspecialidade = $request->session()->get('sucessoEspecialidade');
+                return view('administrador.medico.medicos', compact('sucessoEspecialidade', 'especialidades'));
+              } else {
+                return view('administrador.medico.medicos', compact('especialidades', 'especialidades'));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public function getMedico() {
+    $medicos = Medico::all();
+
+    return Datatables::of($medicos)
+    ->addColumn('action', function($medico) {
+      return '<button type="button" class="btn btn-info btn-xs" value="'.$medico->id_medico.'" onclick="detalhesDoctor(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> '.
+             '<td><a href="/administrador/medicos/calendario-atendimento/'.$medico->id_medico.'" class="btn btn-success btn-xs" id="ver-calendario">Ir para Calendário <i class="fa fa-share-square-o"></i></a></td>';
+    })->make(true);
+  }
+
+  public function verMedico($id) {
+    $medico = DB::table('medicos')
+        ->join('enderecos', 'medicos.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'medicos.telefone_id', '=', 'telefones.id_telefone')
+        ->select('medicos.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+        ->where('medicos.id_medico', '=', $id)
+        ->get()
+        ->first();
+
+    return Response::json($medico);
+  }
+
+  public function createMedico(Request $request) {
+    if ($request->numero_crm != null && $request->nome_medico != null
+      && $request->rua != null && $request->numero != null && $request->bairro != null &&
+      $request->nome_cidade != null && $request->cep != null &&
+      $request->nome_estado != null && $request->telefone_um != null) {
+
+        $medicoBanco = Medico::where('numero_crm', $request->numero_crm)->get()->first();
+        if ($medicoBanco != null) {
+          $request->session()->flash('erro', 'Esse CRM já está cadastrado!');
+          return back()->withInput();
+        }
+
+        $valor = trim($request->cep);
+        $cep = str_replace("-", "", $valor);
+
+        $valor = trim($request->telefone_um);
+        $valor = str_replace("(", "", $valor);
+        $valor = str_replace(")", "", $valor);
+        $valor = str_replace(" ", "", $valor);
+        $telefone_um = str_replace("-", "", $valor);
+
+        $telefone_dois = trim($request->telefone_dois);
+        $telefone_dois = str_replace("(", "", $telefone_dois);
+        $telefone_dois = str_replace(")", "", $telefone_dois);
+        $telefone_dois = str_replace(" ", "", $telefone_dois);
+        $telefone_dois = str_replace("-", "", $telefone_dois);
+
+        $telefone = Telefone::create(['telefone_um' => $telefone_um,
+                                        'telefone_dois' => $telefone_dois, ]);
+
+
+        $medico = new Medico();
+        $medico->nome_medico = strtoupper($request->nome_medico);
+        $medico->numero_crm = $request->numero_crm;
+        $medico->telefone_id = $telefone->id_telefone;
+
+        $estado = Estado::create($request->all());
+        $cidade = new Cidade($request->all());
+        $cidade->estado_id = $estado->id_estado;
+
+        $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
+                                        'cep' => $cep,
+                                        'estado_id' => $cidade->estado_id, ]);
+        $endereco = new Endereco($request->all());
+
+        $endereco->cidade_id = $cidadeCreate->id_cidade;
+
+        $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
+                                        'numero' => $endereco->numero,
+                                        'complemento' => strtoupper($endereco->complemento),
+                                        'bairro' => strtoupper($endereco->bairro),
+                                        'cidade_id' => $endereco->cidade_id, ]);
+        $medico->endereco_id = $enderecoCreate->id_endereco;
+
+        if ($medico->save()) {
+          $request->session()->flash('sucesso', '  Cadastro realizado com sucesso!');
+          return back();
+        } else {
+          $request->session()->flash('erro', 'Erro inesperado, por favor tente em instantes!');
+          return back()->withInput();
+        }
+
+    } else {
+      $request->session()->flash('erro', 'Por favor, preencha todos os campos obrigatórios!');
+      return back()->withInput();
+    }
+  }
+
+  public function editMedico(Request $request) {
+    if ($request->medico_id != null && $request->numero_crm != null &&
+        $request->nome_medico != null && $request->rua != null && $request->numero != null &&
+        $request->bairro != null && $request->nome_cidade != null && $request->cep != null &&
+        $request->nome_estado != null && $request->telefone_um != null) {
+
+        $medicoBanco = Medico::where('id_medico', $request->medico_id)->get()->first();
+        if ($medicoBanco->numero_crm != $request->numero_crm) {
+          $medicoBancoTwo = Medico::where('numero_crm', $request->numero_crm)->get()->first();
+          if ($medicoBancoTwo != null) {
+            $request->session()->flash('erroEdit', 'Esse CRM já está cadastrado!');
+            return back()->withInput();
+          }
+        }
+
+        $valor = trim($request->cep);
+        $cep = str_replace("-", "", $valor);
+
+        $valor = trim($request->telefone_um);
+        $valor = str_replace("(", "", $valor);
+        $valor = str_replace(")", "", $valor);
+        $valor = str_replace(" ", "", $valor);
+        $telefone_um = str_replace("-", "", $valor);
+
+        $telefone_dois = trim($request->telefone_dois);
+        $telefone_dois = str_replace("(", "", $telefone_dois);
+        $telefone_dois = str_replace(")", "", $telefone_dois);
+        $telefone_dois = str_replace(" ", "", $telefone_dois);
+        $telefone_dois = str_replace("-", "", $telefone_dois);
+
+        $medico = Medico::find($request->medico_id);
+        $telefone =Telefone::find($medico->telefone_id);
+        $endereco = Endereco::find($medico->endereco_id);
+        $cidade = Cidade::find($endereco->cidade_id);
+        $estado = Estado::find($cidade->estado_id);
+
+        $telefone->telefone_um = $telefone_um;
+        $telefone->telefone_dois = $telefone_dois;
+
+        $estado->nome_estado = strtoupper($request->nome_estado);
+
+        $cidade->nome_cidade = strtoupper($request->nome_cidade);
+        $cidade->cep = $request->cep;
+
+        $endereco->rua = strtoupper($request->rua);
+        $endereco->numero = $request->numero;
+        $endereco->bairro = strtoupper($request->bairro);
+        $endereco->complemento = strtoupper($request->complemento);
+
+        $medico->nome_medico = strtoupper($request->nome_medico);
+        $medico->numero_crm = $request->numero_crm;
+
+        $status = false;
+        try {
+          $medico->save();
+          $telefone->save();
+          $endereco->save();
+          $cidade->save();
+          $estado->save();
+
+          $status = true;
+        } catch (Exception $e) {
+          dd($e);
+        }
+
+        if ($status) {
+          $request->session()->flash('sucesso', 'Médico alterado com sucesso!');
+          return back();
+        } else {
+          $request->session()->flash('erroEdit', 'Não foi possível editar o Médico, por favor tente em instantes!');
+          return back()->withInput();
+        }
+
+    } else {
+      $request->session()->flash('erroEdit', 'Por favor, preencha todos os campos obrigatórios!');
+      return back()->withInput();
+    }
+  }
+
+  public function deleteMedico(Request $request) {
+    $medico_id = $request->id;
+
+    $medico = Medico::find($medico_id);
+    $telefone =Telefone::find($medico->telefone_id);
+    $endereco = Endereco::find($medico->endereco_id);
+    $cidade = Cidade::find($endereco->cidade_id);
+    $estado = Estado::find($cidade->estado_id);
+
+    $calendarios_busca = DB::table('calendarios')->where('medico_id', '=', $medico->id_medico)->get();
+
+    $calendarios_delete = DB::table('calendarios')->where('medico_id', '=', $medico->id_medico);
+
+    $consultas = DB::table('consultas')->where('medico_id', '=', $medico->id_medico);
+
+    $status_one = false;
+
+    try {
+      $consultas->delete();
+
+      foreach ($calendarios_busca as $calendario) {
+        DB::table('periodos')->where('start', '=', $calendario->data)->delete();
+      }
+      $calendarios_delete->delete();
+
+      $status_one = true;
+    } catch (Exception $e) {
+      dd($e);
+    }
+
+    $result;
+
+    if ($status_one) {
+
+      $status_two = false;
+      try {
+        $medico->delete();
+        $telefone->delete();
+        $endereco->delete();
+        $cidade->delete();
+        $estado->delete();
+
+        $status_two = true;
+      } catch (Exception $e) {
+        dd($e);
+      }
+
+      if ($status_two) {
+        $result = ['menssage' => 'success'];
+      } else {
+        $result = ['menssage' => 'error'];
+      }
+
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
+  }
+
+  public function calendarioAtendimento(Request $request, $medico_id) {
+    $medico = Medico::find($medico_id);
+    $locals = Local::all();
+    $especialidades = $medico->especialidades;
+
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro'));
+    } else {
+
+      if ($request->session()->has('erro_list_datas') && $request->session()->has('sucesso')) {
+        $erro_list_datas = $request->session()->get('erro_list_datas');
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro_list_datas', 'sucesso'));
+      } else {
+        if ($request->session()->has('erro_list_datas')) {
+          $erro_list_datas = $request->session()->get('erro_list_datas');
+          return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'erro_list_datas'));
+        } else {
+          $sucesso = $request->session()->get('sucesso');
+          return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades', 'sucesso'));
+        }
+      }
+
+    }
+
+    return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
+  }
+
+  public function verCalendarioAtendimento($medico_id) {
+    $data = DB::table('periodos')
+        ->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
+        ->join('locals', 'periodos.local_id', '=', 'locals.id_local')
+        ->join('medicos', 'calendarios.medico_id', '=', 'medicos.id_medico')
+        ->join('especialidades', 'calendarios.especialidade_id', '=', 'especialidades.id_especialidade')
+        ->select('periodos.*', 'calendarios.*', 'locals.*', 'medicos.*', 'especialidades.*')
+        ->where('calendarios.medico_id', '=', $medico_id)
+        ->get();
+
+    return Response()->json($data);
+  }
+
+  public function calendarioCadastrar(Request $request) {
+    $id_medico = $request->medico_id;
+    $id_especialidade = $request->especialidade;
+    $id_local = $request->local;
+
+    $datas_start = $request->start;
+    $periodos  = $request->periodo;
+    $total_consultas = $request->total_consultas;
+
+    if ($id_medico == null || $id_especialidade == null || $id_local == null ||
+        count($datas_start) == 0 || count($periodos) == 0 || count($total_consultas) == 0) {
+
+        $request->session()->flash('erro', 'Por favor, preencha todos os campos obrigatórios!');
+        return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+    } else {
+
+      $keys_datas = array_keys($datas_start);
+      $last_index_datas = end($keys_datas);
+      $erro_list_datas = array();
+      $sucesso_list = array();
+
+      for ($i=0; $i <= $last_index_datas; $i++) {
+        if (array_key_exists($i, $datas_start)) {
+          $search_db = DB::table('periodos')->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
+                                            ->select('periodos.*', 'calendarios.*')
+                                            ->where('periodos.start', '=', $datas_start[$i])
+                                            ->where('periodos.nome', '=', $periodos[$i])
+                                            ->where('calendarios.data', '=', $datas_start[$i])
+                                            ->where('calendarios.medico_id', '=', $id_medico)
+                                            ->first();
+
+          if ($search_db == null) {
+            $especialidade = Especialidade::where('id_especialidade', $id_especialidade)->get()->first();
+            $title = $periodos[$i]." - ".$especialidade->nome_especialidade;
+
+            $periodo = new Periodo();
+            $periodo->nome = $periodos[$i];
+            $periodo->title = $title;
+            $periodo->start = $datas_start[$i];
+            $periodo->total_consultas = $total_consultas[$i];
+            $periodo->vagas_disponiveis = $total_consultas[$i];
+            // $periodo->calendario_id = $calendario->id_calendario;
+            $periodo->local_id = $id_local;
+
+            $calendarioBanco = Calendario::where('data', $datas_start[$i])->get()->first();
+            if ($calendarioBanco != null) {
+              $periodo->calendario_id = $calendarioBanco->id_calendario;
+            } else {
+              $calendario = Calendario::create(['data' => $datas_start[$i],
+                                              'especialidade_id' => $id_especialidade,
+                                              'medico_id' => $id_medico]);
+
+              $periodo->calendario_id = $calendario->id_calendario;
+            }
+
+            if ($periodo->save()) {
+              array_push($sucesso_list, array('data' => $datas_start[$i], 'periodo' => $periodos[$i]));
+            } else {
+              array_push($erro_list_datas, array('data' => $datas_start[$i], 'periodo' => $periodos[$i]));
+            }
+
+          } else {
+            array_push($erro_list_datas, array('data' => $datas_start[$i], 'periodo' => $periodos[$i]));
+          }
+
+        }
+      }
+
+      if ($erro_list_datas == null) {
+        $request->session()->flash('sucesso', $sucesso_list);
+        return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+      } else {
+        if ($erro_list_datas != null && $sucesso_list != null) {
+          $request->session()->flash('erro_list_datas', $erro_list_datas);
+          $request->session()->flash('sucesso', $sucesso_list);
+          return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        } else {
+          $request->session()->flash('erro_list_datas', $erro_list_datas);
+          return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        }
+
+      }
+
+    }
+
+  }
+
+  public function calendarioExcluir(Request $request) {
+    $id_periodo = $request->id;
+    $periodo_delete = Periodo::where('id_periodo', $id_periodo)->get()->first();
+    $calendario_delete = Calendario::where('id_calendario', $periodo_delete->calendario_id)->get()->first();
+    $consultas_delete = Consulta::where('periodo_id', $id_periodo)->get();
+    $outros_periodos = Periodo::where('start', $calendario_delete->data)->get();
+
+    $status = false;
+
+    $num_datas = count($outros_periodos);
+
+    if ($num_datas == 1) {
+      try {
+        foreach ($consultas_delete as $consulta) {
+          $consulta->delete();
+        }
+        $periodo_delete->delete();
+        $calendario_delete->delete();
+        $status = true;
+      } catch (Exception $e) {
+        $e;
+      }
+    } else {
+      try {
+        foreach ($consultas_delete as $consulta) {
+          $consulta->delete();
+        }
+        $periodo_delete->delete();
+        $status = true;
+      } catch (Exception $e) {
+        $e;
+      }
+    }
+
+    $result;
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
   }
 
   public function manualAdministrador() {

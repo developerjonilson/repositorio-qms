@@ -406,118 +406,431 @@ $(document).ready(function(){
         },
     });
 
+$.validator.setDefaults({
+    highlight: function(element) {
+        $(element).closest('.form-group').addClass('has-error');
+    },
+    unhighlight: function(element) {
+        $(element).closest('.form-group').removeClass('has-error');
+    },
+    errorElement: 'span',
+    errorClass: 'help-block',
+    errorPlacement: function(error, element) {
+        if(element.parent('.input-group').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+});
+
+$("#form_create_operator").validate({
+        // Define as regras
+        rules: {
+            name: {
+              required: true,
+              lettersonlys: true
+            },
+            data_nascimento: {
+              required: true
+            },
+            cpf: {
+              required: true,
+              verificarCpf: true
+            },
+            rg: {
+              required: true,
+              digits: true
+            },
+            email: {
+               required: true,
+               email: true
+            },
+            rua: {
+               required: true
+            },
+            numero: {
+              required: true,
+              number: true
+            },
+            bairro: {
+              required: true
+            },
+            nome_cidade: {
+              required: true
+            },
+            cep: {
+              required: true,
+            },
+            nome_estado: {
+              required: true
+            },
+            telefone_um: {
+              required: true
+            },
+        },
+        // Define as mensagens de erro para cada regra
+        messages: {
+              name: {
+                required: "Campo Obrigatório!",
+              },
+              data_nascimento: {
+                required: "Campo Obrigatório!",
+              },
+              cpf: {
+                required: "Campo Obrigatório!",
+                verificarCpf: "CPF inválido!"
+              },
+              rg: {
+                required: "Campo Obrigatório!",
+                digits: "Campo numérico!"
+              },
+              email: {
+                 required: "Campo Obrigatório!",
+                 email: "Informe um email correto!"
+              },
+              rua: {
+                 required: "Campo Obrigatório!"
+              },
+              numero: {
+                required: "Campo Obrigatório!",
+                number: "Este campo só pode conter numeros!"
+              },
+              bairro: {
+                required: "Campo Obrigatório!"
+              },
+              nome_cidade: {
+                required: "Campo Obrigatório!"
+              },
+              cep: {
+                required: "Campo Obrigatório!"
+              },
+              nome_estado: {
+                required: "Campo Obrigatório!"
+              },
+              telefone_um: {
+                required: "Campo Obrigatório!"
+              },
+        },
+
+      submitHandler: postFormOperador,
+    }
+  );
+
+  function postFormOperador(form) {
+      $('.loading').fadeIn('fast').removeClass('hidden');
+      form.submit();
+
+  };
+
+  $("#form_actions_operator").validate({
+          // Define as regras
+          rules: {
+              name: {
+                required: true,
+                lettersonlys: true
+              },
+              data_nascimento: {
+                required: true
+              },
+              cpf: {
+                required: true,
+                verificarCpf: true
+              },
+              rg: {
+                required: true,
+                digits: true
+              },
+              email: {
+                 required: true,
+                 email: true
+              },
+              rua: {
+                 required: true
+              },
+              numero: {
+                required: true,
+                number: true
+              },
+              bairro: {
+                required: true
+              },
+              nome_cidade: {
+                required: true
+              },
+              cep: {
+                required: true,
+              },
+              nome_estado: {
+                required: true
+              },
+              telefone_um: {
+                required: true
+              },
+          },
+          // Define as mensagens de erro para cada regra
+          messages: {
+                name: {
+                  required: "Campo Obrigatório!",
+                },
+                data_nascimento: {
+                  required: "Campo Obrigatório!",
+                },
+                cpf: {
+                  required: "Campo Obrigatório!",
+                  verificarCpf: "CPF inválido!"
+                },
+                rg: {
+                  required: "Campo Obrigatório!",
+                  digits: "Campo numérico!"
+                },
+                email: {
+                   required: "Campo Obrigatório!",
+                   email: "Informe um email correto!"
+                },
+                rua: {
+                   required: "Campo Obrigatório!"
+                },
+                numero: {
+                  required: "Campo Obrigatório!",
+                  number: "Este campo só pode conter numeros!"
+                },
+                bairro: {
+                  required: "Campo Obrigatório!"
+                },
+                nome_cidade: {
+                  required: "Campo Obrigatório!"
+                },
+                cep: {
+                  required: "Campo Obrigatório!"
+                },
+                nome_estado: {
+                  required: "Campo Obrigatório!"
+                },
+                telefone_um: {
+                  required: "Campo Obrigatório!"
+                },
+          },
+
+        submitHandler: postFormEditOperador,
+      }
+    );
+
+    function postFormEditOperador(form) {
+        $('.loading').fadeIn('fast').removeClass('hidden');
+        form.submit();
+    };
+
+    $("#new_especialidade").validate({
+            // Define as regras
+            rules: {
+                codigo_especialidade: {
+                  required: true,
+                  number: true
+                },
+                nome_especialidade: {
+                  required: true,
+                  lettersonlys: true
+                },
+            },
+            // Define as mensagens de erro para cada regra
+            messages: {
+                  codigo_especialidade: {
+                    required: "Campo Obrigatório!",
+                    number: "Este campo só pode conter numeros!"
+                  },
+                  nome_especialidade: {
+                    required: "Campo Obrigatório!",
+                  },
+            },
+
+          submitHandler: postFormEspecialidade,
+        }
+      );
+
+      function postFormEspecialidade(form) {
+          $('.loading').fadeIn('fast').removeClass('hidden');
+          form.submit();
+
+      };
+
+      $("#create_doctor").validate({
+              // Define as regras
+              rules: {
+                  numero_crm: {
+                    required: true,
+                    number: true
+                  },
+                  nome_medico: {
+                    required: true,
+                    lettersonlys: true
+                  },
+                  rua: {
+                     required: true
+                  },
+                  numero: {
+                    required: true,
+                    number: true
+                  },
+                  bairro: {
+                    required: true
+                  },
+                  nome_cidade: {
+                    required: true
+                  },
+                  cep: {
+                    required: true,
+                  },
+                  nome_estado: {
+                    required: true
+                  },
+                  telefone_um: {
+                    required: true
+                  },
+              },
+              // Define as mensagens de erro para cada regra
+              messages: {
+                    numero_crm: {
+                      required: "Campo Obrigatório!",
+                      number: "Este campo só pode conter numeros!"
+                    },
+                    nome_medico: {
+                      required: "Campo Obrigatório!",
+                    },
+                    rua: {
+                       required: "Campo Obrigatório!"
+                    },
+                    numero: {
+                      required: "Campo Obrigatório!",
+                      number: "Este campo só pode conter numeros!"
+                    },
+                    bairro: {
+                      required: "Campo Obrigatório!"
+                    },
+                    nome_cidade: {
+                      required: "Campo Obrigatório!"
+                    },
+                    cep: {
+                      required: "Campo Obrigatório!"
+                    },
+                    nome_estado: {
+                      required: "Campo Obrigatório!"
+                    },
+                    telefone_um: {
+                      required: "Campo Obrigatório!"
+                    },
+              },
+
+            submitHandler: postFormCreateDoctor,
+          }
+        );
+
+        function postFormCreateDoctor(form) {
+            $('.loading').fadeIn('fast').removeClass('hidden');
+            form.submit();
+        };
+
+        $("#form_actions_doctor").validate({
+                // Define as regras
+                rules: {
+                    numero_crm: {
+                      required: true,
+                      number: true
+                    },
+                    nome_medico: {
+                      required: true,
+                      lettersonlys: true
+                    },
+                    rua: {
+                       required: true
+                    },
+                    numero: {
+                      required: true,
+                      number: true
+                    },
+                    bairro: {
+                      required: true
+                    },
+                    nome_cidade: {
+                      required: true
+                    },
+                    cep: {
+                      required: true,
+                    },
+                    nome_estado: {
+                      required: true
+                    },
+                    telefone_um: {
+                      required: true
+                    },
+                },
+                // Define as mensagens de erro para cada regra
+                messages: {
+                      numero_crm: {
+                        required: "Campo Obrigatório!",
+                        number: "Este campo só pode conter numeros!"
+                      },
+                      nome_medico: {
+                        required: "Campo Obrigatório!",
+                      },
+                      rua: {
+                         required: "Campo Obrigatório!"
+                      },
+                      numero: {
+                        required: "Campo Obrigatório!",
+                        number: "Este campo só pode conter numeros!"
+                      },
+                      bairro: {
+                        required: "Campo Obrigatório!"
+                      },
+                      nome_cidade: {
+                        required: "Campo Obrigatório!"
+                      },
+                      cep: {
+                        required: "Campo Obrigatório!"
+                      },
+                      nome_estado: {
+                        required: "Campo Obrigatório!"
+                      },
+                      telefone_um: {
+                        required: "Campo Obrigatório!"
+                      },
+                },
+
+              submitHandler: postFormActionsDoctor,
+            }
+          );
+
+          function postFormActionsDoctor(form) {
+              $('.loading').fadeIn('fast').removeClass('hidden');
+              form.submit();
+          };
 
 
-// cadastrar operador
-//    $("#new_operador").validate({
-//         // Define as regras
-//         rules: {
-//           name: {
-//             required: true
-//           },
-//           data_nascimento: {
-//             required: true,
-//           },
-//           cpf: {
-//             required: true,
-//             verificarCpf: true
-//           },
-//           rg: {
-//             required: true,
-//             digits: true
-//           },
-//           email: {
-//             required: true,
-//           },
-//           rua: {
-//             required: true
-//           },
-//           numero: {
-//             required: true,
-//             digits: true
-//           },
-//           bairro: {
-//             required: true
-//           },
-//           cidade: {
-//             required: true
-//           },
-//           cep: {
-//             required: true,
-//           },
-//           nome_estado: {
-//             required: true
-//           },
-//           telefone_um: {
-//             required: true
-//           },
-//           telefone_dois: {
-//             required: true
-//           },
-//         },
-//         // Define as mensagens de erro para cada regra
-//         messages: {
-//             name: {
-//               required: "Esse campo não pode ficar vazio!",
-//             },
-//             data_nascimento: {
-//               required: "Esse campo não pode ficar vazio!",
-//             },
-//             cpf: {
-//               required: "Esse campo não pode ficar vazio!",
-//               verificarCpf: "Esse CPF informado é inválido!"
-//             },
-//             rg: {
-//               required: "Esse campo não pode ficar vazio!",
-//               digits:"Este campo só podem conter numeros!"
-//             },
-//             email: {
-//               required: "Esse campo não pode ficar vazio!",
-//             },
-//             rua: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//             numero: {
-//                required: "Esse campo não pode ficar vazio!",
-//                digits:"Este campo só podem conter numeros!"
-//             },
-//             bairro: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//             cidade: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//             cep: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//             nome_estado: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//             telefone_um: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//             telefone_dois: {
-//                required: "Esse campo não pode ficar vazio!",
-//             },
-//
-//         },
-//
-//       submitHandler: postFormNewOperador,
-//     }
-//   );
-//
-//   function postFormNewOperador(form) {
-//       $('.loading').fadeIn('fast').removeClass('hidden');
-//
-//       $('#cpf').unmask();
-//       $('#cep').unmask();
-//       $('#telefone_um').unmask();
-//       $('#telefone_dois').unmask();
-//
-//       form.submit();
-//   };
+          $("#add_especialdiades").validate({
+                  // Define as regras
+                  rules: {
+                      codigo_especialidade: {
+                        required: true,
+                      },
+                  },
+                  // Define as mensagens de erro para cada regra
+                  messages: {
+                        codigo_especialidade: {
+                          required: "Campo Obrigatório!",
+                        },
+                  },
 
-  });
+                submitHandler: postFormCadastrarEspecialidadeMedico,
+              }
+            );
+
+            function postFormCadastrarEspecialidadeMedico(form) {
+                $('.loading').fadeIn('fast').removeClass('hidden');
+                form.submit();
+            };
+
+});
 
 
 
@@ -571,3 +884,7 @@ jQuery.validator.addMethod("verificarCns", function(value, element) {
   }
 
 }, "Informe um número de CNS válido");
+
+jQuery.validator.addMethod("lettersonlys", function(value, element) {
+  return this.optional(element) || /^[a-zA-Z ]*$/.test(value);
+}, "Preencha somente com letras");

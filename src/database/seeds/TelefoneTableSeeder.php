@@ -46,5 +46,19 @@ class TelefoneTableSeeder extends Seeder
           'created_at'=> date("Y/m/d h:i:s"),
           'updated_at'=> date("Y/m/d h:i:s"),
       ]);
+
+      DB::table('telefones')->insert([
+          'telefone_um' => '35420021',
+          'telefone_dois' => '354210023',
+          'created_at'=> date("Y/m/d h:i:s"),
+          'updated_at'=> date("Y/m/d h:i:s"),
+      ]);
+
+      DB::table('telefones')->insert([
+          'telefone_um' => '35420021',
+          'telefone_dois' => '354210023',
+          'created_at'=> date("Y/m/d h:i:s"),
+          'updated_at'=> date("Y/m/d h:i:s"),
+      ]);
     }
 }

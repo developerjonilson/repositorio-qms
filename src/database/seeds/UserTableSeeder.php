@@ -21,8 +21,8 @@ class UserTableSeeder extends Seeder
         'data_nascimento'=> date("Y/m/d", strtotime("12/10/1998")),
         'tipo'=> 'operador',
         'data_alteracao_senha'=> date("Y-m-d"),
-        'endereco_id'=> 1,
-        'telefone_id'=> 1,
+        'endereco_id'=> 6,
+        'telefone_id'=> 6,
         'created_at'=> date("Y/m/d h:i:s"),
         'updated_at'=> date("Y/m/d h:i:s"),
       ]);
@@ -53,8 +53,8 @@ class UserTableSeeder extends Seeder
         'tipo'=> 'atendente',
         // 'numero_alteracao_senha'=> '0',
         'data_alteracao_senha'=> date("Y/m/d"),
-        'endereco_id'=> 1,
-        'telefone_id'=> 1,
+        'endereco_id'=> 7,
+        'telefone_id'=> 7,
         'created_at'=> date("Y/m/d h:i:s"),
         'updated_at'=> date("Y/m/d h:i:s"),
       ]);
