@@ -1185,7 +1185,22 @@ class AdministradorController extends Controller {
   }
 
   public function relatorios() {
-    return view('administrador.relatorios.relatorio');
+    $data_hoje = date('Y-m-d');
+
+    // dd($data_hoje);
+
+    $consultas_hoje = DB::table('consultas')
+        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+        ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+        ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+        ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+        ->where('calendarios.data', '=', $data_hoje)->get();
+
+  // dd($consultas_hoje);
+
+    return view('administrador.relatorios.relatorio', compact('consultas_hoje'));
   }
 
   // public function relatorioMensal() {

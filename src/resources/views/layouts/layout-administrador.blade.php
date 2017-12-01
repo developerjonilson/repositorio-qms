@@ -63,7 +63,7 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="">
-							<a><i class="lnr lnr-clock"></i> <span class="hora"></span></a>
+							<a><i class="lnr lnr-calendar-full"></i> <span class="data_hoje"></span></a>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
@@ -172,7 +172,7 @@
 
 	moment.locale('pt-br');
 
-	$('.hora').html(moment().format('llll'));
+	$('.data_hoje').html(moment().format('LL'));
 
 	$('div[data-toggle="datepicker"]').datepicker({
 		language: 'pt-BR',
