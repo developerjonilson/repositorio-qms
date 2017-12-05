@@ -1185,22 +1185,47 @@ class AdministradorController extends Controller {
   }
 
   public function relatorios() {
-    $data_hoje = date('Y-m-d');
+    return view('administrador.relatorios.relatorio');
+    // $data_hoje = date('Y-m-d');
 
     // dd($data_hoje);
 
-    $consultas_hoje = DB::table('consultas')
-        ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
-        ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
-        ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
-        ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
-        ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
-        ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
-        ->where('calendarios.data', '=', $data_hoje)->get();
+    // $consultas_hoje = DB::table('consultas')
+    //     ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+    //     ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+    //     ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+    //     ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+    //     ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+    //     ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+    //     ->where('calendarios.data', '=', $data_hoje)->get();
 
   // dd($consultas_hoje);
 
-    return view('administrador.relatorios.relatorio', compact('consultas_hoje'));
+    // return view('administrador.relatorios.relatorio', compact('consultas_hoje'));
+  }
+
+  public function relatoriosFilter(Request $request) {
+    // $queries = DB::table('consultas')->select(['codigo_consulta', 'name', 'email', 'created_at', 'updated_at']);
+    $queries = DB::table('consultas')
+                      ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                      ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                      ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                      ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                      ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                      ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                      ->where('calendarios.data', '=', $data_hoje)->get();
+
+    return Datatables::of($users)
+        ->filter(function ($query) use ($request) {
+            if ($request->has('name')) {
+                $query->where('name', 'like', "%{$request->get('name')}%");
+            }
+
+            if ($request->has('email')) {
+                $query->where('email', 'like', "%{$request->get('email')}%");
+            }
+        })
+        ->make(true);
   }
 
   // public function relatorioMensal() {

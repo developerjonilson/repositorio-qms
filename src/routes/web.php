@@ -62,6 +62,7 @@ Route::post('/administrador/medicos/calendario-atendimento/excluir', 'Administra
 // Route::get('/administrador/relatorios/mensal', 'AdministradorController@relatorioMensal')->name('administrador.relatorio.mensal');
 
 Route::get('/administrador/relatorios', 'AdministradorController@relatorios')->name('administrador.relatorio');
+Route::get('/administrador/relatorios/filter', 'AdministradorController@relatoriosFilter')->name('administrador.relatorio_filter');
 
 
 
