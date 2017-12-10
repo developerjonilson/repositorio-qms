@@ -50,61 +50,37 @@
 			</div>
 			<hr>
 			<div class="row">
-				<h4><b>Informações do Paciente</b></h4>
+				<h3 class="text-center"> Relatório de Consultas Diarias - Data: {{date('d/m/Y')}} </h3>
 			</div>
-			<div class="row">
-				<table border="1px">
-					<tr>
-						<td><b>Nome do Paciente</b></td>
-						<td><label>{{$consulta->nome_paciente}}</label></td>
-					</tr>
-					<tr>
-						<td><b>Número do CNS</b></td>
-						<td><label>{{$consulta->numero_cns}}</label></td>
-					</tr>
-					<tr>
-						<td><b>Nome da Mãe</b></td>
-						<td><label>{{$consulta->nome_mae}}</label></td>
-					</tr>
-				</table>
-			</div>
-			<br>
 			<hr>
 			<div class="row">
-				<h4><b>Informações da Consulta</b></h4>
-			</div>
-			<div class="row">
 				<table border="1px">
-					<tr>
-						<td><b>Especialidade</b></td>
-						<td><label>{{$consulta->nome_especialidade}}</label></td>
-					</tr>
-					<tr>
-						<td><b>Médico</b></td>
-						<td><label>{{$consulta->numero_crm}} - {{$consulta->nome_medico}}</label></td>
-					</tr>
-					<tr>
-						<td><b>Data da consulta</b></td>
-						<td><label>{{ date('d/m/Y', strtotime($consulta->data)) }}</label></td>
-					</tr>
-					<tr>
-						<td><b>Periodo / Horário</b></td>
-						<td><label>{{ $consulta->nome }}</label></td>
-					</tr>
+					<thead>
+						<tr>
+							<th><b>Código</b></th>
+							<th><b>Nome do Paciente</b></th>
+							<th><b>Número do CNS</b></th>
+							<th><b>Especialidade</b></th>
+							<th><b>Médico</b></th>
+							<th><b>Período</b></th>
+						</tr>
+					</thead>
+					<tbody>
+						@isset($consultas)
+							@foreach ($consultas as $consulta)
+								<tr>
+									<td>{{ $consulta->codigo_consulta }}</td>
+									<td>{{ $consulta->nome_paciente }}</td>
+									<td>{{ $consulta->numero_cns }}</td>
+									<td>{{ $consulta->nome_especialidade }}</td>
+									<td>{{ $consulta->nome_medico }}</td>
+									<td>{{ $consulta->nome }}</td>
+								</tr>
+							@endforeach
+						@endisset
+					</tbody>
 				</table>
 			</div>
-			<br>
-			<hr>
-			<div class="row">
-				<h4><b>Informações do Local da Consulta</b></h4>
-			</div>
-			<table border="1px">
-				<tr>
-					<td><b>Local</b></td>
-					<td><label>{{ $consulta->nome_fantasia}}</label></td>
-				</tr>
-			</table>
-		</div>
 
 		<div class="footer">
 			<hr>

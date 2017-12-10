@@ -27,6 +27,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AdministradorController extends Controller {
 
+  private $ativado = 0;
+
   public function __construct() {
       $this->middleware('auth');
       $this->middleware('\qms\Http\Middleware\AutorizacaoMiddleware::class');
@@ -1096,7 +1098,7 @@ class AdministradorController extends Controller {
             // $periodo->calendario_id = $calendario->id_calendario;
             $periodo->local_id = $id_local;
 
-            $calendarioBanco = Calendario::where('data', $datas_start[$i])->get()->first();
+            $calendarioBanco = DB::table('calendarios')->where('data', '=', $datas_start[$i])->where('medico_id', '=', $id_medico)->get()->first();
             if ($calendarioBanco != null) {
               $periodo->calendario_id = $calendarioBanco->id_calendario;
             } else {
@@ -1184,27 +1186,21 @@ class AdministradorController extends Controller {
     return Response::json($result);
   }
 
+  public function getMedicos($idEspecialidade) {
+    $especialidade = Especialidade::where('id_especialidade', $idEspecialidade)->get()->first();
+    $medicos = $especialidade->medicos;
+
+    return Response::json($medicos);
+  }
+
   public function relatorios() {
-    return view('administrador.relatorios.relatorio');
-    // $data_hoje = date('Y-m-d');
+    $especialidades = Especialidade::all();
 
-    // dd($data_hoje);
-
-    // $consultas_hoje = DB::table('consultas')
-    //     ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
-    //     ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
-    //     ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
-    //     ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
-    //     ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
-    //     ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
-    //     ->where('calendarios.data', '=', $data_hoje)->get();
-
-  // dd($consultas_hoje);
-
-    // return view('administrador.relatorios.relatorio', compact('consultas_hoje'));
+    return view('administrador.relatorios.relatorio', compact('especialidades'));
   }
 
   public function relatoriosFilter(Request $request) {
+    $data_hoje = date('Y-m-d');
     // $queries = DB::table('consultas')->select(['codigo_consulta', 'name', 'email', 'created_at', 'updated_at']);
     $queries = DB::table('consultas')
                       ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
@@ -1213,19 +1209,163 @@ class AdministradorController extends Controller {
                       ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
                       ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                       ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
-                      ->where('calendarios.data', '=', $data_hoje)->get();
+                      ->where('system_status', '=', $this->ativado)
+                      ->where('calendarios.data', '=', $data_hoje);
 
-    return Datatables::of($users)
+    return Datatables::of($queries)
         ->filter(function ($query) use ($request) {
-            if ($request->has('name')) {
-                $query->where('name', 'like', "%{$request->get('name')}%");
+            if ($request->has('especialidade')) {
+              $query->where('id_especialidade', '=', "{$request->get('especialidade')}");
             }
 
-            if ($request->has('email')) {
-                $query->where('email', 'like', "%{$request->get('email')}%");
+            if ($request->has('medico')) {
+              $query->where('id_medico', '=', "{$request->get('medico')}");
+            }
+
+            if ($request->has('periodo')) {
+              $query->where('nome', 'like', "%{$request->get('periodo')}%");
+              // $query->where('id_periodo', '=', "{$request->get('periodo')}");
             }
         })
         ->make(true);
+  }
+
+  public function relatorioPdf(Request $request) {
+    $data_hoje = date('Y-m-d');
+
+    if ($request->has('periodo')) {
+      $periodo = $request->get('periodo');
+
+      if ($request->has('especialidade')) {
+        $especialidade = $request->get('especialidade');
+
+        if ($request->has('medico')) {
+          $medico = $request->get('medico');
+
+          $consultas = DB::table('consultas')
+                            ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                            ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                            ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                            ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                            ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                            ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                            ->where('system_status', '=', $this->ativado)
+                            ->where('calendarios.data', '=', $data_hoje)
+                            ->where('periodos.nome', '=', $periodo)
+                            ->where('especialidades.id_especialidade', '=', $especialidade)
+                            ->where('medicos.id_medico', '=', $medico)
+                            ->orderBy('consultas.created_at', 'asc')
+                            ->get();
+
+          $view = view('administrador.relatorios.relatorio-diario-pdf', compact('consultas'));
+          $pdf = \App::make('dompdf.wrapper');
+          $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+          return $pdf->stream('consultas');
+        } else {
+          $consultas = DB::table('consultas')
+                            ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                            ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                            ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                            ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                            ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                            ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                            ->where('system_status', '=', $this->ativado)
+                            ->where('calendarios.data', '=', $data_hoje)
+                            ->where('periodos.nome', '=', $periodo)
+                            ->where('especialidades.id_especialidade', '=', $especialidade)
+                            ->orderBy('consultas.created_at', 'asc')
+                            ->get();
+
+          $view = view('administrador.relatorios.relatorio-diario-pdf', compact('consultas'));
+          $pdf = \App::make('dompdf.wrapper');
+          $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+          return $pdf->stream('consultas');
+        }
+
+      } else {
+        $consultas = DB::table('consultas')
+                          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                          ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                          ->where('system_status', '=', $this->ativado)
+                          ->where('calendarios.data', '=', $data_hoje)
+                          ->where('periodos.nome', '=', $periodo)
+                          ->orderBy('consultas.created_at', 'asc')
+                          ->get();
+
+        $view = view('administrador.relatorios.relatorio-diario-pdf', compact('consultas'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+        return $pdf->stream('consultas');
+      }
+    }
+
+    if ($request->has('especialidade')) {
+      $especialidade = $request->get('especialidade');
+
+      if ($request->has('medico')) {
+        $medico = $request->get('medico');
+
+        $consultas = DB::table('consultas')
+                          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                          ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                          ->where('system_status', '=', $this->ativado)
+                          ->where('calendarios.data', '=', $data_hoje)
+                          ->where('especialidades.id_especialidade', '=', $especialidade)
+                          ->where('medicos.id_medico', '=', $medico)
+                          ->orderBy('consultas.created_at', 'asc')
+                          ->get();
+
+        $view = view('administrador.relatorios.relatorio-diario-pdf', compact('consultas'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+        return $pdf->stream('consultas');
+      } else {
+        $consultas = DB::table('consultas')
+                          ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                          ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                          ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                          ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                          ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                          ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                          ->where('system_status', '=', $this->ativado)
+                          ->where('calendarios.data', '=', $data_hoje)
+                          ->where('especialidades.id_especialidade', '=', $especialidade)
+                          ->orderBy('consultas.created_at', 'asc')
+                          ->get();
+
+        $view = view('administrador.relatorios.relatorio-diario-pdf', compact('consultas'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+        return $pdf->stream('consultas');
+      }
+
+    }
+
+    $consultas = DB::table('consultas')
+                      ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
+                      ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
+                      ->join('pacientes', 'consultas.paciente_id', '=', 'pacientes.id_paciente')
+                      ->join('especialidades', 'consultas.especialidade_id', '=', 'especialidades.id_especialidade')
+                      ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
+                      ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
+                      ->where('system_status', '=', $this->ativado)
+                      ->where('calendarios.data', '=', $data_hoje)
+                      ->orderBy('consultas.created_at', 'asc')
+                      ->get();
+
+    $view = view('administrador.relatorios.relatorio-diario-pdf', compact('consultas'));
+    $pdf = \App::make('dompdf.wrapper');
+    // $pdf->loadHTML($view);
+    $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+    return $pdf->stream('consultas');
   }
 
   // public function relatorioMensal() {
