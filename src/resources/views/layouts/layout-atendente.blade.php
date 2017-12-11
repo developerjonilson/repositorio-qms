@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="/css/my-style.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="/css/demo.css">
+
+	<link rel="stylesheet" href="/css/bootstrap-toggle/bootstrap-toggle.min.css">
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
@@ -93,17 +95,9 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{action('AtendenteController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+						<li><a href="{{action('AtendenteController@index')}}" class="active" id="home"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
 
-						<li>
-							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subAtendente" class="collapse ">
-								<ul class="nav">
-									<li><a href="#" class="">Cadastrar</a></li>
-									<li><a href="#" class="">Listar</a></li>
-								</ul>
-							</div>
-						</li>
+						<li><a href="{{action('AtendenteController@consultas')}}" class="" id="consultas"><i class="lnr lnr-heart"></i> <span>Consultas</span></a></li>
 
 						<li>
 								<a href="{{ route('logout') }}"	onclick="event.preventDefault();
@@ -156,6 +150,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>
+	<script src="/scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 	<script src="/scripts/script.js"></script>
 
 	@yield('pos-script')
@@ -163,6 +158,14 @@
 		moment.locale('pt-br');
 
 		$('.data_hoje').html(moment().format('LL'));
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			@yield('scripts')
+
+			@yield('toggles')
+		});
 	</script>
 
 </body>

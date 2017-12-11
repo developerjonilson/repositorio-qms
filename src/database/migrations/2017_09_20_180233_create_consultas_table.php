@@ -20,6 +20,9 @@ class CreateConsultasTable extends Migration
             $val = 0;
             $table->integer('system_status')->default($val);
 
+            $bool = 'false';
+            $table->string('status_atendimento')->default($bool);
+
             $table->integer('calendario_id')->unsigned();
             $table->foreign('calendario_id')->references('id_calendario')->on('calendarios');
 

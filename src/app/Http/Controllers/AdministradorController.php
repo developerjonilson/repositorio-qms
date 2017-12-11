@@ -1194,9 +1194,30 @@ class AdministradorController extends Controller {
   }
 
   public function relatorios() {
+    $calendarios = DB::table('calendarios')->get();
+    $years = array();
+
+    // dd($calendarios);
+    $num = count($calendarios);
+
+    for ($i=0; $i < $num; $i++) {
+      $data = explode("-", $calendarios[$i]->data);
+      $ano = $data[0];
+
+      if (!in_array($ano, $years)) {
+        array_push($years, $ano);
+      }
+      // if (array_key_exists($i, $calendarios)) {
+      //
+      // }
+      // array_push($years, $calendarios[$i]);
+    }
+
+    // dd($years);
+
     $especialidades = Especialidade::all();
 
-    return view('administrador.relatorios.relatorio', compact('especialidades'));
+    return view('administrador.relatorios.relatorio', compact('especialidades', 'years'));
   }
 
   public function relatoriosFilter(Request $request) {
@@ -1368,9 +1389,9 @@ class AdministradorController extends Controller {
     return $pdf->stream('consultas');
   }
 
-  // public function relatorioMensal() {
-  //   return view('administrador.manual-administrador');
-  // }
+  public function relatorioMensal() {
+    return view('administrador.manual-administrador');
+  }
 
   public function manualAdministrador() {
     return view('administrador.manual-administrador');

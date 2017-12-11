@@ -22,7 +22,6 @@
 						<span class="icon"><i class="fa fa-users"></i></span>
 						<p>
 							<span class="number">{{$pacientes}}</span>
-							{{-- <span class="number">1.000.000.000.000</span> --}}
 							<span class="title">Pacientes</span>
 						</p>
 					</div>

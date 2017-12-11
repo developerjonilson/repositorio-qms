@@ -830,6 +830,40 @@ $("#form_create_operator").validate({
                 form.submit();
             };
 
+            $("#buscar_hoje").validate({
+                  // Define as regras
+                  rules: {
+                      especialidade: {
+                          required: true
+                      },
+                      medico: {
+                          required: true
+                      },
+                      periodo: {
+                          required: true
+                      },
+                  },
+                  // Define as mensagens de erro para cada regra
+                  messages: {
+                      especialidade: {
+                          required: "Você tem que selecionar uma especialidade antes!"
+                      },
+                      medico: {
+                          required: "Você tem que selecionar um medico antes!"
+                      },
+                      periodo: {
+                          required: "Você tem que selecionar um periodo antes!"
+                      },
+                  },
+
+                  submitHandler: postFormBuscarHoje,
+              });
+
+              function postFormBuscarHoje(form) {
+                  $('.loading').fadeIn('fast').removeClass('hidden');
+                  form.submit();
+              };
+
 });
 
 

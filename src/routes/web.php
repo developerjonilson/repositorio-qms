@@ -120,6 +120,12 @@ Route::post('/atendente/update-password', 'AtendenteController@updatePassword');
 Route::get('/atendente/perfil', 'AtendenteController@perfilUsuario');
 Route::post('/atendente/alterar-dados', 'AtendenteController@alterProfile');
 
+Route::get('/atendente/consultas', 'AtendenteController@consultas')->name('atendente.consultas');
+Route::get('/atendente/get-medicos/{idEspecialidade}', 'AtendenteController@getMedicos')->name('atendente.medicos');
+Route::get('/atendente/especialidade/{idEspecialidade}/medico/{idMedico}', 'AtendenteController@getPeriodos')->name('atendente.periodos');
+Route::post('/atendente/consulta/listar-atendimentos', 'AtendenteController@listarAtendimentos')->name('atendente.listar_atendimentos');
+Route::post('/atendente/consulta/gerar-pdf', 'AtendenteController@gerarPdf')->name('atendente.gerar_pdf');
+
 
 
 //   -------------------    Rotas do manual do sistema    -------------------------------------------------

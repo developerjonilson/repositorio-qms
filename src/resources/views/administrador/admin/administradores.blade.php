@@ -12,7 +12,7 @@
 
     <div class="panel panel-headline">
       <div class="panel-heading">
-        <h3 class="panel-title">Administradores     (Não está feito!)</h3>
+        <h3 class="panel-title">Administradores</h3>
         <hr>
         <div class="erros">
           @isset($sucesso)
@@ -28,7 +28,7 @@
         <div class="row">
           <div class="col-md-12">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_cadastrar_operador">
-              <i class="fa fa-plus-square-o"></i> Adicionar Operador
+              <i class="fa fa-plus-square-o"></i> Adicionar Administradore
             </button>
           </div>
         </div>

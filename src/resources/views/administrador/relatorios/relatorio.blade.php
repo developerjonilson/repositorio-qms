@@ -87,10 +87,168 @@
                 </div>
               </form>
 
+              <hr>
+
+              <div class="row">
+                <div class="pull-right">
+                  <form class="" action="{{ route('administrador.relatorio_diario_pdf') }}" method="post" target='_blank'>
+                    {{ csrf_field() }}
+                    <input type="hidden" name="periodo" value="">
+                    <input type="hidden" name="especialidade" value="">
+                    <input type="hidden" name="medico" value="">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fa fa-print" aria-hidden="true"></i>  Imprimir</a>
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Table -->
+                <table class="table" id="queries_table">
+                  <thead>
+                    <tr>
+                      <th>Código</th>
+                      <th>Paciente</th>
+                      <th>Especialidade</th>
+                      <th>Médico</th>
+                      <th>Período</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+
             </div>
 
             <div role="tabpanel" class="tab-pane fade" id="mensal">
               {{-- mensal --}}
+              <form action="" method="post" id="search-form">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h4>Filtar Por</h4>
+                  </div>
+                  <div class="col-md-4 pull-right">
+                    <a href="{{ route('administrador.relatorio') }}" class="btn btn-danger pull-right" id="btn_limpar"><i class="fa fa-eraser"></i>   Limpar Filtros</a>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="ano">Ano</label>
+                      <select class="form-control" name="ano">
+                        <option selected disabled>Selecione...</option>
+                        @isset($years)
+                          @foreach ($years as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                          @endforeach
+                        @endisset
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="mes">Mês</label>
+                      <select class="form-control" name="mes">
+                        <option value="">Todos</option>
+                        <option value="01">Janeiro</option>
+                        <option value="02">Fevereiro</option>
+                        <option value="03">Março</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Maio</option>
+                        <option value="06">Junho</option>
+                        <option value="07">Julho</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="perido">Período</label>
+                      <select class="form-control" name="periodo">
+                        <option value="">Todos</option>
+                        <option value="Manhã">Manhã</option>
+                        <option value="Tarde">Tarde</option>
+                        <option value="Noite">Noite</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="especialidade">Especialidade</label>
+                      <select class="form-control" name="especialidade">
+                        <option value="">TODOS</option>
+                        {{-- <option disabled selected>Selecione...</option> --}}
+                        @isset($especialidades)
+                          @foreach ($especialidades as $esp)
+                            <option value="{{ $esp->id_especialidade }}">{{ $esp->nome_especialidade}}</option>
+                          @endforeach
+                        @endisset
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="medico">Médico</label>
+                      <select class="form-control" name="medico" disabled>
+                        <option value="">TODOS</option>
+                        {{-- <option disabled selected>Selecione...</option> --}}
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>  Buscar</button>
+                  </div>
+
+                </div>
+              </form>
+
+              <hr>
+
+              <div class="row">
+                <div class="pull-right">
+                  <form class="" action="{{ route('administrador.relatorio_diario_pdf') }}" method="post" target='_blank'>
+                    {{ csrf_field() }}
+                    <input type="hidden" name="periodo" value="">
+                    <input type="hidden" name="especialidade" value="">
+                    <input type="hidden" name="medico" value="">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fa fa-print" aria-hidden="true"></i>  Imprimir</a>
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Table -->
+                <table class="table" id="queries_mensal_table">
+                  <thead>
+                    <tr>
+                      <th>Código</th>
+                      <th>Paciente</th>
+                      <th>Especialidade</th>
+                      <th>Médico</th>
+                      <th>Data</th>
+                      <th>Período</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+
             </div>
 
           </div>
@@ -100,44 +258,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="row">
-          <div class="pull-right">
-            <form class="" action="{{ route('administrador.relatorio_diario_pdf') }}" method="post" target='_blank'>
-              {{ csrf_field() }}
-              <input type="text" name="periodo" value="">
-              <input type="text" name="especialidade" value="">
-              <input type="text" name="medico" value="">
-              <button type="submit" class="btn btn-success">
-                <i class="fa fa-print" aria-hidden="true"></i>  Imprimir</a>
-              </button>
-              {{-- <input type="submit" name="" value="Imprimir" class="btn btn-success"> --}}
-            </form>
-            {{-- <a id="pdf" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i>  Imprimir</a> --}}
-          </div>
-        </div>
 
-
-        <div class="row">
-          <!-- Table -->
-          <table class="table" id="queries_table">
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Paciente</th>
-                <th>Especialidade</th>
-                <th>Médico</th>
-                <th>Período</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-    </div>
-
-  </div>
 
 @endsection
 
