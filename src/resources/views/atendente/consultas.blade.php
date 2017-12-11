@@ -2,13 +2,20 @@
 
 @section('conteudo')
 
+	<div class="row">
+    <ol class="breadcrumb">
+      <li><a href="{{ action('AtendenteController@index') }}">Atendente</a></li>
+      <li class="active">Consultas</li>
+    </ol>
+  </div>
+
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<h3 class="panel-title">Buscar Hoje</h3>
 			<hr>
 		</div>
 		<div class="panel-body">
-			<form class="" action="#" method="post" id="buscar_hoje">
+			<form action="{{ route('atendente.listar_atendimentos') }}" method="post" id="buscar_hoje">
 				{{ csrf_field() }}
 				<div class="row">
 					<div class="col-md-4">

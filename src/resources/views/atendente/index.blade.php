@@ -1,7 +1,6 @@
 @extends('layouts.layout-atendente')
 
 @section('conteudo')
-
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<h3 class="panel-title">Visão Geral</h3>

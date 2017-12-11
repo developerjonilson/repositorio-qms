@@ -61,7 +61,11 @@ Route::post('/administrador/medicos/calendario-atendimento/excluir', 'Administra
 Route::get('/administrador/get-medicos/{idEspecialidade}', 'AdministradorController@getMedicos');
 Route::get('/administrador/relatorios', 'AdministradorController@relatorios')->name('administrador.relatorio');
 Route::get('/administrador/relatorios/filter', 'AdministradorController@relatoriosFilter')->name('administrador.relatorio_filter');
+Route::get('/administrador/relatorios/filter-mensal', 'AdministradorController@relatoriosFilterMensal')->name('administrador.relatorio_filter_mensal');
 Route::post('/administrador/relatorio-diario-pdf', 'AdministradorController@relatorioPdf')->name('administrador.relatorio_diario_pdf');
+Route::post('/administrador/relatorio-mensal-pdf', 'AdministradorController@relatorioMensalPdf')->name('administrador.relatorio_mensal_pdf');
+
+Route::get('/administrador/get-meses/{ano}', 'AdministradorController@getMeses')->name('atendente.meses');
 
 
 
@@ -125,7 +129,6 @@ Route::get('/atendente/get-medicos/{idEspecialidade}', 'AtendenteController@getM
 Route::get('/atendente/especialidade/{idEspecialidade}/medico/{idMedico}', 'AtendenteController@getPeriodos')->name('atendente.periodos');
 Route::post('/atendente/consulta/listar-atendimentos', 'AtendenteController@listarAtendimentos')->name('atendente.listar_atendimentos');
 Route::post('/atendente/consulta/gerar-pdf', 'AtendenteController@gerarPdf')->name('atendente.gerar_pdf');
-
 
 
 //   -------------------    Rotas do manual do sistema    -------------------------------------------------

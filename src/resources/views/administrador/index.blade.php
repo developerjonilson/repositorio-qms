@@ -21,7 +21,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-user-o "></i></span>
 						<p>
-							<span class="number">3</span>
+							<span class="number">{{ $total_atendentes }}</span>
 							<span class="title">Atendentes do QMS</span>
 						</p>
 					</div>
@@ -30,7 +30,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-users"></i></span>
 						<p>
-							<span class="number">4</span>
+							<span class="number">{{ $total_operadores }}</span>
 							<span class="title">Operadores do QMS</span>
 						</p>
 					</div>
@@ -39,7 +39,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-user-md"></i></span>
 						<p>
-							<span class="number">20</span>
+							<span class="number">{{ $total_medicos }}</span>
 							<span class="title">Médicos no QMS</span>
 						</p>
 					</div>
@@ -48,7 +48,7 @@
 					<div class="metric">
 						<span class="icon"><i class="fa fa-calendar-check-o"></i></span>
 						<p>
-							<span class="number">20</span>
+							<span class="number">{{ $total_calendarios }}</span>
 							<span class="title">Calendário Médico</span>
 						</p>
 					</div>

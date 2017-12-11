@@ -35,7 +35,16 @@ class AdministradorController extends Controller {
   }
 
   public function index() {
-    return view('administrador.index');
+    $total_atendentes = DB::table('users')->where('tipo', 'atendente')->count();
+    $total_operadores = DB::table('users')->where('tipo', 'operador')->count();
+    $total_medicos = DB::table('medicos')->count();
+    $total_calendarios = DB::table('calendarios')->count();
+
+    return view('administrador.index', ['total_atendentes' => $total_atendentes,
+                                  'total_operadores' => $total_operadores,
+                                  'total_medicos' => $total_medicos,
+                                  'total_calendarios' => $total_calendarios]);
+    // return view('administrador.index');
   }
 
   public function acessoNegadoAdministrador() {
@@ -1196,8 +1205,6 @@ class AdministradorController extends Controller {
   public function relatorios() {
     $calendarios = DB::table('calendarios')->get();
     $years = array();
-
-    // dd($calendarios);
     $num = count($calendarios);
 
     for ($i=0; $i < $num; $i++) {
@@ -1207,13 +1214,7 @@ class AdministradorController extends Controller {
       if (!in_array($ano, $years)) {
         array_push($years, $ano);
       }
-      // if (array_key_exists($i, $calendarios)) {
-      //
-      // }
-      // array_push($years, $calendarios[$i]);
     }
-
-    // dd($years);
 
     $especialidades = Especialidade::all();
 
@@ -1222,7 +1223,7 @@ class AdministradorController extends Controller {
 
   public function relatoriosFilter(Request $request) {
     $data_hoje = date('Y-m-d');
-    // $queries = DB::table('consultas')->select(['codigo_consulta', 'name', 'email', 'created_at', 'updated_at']);
+
     $queries = DB::table('consultas')
                       ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                       ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1389,9 +1390,71 @@ class AdministradorController extends Controller {
     return $pdf->stream('consultas');
   }
 
-  public function relatorioMensal() {
-    return view('administrador.manual-administrador');
+  public function getMeses($ano) {
+    $calendarios = DB::table('calendarios')->get();
+    $meses = array();
+    $num = count($calendarios);
+
+    for ($i=0; $i < $num; $i++) {
+      $data = explode("-", $calendarios[$i]->data);
+      $mes = $data[1];
+      $mes_extenso;
+
+      if (!in_array($mes, $meses)) {
+        // $meses[$i] = $mes => $mes_extenso;
+        // $meses[$i] = '{}'$mes_extenso;
+        switch ($mes) {
+          case "01":
+            $mes_extenso = 'Janeiro';
+            break;
+          case "02":
+            $mes_extenso = 'Fevereiro';
+            break;
+          case "03":
+            $mes_extenso = 'Março';
+            break;
+          case "04":
+            $mes_extenso = 'Abril';
+            break;
+          case "05":
+            $mes_extenso = 'Maio';
+            break;
+          case "06":
+            $mes_extenso = 'Junho';
+            break;
+          case "07":
+            $mes_extenso = 'Julho';
+            break;
+          case "08":
+            $mes_extenso = 'Agosto';
+            break;
+          case "09":
+            $mes_extenso = 'Setembro';
+            break;
+          case "10":
+            $mes_extenso = 'Outubro';
+            break;
+          case "11":
+            $mes_extenso = 'Novembro';
+            break;
+          case "12":
+            $mes_extenso = 'Dezembro';
+            break;
+        }
+
+        $meses[$mes] = $mes_extenso;
+        // $meses[$i] = $mes_extenso;
+        // array_push($meses, $mes => $mes_extenso);
+        // array_push($meses, $mes);
+      }
+    }
+    // print_r($meses);
+    return Response::json($meses);
   }
+
+  // public function relatorioMensal() {
+  //   return view('administrador.manual-administrador');
+  // }
 
   public function manualAdministrador() {
     return view('administrador.manual-administrador');

@@ -122,7 +122,7 @@
 
             <div role="tabpanel" class="tab-pane fade" id="mensal">
               {{-- mensal --}}
-              <form action="" method="post" id="search-form">
+              <form action="" method="post" id="search-form-mensal">
                 <div class="row">
                   <div class="col-md-8">
                     <h4>Filtar Por</h4>
@@ -137,7 +137,7 @@
                     <div class="form-group">
                       <label for="ano">Ano</label>
                       <select class="form-control" name="ano">
-                        <option selected disabled>Selecione...</option>
+                        <option value="">Todos</option>
                         @isset($years)
                           @foreach ($years as $year)
                             <option value="{{ $year }}">{{ $year }}</option>
@@ -150,20 +150,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="mes">Mês</label>
-                      <select class="form-control" name="mes">
+                      <select class="form-control" name="meses" disabled>
                         <option value="">Todos</option>
-                        <option value="01">Janeiro</option>
-                        <option value="02">Fevereiro</option>
-                        <option value="03">Março</option>
-                        <option value="04">Abril</option>
-                        <option value="05">Maio</option>
-                        <option value="06">Junho</option>
-                        <option value="07">Julho</option>
-                        <option value="08">Agosto</option>
-                        <option value="09">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
                       </select>
                     </div>
                   </div>
@@ -187,7 +175,6 @@
                       <label for="especialidade">Especialidade</label>
                       <select class="form-control" name="especialidade">
                         <option value="">TODOS</option>
-                        {{-- <option disabled selected>Selecione...</option> --}}
                         @isset($especialidades)
                           @foreach ($especialidades as $esp)
                             <option value="{{ $esp->id_especialidade }}">{{ $esp->nome_especialidade}}</option>
@@ -202,7 +189,6 @@
                       <label for="medico">Médico</label>
                       <select class="form-control" name="medico" disabled>
                         <option value="">TODOS</option>
-                        {{-- <option disabled selected>Selecione...</option> --}}
                       </select>
                     </div>
                   </div>
@@ -367,6 +353,94 @@
     $.post("{{ route('administrador.relatorio_diario_pdf') }}",
     {
       _token: "{{ csrf_token() }}",
+       especialidade: $('select[name="especialidade"]').val(),
+       medico: $('select[name="medico"]').val(),
+       periodo: $('select[name="periodo"]').val()
+    });
+  });
+
+  $('select[name="ano"]').change(function () {
+    let ano = $(this).val();
+
+    if (ano == '') {
+      $('select[name="meses"]').empty();
+      $('select[name="meses"]').append('<option value="">Todos</option>');
+      $('select[name="meses"]').attr('disabled', true);
+    } else {
+      $.get('/administrador/get-meses/' + ano, function (meses) {
+        $('select[name="meses"]').empty();
+        $('select[name="meses"]').append('<option selected disabled>Selecione...</option>');
+        $.each(meses, function (key, mes) {
+          $('select[name="meses"]').append('<option value="'+key+'">'+mes+'</option>');
+        });
+        $('select[name="meses"]').attr('disabled', false);
+      });
+    }
+
+  });
+
+  var oTable = $('#queries_mensal_table').DataTable({
+      oLanguage: {
+        "sEmptyTable": "Nenhum registro encontrado",
+        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+        "sInfoPostFix": "",
+        "sInfoThousands": ".",
+        "sLengthMenu": "_MENU_ resultados por página",
+        "sLoadingRecords": "Carregando...",
+        "sProcessing": "Processando...",
+        "sZeroRecords": "Nenhum registro encontrado",
+        "sSearch": "Pesquisar",
+        "oPaginate": {
+            "sNext": "Próximo",
+            "sPrevious": "Anterior",
+            "sFirst": "Primeiro",
+            "sLast": "Último"
+        },
+        "oAria": {
+            "sSortAscending": ": Ordenar colunas de forma ascendente",
+            "sSortDescending": ": Ordenar colunas de forma descendente"
+        }
+      },
+      dom: "<'row'<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
+          "<'row'<'col-xs-12't>>"+
+          "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
+      processing: true,
+      serverSide: true,
+      ajax: {
+          url: '{{ route('administrador.relatorio_filter_mensal') }}',
+          data: function (d) {
+              d.ano = $('select[name="ano"]').val();
+              d.mes = $('select[name="meses"]').val();
+              d.especialidade = $('select[name="especialidade"]').val();
+              d.medico = $('select[name="medico"]').val();
+              d.periodo = $('select[name="periodo"]').val();
+          }
+      },
+      columns: [
+          {data: 'codigo_consulta', name: 'codigo_consulta'},
+          {data: 'nome_paciente', name: 'nome_paciente'},
+          {data: 'nome_especialidade', name: 'nome_especialidade'},
+          {data: 'nome_medico', name: 'nome_medico'},
+          {data: 'data', name: 'data'}
+          {data: 'nome', name: 'nome'}
+      ]
+  });
+
+  $('#search-form-mensal').on('submit', function(e) {
+      oTable.draw();
+      e.preventDefault();
+  });
+
+  $('#pdf_mensal').click(function () {
+    $('.loading').fadeOut(700).removeClass('hidden');
+
+    $.post("{{ route('administrador.relatorio_mensal_pdf') }}",
+    {
+      _token: "{{ csrf_token() }}",
+       ano = $('select[name="ano"]').val();
+       mes = $('select[name="meses"]').val();
        especialidade: $('select[name="especialidade"]').val(),
        medico: $('select[name="medico"]').val(),
        periodo: $('select[name="periodo"]').val()
