@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="/css/my-style.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="/css/demo.css">
+	<link rel="stylesheet" href="/css/sweetalert2.min.css">
 
 	<link rel="stylesheet" href="/css/bootstrap-toggle/bootstrap-toggle.min.css">
 	<!-- GOOGLE FONTS -->
@@ -152,6 +153,7 @@
 	<script src="/scripts/validator.min.js"></script>
 	<script src="/scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 	<script src="/scripts/script.js"></script>
+	<script src="/scripts/sweetalert2.min.js"></script>
 
 	@yield('pos-script')
 	<script>

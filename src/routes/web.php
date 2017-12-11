@@ -130,6 +130,8 @@ Route::get('/atendente/especialidade/{idEspecialidade}/medico/{idMedico}', 'Aten
 Route::post('/atendente/consulta/listar-atendimentos', 'AtendenteController@listarAtendimentos')->name('atendente.listar_atendimentos');
 Route::post('/atendente/consulta/gerar-pdf', 'AtendenteController@gerarPdf')->name('atendente.gerar_pdf');
 
+Route::post('/atendente/status', 'AtendenteController@status')->name('atendente.status');
+
 
 //   -------------------    Rotas do manual do sistema    -------------------------------------------------
 Route::get('/operador/manual', 'OperadorController@manualOperador');

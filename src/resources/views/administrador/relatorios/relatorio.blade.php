@@ -21,7 +21,7 @@
           <!-- Nav tabs -->
           <ul class="nav nav-tabs nav-justified" role="tablist" id="my_tabs">
             <li role="presentation" class="active"><a href="#diario" aria-controls="diario" role="tab" data-toggle="tab"><b>Relatório Diário</b></a></li>
-            <li role="presentation"><a href="#mensal" aria-controls="mensal" role="tab" data-toggle="tab"><b>Relatório Mensal</b></a></li>
+            <li role="presentation"><a href="#mensal" aria-controls="mensal" role="tab" data-toggle="tab"><b>Relatório Personalizado</b></a></li>
           </ul>
 
           <!-- Tab panes -->
@@ -57,7 +57,6 @@
                       <label for="especialidade">Especialidade</label>
                       <select class="form-control" name="especialidade">
                         <option value="">TODOS</option>
-                        {{-- <option disabled selected>Selecione...</option> --}}
                         @isset($especialidades)
                           @foreach ($especialidades as $esp)
                             <option value="{{ $esp->id_especialidade }}">{{ $esp->nome_especialidade}}</option>
@@ -72,7 +71,6 @@
                       <label for="medico">Médico</label>
                       <select class="form-control" name="medico" disabled>
                         <option value="">TODOS</option>
-                        {{-- <option disabled selected>Selecione...</option> --}}
                       </select>
                     </div>
                   </div>
@@ -207,8 +205,10 @@
 
               <div class="row">
                 <div class="pull-right">
-                  <form class="" action="{{ route('administrador.relatorio_diario_pdf') }}" method="post" target='_blank'>
+                  <form class="" action="{{ route('administrador.relatorio_mensal_pdf') }}" method="post" target='_blank'>
                     {{ csrf_field() }}
+                    <input type="hidden" name="ano" value="">
+                    <input type="hidden" name="mes" value="">
                     <input type="hidden" name="periodo" value="">
                     <input type="hidden" name="especialidade" value="">
                     <input type="hidden" name="medico" value="">
@@ -268,6 +268,16 @@
     $('input[name="medico"]').val(valor);
   });
 
+  $('select[name="ano"]').change(function () {
+    let valor = $(this).val();
+    $('input[name="ano"]').val(valor);
+  });
+
+  $('select[name="meses"]').change(function () {
+    let valor = $(this).val();
+    $('input[name="mes"]').val(valor);
+  });
+
   $('select[name="especialidade"]').change(function () {
     let idEspecialidade = $(this).val();
 
@@ -318,7 +328,6 @@
       processing: true,
       serverSide: true,
       ajax: {
-          {{-- url: 'https://datatables.yajrabox.com/fluent/custom-filter-data', --}}
           url: '{{ route('administrador.relatorio_filter') }}',
           data: function (d) {
               d.especialidade = $('select[name="especialidade"]').val();
@@ -339,13 +348,6 @@
       oTable.draw();
       e.preventDefault();
   });
-
-  {{-- $('#my_tabs a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  }) --}}
-
-  {{-- $('#my_tabs a[href="#personalizado"]').tab('show')  --}}
 
   $('#pdf').click(function () {
     $('.loading').fadeOut(700).removeClass('hidden');
@@ -369,7 +371,7 @@
     } else {
       $.get('/administrador/get-meses/' + ano, function (meses) {
         $('select[name="meses"]').empty();
-        $('select[name="meses"]').append('<option selected disabled>Selecione...</option>');
+        $('select[name="meses"]').append('<option value="">Todos</option>');
         $.each(meses, function (key, mes) {
           $('select[name="meses"]').append('<option value="'+key+'">'+mes+'</option>');
         });
@@ -423,7 +425,7 @@
           {data: 'nome_paciente', name: 'nome_paciente'},
           {data: 'nome_especialidade', name: 'nome_especialidade'},
           {data: 'nome_medico', name: 'nome_medico'},
-          {data: 'data', name: 'data'}
+          {data: 'data', name: 'data'},
           {data: 'nome', name: 'nome'}
       ]
   });
@@ -439,8 +441,8 @@
     $.post("{{ route('administrador.relatorio_mensal_pdf') }}",
     {
       _token: "{{ csrf_token() }}",
-       ano = $('select[name="ano"]').val();
-       mes = $('select[name="meses"]').val();
+       ano: $('select[name="ano"]').val(),
+       mes: $('select[name="meses"]').val(),
        especialidade: $('select[name="especialidade"]').val(),
        medico: $('select[name="medico"]').val(),
        periodo: $('select[name="periodo"]').val()

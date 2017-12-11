@@ -110,7 +110,7 @@
 											<td>{{ date('d/m/Y', strtotime($consulta->data_nascimento)) }}</td>
 											<td>{{ $consulta->nome_mae }}</td>
 											<td>
-												<input value="{{ $consulta->status_atendimento }}" name="atendimento" type="checkbox" data-toggle="toggle" data-on="Atendido" data-off="Não Atendido" data-onstyle="success" data-offstyle="danger">
+												<input value="{{ $consulta->id_consulta }}" name="atendimento" type="checkbox" data-toggle="toggle" data-on="Atendido" data-off="Não Atendido" data-onstyle="success" data-offstyle="danger" onclick="status(this.value)">
 											</td>
 										</tr>
 									@endforeach
@@ -175,4 +175,59 @@
       $('select[name="periodo"]').prop("disabled", false);
     });
   });
+
+	function status(idConsulta) {
+		swal({
+			position: 'top',
+			title: 'Atendimento',
+			text: "O paciente já foi atendido?",
+			type: 'success',
+			showCancelButton: true,
+			confirmButtonColor: '#5cb85c',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sim',
+			cancelButtonText: 'Não'
+		}).then(function (result) {
+			if (result.value) {
+				$('.loading').fadeOut(700).removeClass('hidden');
+
+				$.post("{{ route('atendente.status') }}",
+				{
+					_token: "{{ csrf_token() }}",
+					id: idConsulta
+				},
+				function(result) {
+					if (result.menssage === 'error') {
+						$('.loading').fadeOut(700).addClass('hidden');
+						swal({
+							position: 'top',
+							title: 'Erro!',
+							text: 'Ocorreu ao mudar o status, tente em instantes!',
+							type: 'error',
+							confirmButtonText: 'Ok'
+						});
+					}
+					if (result.menssage === 'success') {
+						$('.loading').fadeOut(700).addClass('hidden');
+						swal({
+							position: 'top',
+							title: 'Sucesso!',
+							text: 'O status foi alterado com sucesso!',
+							type: 'success'
+						})
+					}
+				}, "json");
+
+			}
+		})
+	}
+
+
+	$(function() {
+    $('input[name="atendimento"]').change(function() {
+			$id = $(this).val();
+
+			status($id);
+    })
+  })
 @endsection

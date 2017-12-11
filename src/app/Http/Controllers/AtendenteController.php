@@ -264,8 +264,33 @@ class AtendenteController extends Controller
     }
   }
 
-  public function status() {
-    
+  public function status(Request $request) {
+    $id_consulta = $request->id;
+    $consulta = Consulta::where('id_consulta', $id_consulta)->get()->first();
+
+    $result;
+
+    if ($consulta != null) {
+
+      $status = $consulta->status_atendimento;
+
+      if ($status) {
+        $consulta->status_atendimento = 'false';
+      } else {
+        $consulta->status_atendimento = 'true';
+      }
+
+      if ($consulta->save()) {
+        $result = ['menssage' => 'success'];
+      } else {
+        $result = ['menssage' => 'error'];
+      }
+            
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
   }
 
   public function manualAtendente() {
