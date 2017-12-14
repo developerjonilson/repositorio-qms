@@ -59,7 +59,8 @@ Route::post('/administrador/medicos/calendario-atendimento/excluir', 'Administra
 
 //rotas de relatorios:
 Route::get('/administrador/get-medicos/{idEspecialidade}', 'AdministradorController@getMedicos');
-Route::get('/administrador/relatorios', 'AdministradorController@relatorios')->name('administrador.relatorio');
+Route::get('/administrador/relatorio-diario', 'AdministradorController@relatorioDiario')->name('administrador.relatorio-diario');
+Route::get('/administrador/relatorio-mensais', 'AdministradorController@relatorioMensal')->name('administrador.relatorio-mensal');
 Route::get('/administrador/relatorios/filter', 'AdministradorController@relatoriosFilter')->name('administrador.relatorio_filter');
 Route::get('/administrador/relatorios/filter-mensal', 'AdministradorController@relatoriosFilterMensal')->name('administrador.relatorio_filter_mensal');
 Route::post('/administrador/relatorio-diario-pdf', 'AdministradorController@relatorioPdf')->name('administrador.relatorio_diario_pdf');

@@ -176,7 +176,7 @@
     });
   });
 
-	function status(idConsulta) {
+	{{-- function status(idConsulta) {
 		swal({
 			position: 'top',
 			title: 'Atendimento',
@@ -229,5 +229,40 @@
 
 			status($id);
     })
-  })
+  }) --}}
+
+	$(function() {
+		$('input[name="atendimento"]').change(function() {
+			idConsulta = $(this).val();
+
+			$('.loading').fadeOut(700).removeClass('hidden');
+
+			$.post("{{ route('atendente.status') }}",
+			{
+				_token: "{{ csrf_token() }}",
+				id: idConsulta
+			},
+			function(result) {
+				if (result.menssage === 'error') {
+					$('.loading').fadeOut(700).addClass('hidden');
+					swal({
+						position: 'top',
+						title: 'Erro!',
+						text: 'Ocorreu ao mudar o status, tente em instantes!',
+						type: 'error',
+						confirmButtonText: 'Ok'
+					});
+				}
+				if (result.menssage === 'success') {
+					$('.loading').fadeOut(700).addClass('hidden');
+					swal({
+						position: 'top',
+						title: 'Sucesso!',
+						text: 'O status foi alterado com sucesso!',
+						type: 'success'
+					})
+				}
+			}, "json");
+		})
+	})
 @endsection

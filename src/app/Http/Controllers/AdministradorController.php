@@ -1203,7 +1203,7 @@ class AdministradorController extends Controller {
     return Response::json($medicos);
   }
 
-  public function relatorios() {
+  public function relatorioDiario() {
     $calendarios = DB::table('calendarios')->get();
     $years = array();
     $num = count($calendarios);
@@ -1219,7 +1219,26 @@ class AdministradorController extends Controller {
 
     $especialidades = Especialidade::all();
 
-    return view('administrador.relatorios.relatorio', compact('especialidades', 'years'));
+    return view('administrador.relatorios.relatorio-diario', compact('especialidades', 'years'));
+  }
+
+  public function relatorioMensal() {
+    $calendarios = DB::table('calendarios')->get();
+    $years = array();
+    $num = count($calendarios);
+
+    for ($i=0; $i < $num; $i++) {
+      $data = explode("-", $calendarios[$i]->data);
+      $ano = $data[0];
+
+      if (!in_array($ano, $years)) {
+        array_push($years, $ano);
+      }
+    }
+
+    $especialidades = Especialidade::all();
+
+    return view('administrador.relatorios.relatorio-mensal', compact('especialidades', 'years'));
   }
 
   public function relatoriosFilter(Request $request) {
