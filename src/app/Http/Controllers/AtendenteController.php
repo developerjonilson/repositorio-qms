@@ -256,7 +256,7 @@ class AtendenteController extends Controller
 
       $view = view('atendente.relatorio-pdf', compact('consultas', 'especialidade', 'medico', 'periodo'));
       $pdf = \App::make('dompdf.wrapper');
-      $pdf->loadHTML($view);
+      $pdf->loadHTML($view)->setPaper('a4', 'landscape');
       return $pdf->stream('consultas');
     } else {
       $request->session()->flash('erro', 'Erro ao gerar PDF!');
@@ -274,7 +274,7 @@ class AtendenteController extends Controller
 
       $status = $consulta->status_atendimento;
 
-      if ($status) {
+      if ($status == 'true') {
         $consulta->status_atendimento = 'false';
       } else {
         $consulta->status_atendimento = 'true';
@@ -285,7 +285,7 @@ class AtendenteController extends Controller
       } else {
         $result = ['menssage' => 'error'];
       }
-            
+
     } else {
       $result = ['menssage' => 'error'];
     }

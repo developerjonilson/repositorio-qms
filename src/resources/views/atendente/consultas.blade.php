@@ -70,52 +70,62 @@
 						<div class="col-md-4">
 							<label>Especialidade</label>
 							<input type="hidden" name="especialidade_num" value="{{ $especialidade_atual->id_especialidade }}">
-							<span class="form-control disabled">{{ $especialidade_atual->nome_especialidade }}</span>
+							<input type="text" name="nome_especialidade" value="{{ $especialidade_atual->nome_especialidade }}" class="form-control" disabled>
 						</div>
 						<div class="col-md-4">
 							<label>Médico</label>
 							<input type="hidden" name="medico_num" value="{{ $medico->id_medico }}">
-							<span class="form-control disabled">{{ $medico->nome_medico }}</span>
+							<input type="text" name="nome_medico" value="{{ $medico->nome_medico }}" class="form-control" disabled>
 						</div>
 						<div class="col-md-4">
 							<label>Período</label>
 							<input type="hidden" name="periodo_num" value="{{ $periodo->id_periodo }}">
-							<span class="form-control disabled">{{ $periodo->nome }}</span>
+							<input type="text" name="nome_medico" value="{{ $periodo->nome }}" class="form-control" disabled>
 						</div>
 					</div>
 					<hr>
 				</form>
 
+				<form class="" action="{{ route('atendente.listar_atendimentos') }}" method="post" id="refresh" name="atendente_pdf">
+					{{ csrf_field() }}
+					<input type="hidden" name="especialidade" value="{{ $especialidade_atual->id_especialidade }}">
+					<input type="hidden" name="medico" value="{{ $medico->id_medico }}">
+					<input type="hidden" name="periodo" value="{{ $periodo->id_periodo }}">
+				</form>
+
 				<div class="row">
 					<div class="col-md-12">
-						<table>
-							<!-- Table -->
-							<table class="table" id="">
-								<thead>
+						<!-- Table -->
+						<table class="table" id="">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Paciente</th>
+									<th>Número CNS</th>
+									<th>Data de Nascimento</th>
+									<th>Nome da Mãe</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach ($consultas as $consulta)
 									<tr>
-										<th>Código</th>
-										<th>Paciente</th>
-										<th>Número CNS</th>
-										<th>Data de Nascimento</th>
-										<th>Nome da Mãe</th>
-										<th>Status</th>
+										<td>{{ $consulta->codigo_consulta }}</td>
+										<td>{{ $consulta->nome_paciente }}</td>
+										<td>{{ $consulta->numero_cns }}</td>
+										<td>{{ date('d/m/Y', strtotime($consulta->data_nascimento)) }}</td>
+										<td>{{ $consulta->nome_mae }}</td>
+										<td>
+											<input value="{{ $consulta->id_consulta }}" name="status_atendimento" type="checkbox" data-toggle="toggle"
+											data-on="Atendido" data-off="Não Atendido" data-onstyle="success" data-offstyle="danger"
+											onclick="status(this.value)"
+											@if ($consulta->status_atendimento === 'true')
+												checked
+											@endif>
+										</td>
 									</tr>
-								</thead>
-								<tbody>
-									@foreach ($consultas as $consulta)
-										<tr>
-											<td>{{ $consulta->codigo_consulta }}</td>
-											<td>{{ $consulta->nome_paciente }}</td>
-											<td>{{ $consulta->numero_cns }}</td>
-											<td>{{ date('d/m/Y', strtotime($consulta->data_nascimento)) }}</td>
-											<td>{{ $consulta->nome_mae }}</td>
-											<td>
-												<input value="{{ $consulta->id_consulta }}" name="atendimento" type="checkbox" data-toggle="toggle" data-on="Atendido" data-off="Não Atendido" data-onstyle="success" data-offstyle="danger" onclick="status(this.value)">
-											</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
+								@endforeach
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -137,8 +147,6 @@
 @section('scripts')
 	$('#home').removeClass('active');
 	$('#consultas').addClass('active');
-
-	{{-- $('input[name="atendimento"]').bootstrapToggle('off'); --}}
 
 	$('select[name="especialidade"]').change(function () {
     let idEspecialidade = $(this).val();
@@ -176,93 +184,71 @@
     });
   });
 
-	{{-- function status(idConsulta) {
-		swal({
-			position: 'top',
-			title: 'Atendimento',
-			text: "O paciente já foi atendido?",
-			type: 'success',
-			showCancelButton: true,
-			confirmButtonColor: '#5cb85c',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sim',
-			cancelButtonText: 'Não'
-		}).then(function (result) {
-			if (result.value) {
-				$('.loading').fadeOut(700).removeClass('hidden');
-
-				$.post("{{ route('atendente.status') }}",
-				{
-					_token: "{{ csrf_token() }}",
-					id: idConsulta
-				},
-				function(result) {
-					if (result.menssage === 'error') {
-						$('.loading').fadeOut(700).addClass('hidden');
-						swal({
-							position: 'top',
-							title: 'Erro!',
-							text: 'Ocorreu ao mudar o status, tente em instantes!',
-							type: 'error',
-							confirmButtonText: 'Ok'
-						});
-					}
-					if (result.menssage === 'success') {
-						$('.loading').fadeOut(700).addClass('hidden');
-						swal({
-							position: 'top',
-							title: 'Sucesso!',
-							text: 'O status foi alterado com sucesso!',
-							type: 'success'
-						})
-					}
-				}, "json");
-
-			}
-		})
-	}
-
-
 	$(function() {
-    $('input[name="atendimento"]').change(function() {
-			$id = $(this).val();
-
-			status($id);
-    })
-  }) --}}
-
-	$(function() {
-		$('input[name="atendimento"]').change(function() {
+		$('input[name="status_atendimento"]').change(function () {
 			idConsulta = $(this).val();
+			especialidade_id = $('input[name="especialidade_num"]').val();
+			medico_id = $('input[name="medico_num"]').val();
+			periodo_id = $('input[name="periodo_num"]').val();
 
-			$('.loading').fadeOut(700).removeClass('hidden');
+			swal({
+				title: 'Status do Atendimento',
+				text: "O paciente já foi realmente atendido?",
+				type: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#5cb85c',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Sim',
+				cancelButtonText: 'Não',
+				allowOutsideClick: false
+			}).then(function (result) {
+				if (result.value) {
+					$('.loading').fadeOut(700).removeClass('hidden');
 
-			$.post("{{ route('atendente.status') }}",
-			{
-				_token: "{{ csrf_token() }}",
-				id: idConsulta
-			},
-			function(result) {
-				if (result.menssage === 'error') {
-					$('.loading').fadeOut(700).addClass('hidden');
-					swal({
-						position: 'top',
-						title: 'Erro!',
-						text: 'Ocorreu ao mudar o status, tente em instantes!',
-						type: 'error',
-						confirmButtonText: 'Ok'
-					});
+					$.post("{{ route('atendente.status') }}",
+					{
+						_token: "{{ csrf_token() }}",
+						 id: idConsulta
+					},
+					function(result) {
+						if (result.menssage === 'error') {
+							$('.loading').fadeOut(700).addClass('hidden');
+							swal({
+							  title: 'Erro!',
+								text: 'Ocorreu um erro ao modificar o status, tente em instantes!',
+								type: 'error',
+								confirmButtonText: 'Ok',
+								allowOutsideClick: false
+							}).then((result) => {
+							  if (result.value) {
+									$('.loading').fadeOut(700).removeClass('hidden')
+									$("#refresh").submit()
+							  }
+							})
+						}
+
+						if (result.menssage === 'success') {
+							$('.loading').fadeOut(700).addClass('hidden');
+							swal({
+								title: 'Sucesso!',
+								text: 'O status do atendimento foi alterado com sucesso!',
+								type: 'success',
+								allowOutsideClick: false
+							}).then(function (result) {
+								$('.loading').fadeOut(700).removeClass('hidden')
+								$("#refresh").submit()
+							})
+						}
+					}, "json");
+
+				} else {
+					$('.loading').fadeOut(700).removeClass('hidden')
+					$("#refresh").submit()
 				}
-				if (result.menssage === 'success') {
-					$('.loading').fadeOut(700).addClass('hidden');
-					swal({
-						position: 'top',
-						title: 'Sucesso!',
-						text: 'O status foi alterado com sucesso!',
-						type: 'success'
-					})
-				}
-			}, "json");
 		})
+
+
 	})
+
+	});
 @endsection

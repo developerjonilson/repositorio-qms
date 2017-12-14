@@ -80,6 +80,7 @@
 							<th><b>Número do CNS</b></th>
 							<th><b>Data de Nascimento</b></th>
 							<th><b>Nome da Mãe</b></th>
+							<th><b>Atendido</b></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -91,6 +92,13 @@
 									<td>{{ $consulta->numero_cns }}</td>
 									<td>{{ date('d/m/Y', strtotime($consulta->data_nascimento)) }}</td>
 									<td>{{ $consulta->nome_mae }}</td>
+									<td>
+										@if ($consulta->status_atendimento === 'true')
+											Sim
+										@else
+											Não
+										@endif
+									</td>
 								</tr>
 							@endforeach
 						@endisset

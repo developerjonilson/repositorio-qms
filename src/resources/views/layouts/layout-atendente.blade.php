@@ -146,8 +146,8 @@
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
-	<script src="/scripts/moment.js"></script>
-	{{-- <script src="/scripts/moment-with-locales.js"></script> --}}
+	{{-- <script src="/scripts/moment.js"></script> --}}
+	<script src="/scripts/moment-with-locales.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>
@@ -155,19 +155,24 @@
 	<script src="/scripts/script.js"></script>
 	<script src="/scripts/sweetalert2.min.js"></script>
 
-	@yield('pos-script')
-	<script>
-		moment.locale('pt-br');
-
-		$('.data_hoje').html(moment().format('LL'));
-	</script>
-
+	{{-- @yield('pos-script')
 	<script>
 		$(document).ready(function () {
-			@yield('scripts')
+			moment.locale('pt-br');
 
-			@yield('toggles')
+			$('.data_hoje').html(moment().format('LL'));
+
+			@yield('scripts')
 		});
+	</script> --}}
+	@yield('pos-script')
+	<script>
+	moment.locale('pt-BR');
+
+	$('.data_hoje').html(moment().format('LL'));
+
+	@yield('scripts')
+
 	</script>
 
 </body>
