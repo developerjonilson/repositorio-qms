@@ -9,7 +9,7 @@
 A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, onde as selecionadas já foram implementadas.
 
 ### Geral
-- [x] Inteface Gráfica dos Usuários tipo **_Operador_**, **_Administrador_** e **_Administrador_**
+- [x] Inteface Gráfica dos Usuários tipo **_Operador_**, **_Administrador_** e **_Atendente_**
 - [x] Login no sistema
 - [x] Alteração de Senha Padrão no Primeiro Login realizado
 - [x] Perfil Usuário
