@@ -65,8 +65,8 @@ Route::get('/administrador/ver-especialidade/{id_especialidade}', 'Administrador
 Route::post('/administrador/excluir-especialidade', 'AdministradorController@excluirEspecialidade')->name('administrador.especialidade.excluir');
 
 //rotas do calendario de atendimento medico:
-Route::get('/administrador/medicos/calendario-atendimento/{medico_id}', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
-Route::get('/administrador/medicos/calendario-atendimento/ver/{medico_id}', 'AdministradorController@verCalendarioAtendimento')->name('administrador.calendario.ver');
+Route::get('/administrador/medicos/calendario-atendimento/{numero_crm}', 'AdministradorController@calendarioAtendimento')->name('administrador.calendario');
+Route::get('/administrador/medicos/calendario-atendimento/ver/{crm_medico}', 'AdministradorController@verCalendarioAtendimento')->name('administrador.calendario.ver');
 Route::post('/administrador/medicos/calendario-atendimento/cadastrar', 'AdministradorController@calendarioCadastrar')->name('administrador.calendario.cadastrar');
 Route::post('/administrador/medicos/calendario-atendimento/excluir', 'AdministradorController@calendarioExcluir')->name('administrador.calendario.excluir');
 
@@ -103,7 +103,8 @@ Route::get('/operador/alterar-paciente', 'PacienteController@alterarPaciente');
 Route::post('/operador/paciente-para-alterar', 'PacienteController@pacienteParaAlterarPost');
 Route::get('/operador/paciente-para-alterar/{numero_cns}', 'PacienteController@pacienteParaAlterarGet');
 Route::post('/operador/alterando-paciente', 'PacienteController@alterandoPaciente');
-Route::get('/operador/ver-paciente/{id}', 'PacienteController@verPaciente');
+// Route::get('/operador/ver-paciente/{id}', 'PacienteController@verPaciente');
+Route::get('/operador/ver-paciente/{paciente_cns}', 'PacienteController@verPaciente');
 
 Route::get('/operador/agendar-consulta/{idPaciente?}', 'ConsultaController@agendarConsulta');
 Route::post('/operador/paciente-agendar-consulta', 'ConsultaController@pacienteParaAgendarConsulta');
