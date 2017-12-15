@@ -9,8 +9,8 @@
 A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, onde as selecionadas já foram implementadas.
 
 ### Geral
-- [x] [Inteface Gráfica dos Usuários tipo **_Operador_**, **_Administrador_** e **_Administrador_**](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/1-interfaces.md)
-- [x] [Login no sistema](https://github.com/jonilsondeveloper/repositorio-qms/blob/master/planejamento/2-login.md)
+- [x] Inteface Gráfica dos Usuários tipo **_Operador_**, **_Administrador_** e **_Administrador_**
+- [x] Login no sistema
 - [x] Alteração de Senha Padrão no Primeiro Login realizado
 - [x] Perfil Usuário
 - [x] Alteração de Perfil Usuário
@@ -18,12 +18,14 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 
 ### Módulo Operador
 - [x] Cadastrar Pacientes
-- [x] Pesquisar Pacientes
-- [x] Alterar registros de pacientes
-- [x] Agendar consultas
-- [x] Alterar consultas agendadas
-- [x] Pesquisar Consultas
+- [x] Listar Pacientes
+- [x] Editar Pacientes
+- [x] Excluir Pacientes
 
+- [x] Agendar Consultas
+- [x] Listar Consultas
+- [x] Pesquisar Consultas
+- [x] Cancelar Agendamento
 
 ### Módulo Administrador
 - [x] Cadastrar atendente
