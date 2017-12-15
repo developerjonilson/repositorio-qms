@@ -263,19 +263,27 @@ class PacienteController extends Controller {
 
   }
 
-  public function verPaciente($idPaciente) {
-    if ($idPaciente != null) {
+  public function verPaciente($numero_cns) {
+    if ($numero_cns != null) {
+      // $paciente = DB::table('pacientes')
+      //     ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id_endereco')
+      //     ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+      //     ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+      //     ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id_telefone')
+      //     ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+      //     ->where('pacientes.id_paciente', '=', $idPaciente)
+      //     ->first();
       $paciente = DB::table('pacientes')
           ->join('enderecos', 'pacientes.endereco_id', '=', 'enderecos.id_endereco')
           ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
           ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
           ->join('telefones', 'pacientes.telefone_id', '=', 'telefones.id_telefone')
           ->select('pacientes.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
-          ->where('pacientes.id_paciente', '=', $idPaciente)
+          ->where('pacientes.numero_cns', '=', $numero_cns)
           ->first();
 
-      // $paciente->id_paciente = $idPaciente; //olhar isso
-      // dd($paciente);
+      // return redirect('/administrador/medicos/calendario-atendimento/'.$medico_return->numero_crm);
+
       return view('paciente.ver-paciente')->with('paciente', $paciente);
     } else {
       return view('paciente.ver-paciente');

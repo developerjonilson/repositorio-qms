@@ -50,7 +50,7 @@
 									{{-- {{ csrf_field() }} --}}
 									<div class="form-group col-md-6">
 										<label>Informe o Número do CNS:<span class="vermelho">*</span></label>
-										<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="123456789012345">
+										<input type="text" class="form-control" name="numero_cns" id="numero_cns" value="">
 									</div>
 									<div class="col-md-12">
 										<button type="submit" class="btn btn-primary" id="btn-search-paciente"><i class="fa fa-search" id="icone-btn-search-paciente"></i>    Buscar</button>

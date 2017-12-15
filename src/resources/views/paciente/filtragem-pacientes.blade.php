@@ -42,7 +42,8 @@
 										<td>{{ $paciente->nome_mae }}</td>
 										<td width="30">
 											<div class="col-md-12">
-											<a href="/operador/ver-paciente/{{ $paciente->id_paciente }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
+											{{-- <a href="/operador/ver-paciente/{{ $paciente->id_paciente }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a> --}}
+											<a href="/operador/ver-paciente/{{ $paciente->numero_cns }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
 											</div>
 											<span class="col-md-1"></span>
 											<div class="col-md-12">
@@ -64,7 +65,8 @@
 													<td>{{ $paciente->nome_mae }}</td>
 													<td width="30">
 														<div class="col-md-12">
-														<a href="/operador/ver-paciente/{{ $paciente->id_paciente }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
+														{{-- <a href="/operador/ver-paciente/{{ $paciente->id_paciente }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a> --}}
+														<a href="/operador/ver-paciente/{{ $paciente->numero_cns }}" class="btn btn-primary btn-xs btn-block"><i class="lnr lnr-eye"></i>  Ver</a>
 														</div>
 														<span class="col-md-1"></span>
 														<div class="col-md-12">

@@ -1431,7 +1431,8 @@ class AdministradorController extends Controller {
     return Datatables::of($medicos)
     ->addColumn('action', function($medico) {
       return '<button type="button" class="btn btn-info btn-xs" value="'.$medico->id_medico.'" onclick="detalhesDoctor(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> '.
-             '<td><a href="/administrador/medicos/calendario-atendimento/'.$medico->id_medico.'" class="btn btn-success btn-xs" id="ver-calendario">Ir para Calendário <i class="fa fa-share-square-o"></i></a></td>';
+             '<td><a href="/administrador/medicos/calendario-atendimento/'.$medico->numero_crm.'" class="btn btn-success btn-xs" id="ver-calendario">Ir para Calendário <i class="fa fa-share-square-o"></i></a></td>';
+            //  '<td><a href="/administrador/medicos/calendario-atendimento/'.$medico->id_medico.'" class="btn btn-success btn-xs" id="ver-calendario">Ir para Calendário <i class="fa fa-share-square-o"></i></a></td>';
     })->make(true);
   }
 
@@ -1656,8 +1657,9 @@ class AdministradorController extends Controller {
     return Response::json($result);
   }
 
-  public function calendarioAtendimento(Request $request, $medico_id) {
-    $medico = Medico::find($medico_id);
+  public function calendarioAtendimento(Request $request, $crm_medico) {
+    // $medico = Medico::find($medico_id);
+    $medico = Medico::where('numero_crm', $crm_medico)->get()->first();
     $locals = Local::all();
     $especialidades = $medico->especialidades;
 
@@ -1685,14 +1687,22 @@ class AdministradorController extends Controller {
     return view('administrador.medico.calendario', compact('medico', 'locals', 'especialidades'));
   }
 
-  public function verCalendarioAtendimento($medico_id) {
+  public function verCalendarioAtendimento($crm_medico) {
+    // $data = DB::table('periodos')
+    //     ->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
+    //     ->join('locals', 'periodos.local_id', '=', 'locals.id_local')
+    //     ->join('medicos', 'calendarios.medico_id', '=', 'medicos.id_medico')
+    //     ->join('especialidades', 'calendarios.especialidade_id', '=', 'especialidades.id_especialidade')
+    //     ->select('periodos.*', 'calendarios.*', 'locals.*', 'medicos.*', 'especialidades.*')
+    //     ->where('calendarios.medico_id', '=', $medico_id)
+    //     ->get();
     $data = DB::table('periodos')
         ->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
         ->join('locals', 'periodos.local_id', '=', 'locals.id_local')
         ->join('medicos', 'calendarios.medico_id', '=', 'medicos.id_medico')
         ->join('especialidades', 'calendarios.especialidade_id', '=', 'especialidades.id_especialidade')
         ->select('periodos.*', 'calendarios.*', 'locals.*', 'medicos.*', 'especialidades.*')
-        ->where('calendarios.medico_id', '=', $medico_id)
+        ->where('medicos.numero_crm', '=', $crm_medico)
         ->get();
 
     return Response()->json($data);
@@ -1700,8 +1710,10 @@ class AdministradorController extends Controller {
 
   public function calendarioCadastrar(Request $request) {
     $id_medico = $request->medico_id;
+    // $id_medico = $medico->numero_crm;
     $id_especialidade = $request->especialidade;
     $id_local = $request->local;
+    $medico_return = Medico::where('id_medico', $request->medico_id)->get()->first();
 
     $datas_start = $request->start;
     $periodos  = $request->periodo;
@@ -1711,7 +1723,8 @@ class AdministradorController extends Controller {
         count($datas_start) == 0 || count($periodos) == 0 || count($total_consultas) == 0) {
 
         $request->session()->flash('erro', 'Por favor, preencha todos os campos obrigatórios!');
-        return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        // return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        return redirect('/administrador/medicos/calendario-atendimento/'.$medico_return->numero_crm);
     } else {
 
       $keys_datas = array_keys($datas_start);
@@ -1768,15 +1781,18 @@ class AdministradorController extends Controller {
 
       if ($erro_list_datas == null) {
         $request->session()->flash('sucesso', $sucesso_list);
-        return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        // return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+        return redirect('/administrador/medicos/calendario-atendimento/'.$medico_return->numero_crm);
       } else {
         if ($erro_list_datas != null && $sucesso_list != null) {
           $request->session()->flash('erro_list_datas', $erro_list_datas);
           $request->session()->flash('sucesso', $sucesso_list);
-          return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+          // return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+          return redirect('/administrador/medicos/calendario-atendimento/'.$medico_return->numero_crm);
         } else {
           $request->session()->flash('erro_list_datas', $erro_list_datas);
-          return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+          // return redirect('/administrador/medicos/calendario-atendimento/'.$id_medico);
+          return redirect('/administrador/medicos/calendario-atendimento/'.$medico_return->numero_crm);
         }
 
       }
