@@ -29,7 +29,20 @@ Route::post('/administrador/editar-operador', 'AdministradorController@editarOpe
 Route::post('/administrador/excluir-operador', 'AdministradorController@excluirOperador')->name('administrador.excluir-operador');
 
 Route::get('/administrador/atendentes', 'AdministradorController@atendentes')->name('administrador.atendentes');
+Route::get('/administrador/get-atendentes', 'AdministradorController@getAtendente')->name('administrador.get-atendentes');
+Route::get('/administrador/ver-atendente/{id}', 'AdministradorController@verAtendente')->name('administrador.ver-atendente');
+Route::post('/administrador/cadastrar-atendente', 'AdministradorController@cadastrarAtendente')->name('administrador.cadastrar-atendente');
+Route::post('/administrador/editar-atendente', 'AdministradorController@editarAtendente')->name('administrador.editar-atendente');
+Route::post('/administrador/excluir-atendente', 'AdministradorController@excluirAtendente')->name('administrador.excluir-atendente');
+
+
 Route::get('/administrador/administradores', 'AdministradorController@administradores')->name('administrador.administradores');
+Route::get('/administrador/get-administradores', 'AdministradorController@getAdministrador')->name('administrador.get-administradores');
+Route::get('/administrador/ver-administrador/{id}', 'AdministradorController@verAdministrador')->name('administrador.ver-administrador');
+Route::post('/administrador/cadastrar-administrador', 'AdministradorController@cadastrarAdministrador')->name('administrador.cadastrar-administrador');
+Route::post('/administrador/editar-administrador', 'AdministradorController@editarAdministrador')->name('administrador.editar-administrador');
+Route::post('/administrador/excluir-administrador', 'AdministradorController@excluirAdministrador')->name('administrador.excluir-administrador');
+
 
 //rotas de medico:
 Route::get('/administrador/medicos', 'AdministradorController@medicos')->name('administrador.medicos');

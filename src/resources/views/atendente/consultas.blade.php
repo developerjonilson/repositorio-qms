@@ -192,6 +192,7 @@
 			periodo_id = $('input[name="periodo_num"]').val();
 
 			swal({
+				position: 'top',
 				title: 'Status do Atendimento',
 				text: "O paciente já foi realmente atendido?",
 				type: 'info',
@@ -214,6 +215,7 @@
 						if (result.menssage === 'error') {
 							$('.loading').fadeOut(700).addClass('hidden');
 							swal({
+								position: 'top',
 							  title: 'Erro!',
 								text: 'Ocorreu um erro ao modificar o status, tente em instantes!',
 								type: 'error',
@@ -230,6 +232,7 @@
 						if (result.menssage === 'success') {
 							$('.loading').fadeOut(700).addClass('hidden');
 							swal({
+								position: 'top',
 								title: 'Sucesso!',
 								text: 'O status do atendimento foi alterado com sucesso!',
 								type: 'success',

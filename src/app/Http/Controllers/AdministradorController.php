@@ -160,52 +160,6 @@ class AdministradorController extends Controller {
 
   }
 
-  public function operadores(Request $request) {
-    if ($request->session()->has('erro')) {
-      $erro = $request->session()->get('erro');
-      return view('administrador.operador.operadores', compact('erro'));
-    } else {
-      if ($request->session()->has('sucesso')) {
-        $sucesso = $request->session()->get('sucesso');
-        return view('administrador.operador.operadores', compact('sucesso'));
-      } else {
-        if ($request->session()->has('erroEdit')) {
-          $erroEdit = $request->session()->get('erroEdit');
-          return view('administrador.operador.operadores', compact('erroEdit'));
-        } else {
-          if ($request->session()->has('erroExcluir')) {
-            $erroExcluir = $request->session()->get('erroExcluir');
-            return view('administrador.operador.operadores', compact('erroExcluir'));
-          } else {
-            return view('administrador.operador.operadores');
-          }
-        }
-      }
-    }
-  }
-
-  public function getOperador() {
-    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
-
-    return Datatables::of($users)->addColumn('action', function($user) {
-      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
-    })->make(true);
-  }
-
-  public function verOperador($id) {
-    $operador = DB::table('users')
-        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id_endereco')
-        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
-        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
-        ->join('telefones', 'users.telefone_id', '=', 'telefones.id_telefone')
-        ->select('users.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
-        ->where('users.id', '=', $id)
-        ->get()
-        ->first();
-
-    return Response::json($operador);
-  }
-
   public static function validaCpf($cpf = null) {
     // Verifica se um número foi informado
     if(empty($cpf)) {
@@ -253,8 +207,53 @@ class AdministradorController extends Controller {
 
           return true;
         }
-      }
+  }
 
+  public function operadores(Request $request) {
+    if ($request->session()->has('erro')) {
+      $erro = $request->session()->get('erro');
+      return view('administrador.operador.operadores', compact('erro'));
+    } else {
+      if ($request->session()->has('sucesso')) {
+        $sucesso = $request->session()->get('sucesso');
+        return view('administrador.operador.operadores', compact('sucesso'));
+      } else {
+        if ($request->session()->has('erroEdit')) {
+          $erroEdit = $request->session()->get('erroEdit');
+          return view('administrador.operador.operadores', compact('erroEdit'));
+        } else {
+          if ($request->session()->has('erroExcluir')) {
+            $erroExcluir = $request->session()->get('erroExcluir');
+            return view('administrador.operador.operadores', compact('erroExcluir'));
+          } else {
+            return view('administrador.operador.operadores');
+          }
+        }
+      }
+    }
+  }
+
+  public function getOperador() {
+    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
+
+    return Datatables::of($users)->addColumn('action', function($user) {
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
+    })->make(true);
+  }
+
+  public function verOperador($id) {
+    $operador = DB::table('users')
+        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'users.telefone_id', '=', 'telefones.id_telefone')
+        ->select('users.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+        ->where('users.id', '=', $id)
+        ->get()
+        ->first();
+
+    return Response::json($operador);
+  }
 
   public function cadastrarOperador(Request $request) {
     if ($request->name != null && $request->data_nascimento != null &&
@@ -548,10 +547,325 @@ class AdministradorController extends Controller {
         $sucesso = $request->session()->get('sucesso');
         return view('administrador.atendente.atendentes', compact('sucesso'));
       } else {
-        return view('administrador.atendente.atendentes');
+        if ($request->session()->has('erroEdit')) {
+          $erroEdit = $request->session()->get('erroEdit');
+          return view('administrador.atendente.atendentes', compact('erroEdit'));
+        } else {
+          if ($request->session()->has('erroExcluir')) {
+            $erroExcluir = $request->session()->get('erroExcluir');
+            return view('administrador.atendente.atendentes', compact('erroExcluir'));
+          } else {
+            return view('administrador.atendente.atendentes');
+          }
+        }
       }
     }
   }
+
+  public function getAtendente() {
+    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'atendente');
+
+    return Datatables::of($users)->addColumn('action', function($user) {
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesAdministrador(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
+    })->make(true);
+  }
+
+  public function verAtendente($id) {
+    $atendente = DB::table('users')
+        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'users.telefone_id', '=', 'telefones.id_telefone')
+        ->select('users.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+        ->where('users.id', '=', $id)
+        ->get()
+        ->first();
+
+    return Response::json($atendente);
+  }
+
+  public function cadastrarAtendente(Request $request) {
+    if ($request->name != null && $request->data_nascimento != null &&
+      $request->cpf != null && $request->rg != null &&
+      $request->email != null && $request->rua != null &&
+      $request->numero != null && $request->bairro != null &&
+      $request->nome_cidade != null && $request->cep != null &&
+      $request->nome_estado != null && $request->telefone_um != null) {
+
+      // $data = $request->data_nascimento;
+      $data_pt = str_replace("/", "-", $request->data_nascimento);
+      $data = date('Y-m-d', strtotime($data_pt));
+      // Separa em dia, mês e ano
+      list($ano, $mes, $dia,) = explode('-', $data);
+      // Descobre que dia é hoje e retorna a unix timestamp
+      $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+      // Descobre a unix timestamp da data de nascimento do fulano
+      $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+      // Depois apenas fazemos o cálculo já citado :)
+      $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
+      // dd($idade);
+
+      if ($idade < 18) {
+        $request->session()->flash('erro', 'O atendente não pode ser menor de idade, verifique a data informada!');
+        return redirect('/administrador/atendentes')->withInput();
+      }
+
+      $validacaoCpf = AdministradorController::validaCpf($request->cpf);
+
+      if (!$validacaoCpf) {
+        $request->session()->flash('erro', 'O CPF informado é inválido!');
+        return redirect('/administrador/atendentes')->withInput();
+      }
+
+      $valor = trim($request->cpf);
+      $valor = str_replace(".", "", $valor);
+      $valor = str_replace(".", "", $valor);
+      $cpf = str_replace("-", "", $valor);
+      $operadorBancoCpf = User::where('cpf', $cpf)->first();
+      if ($operadorBancoCpf != null) {
+        $request->session()->flash('erro', 'Esse CPF já está cadastrado!');
+        return redirect('/administrador/atendentes')->withInput();
+      }
+      $operadorBancoRg = User::where('rg', $request->rg)->first();
+      if ($operadorBancoRg != null) {
+        $request->session()->flash('erro', 'Esse RG já está cadastrado!');
+        return redirect('/administrador/atendentes')->withInput();
+      }
+      $operadorBancoEmail = User::where('email', $request->email)->first();
+      if ($operadorBancoEmail != null) {
+        $request->session()->flash('erro', 'Esse Email já está cadastrado!');
+        return redirect('/administrador/atendentes')->withInput();
+      }
+
+      $valor = trim($request->cep);
+      $cep = str_replace("-", "", $valor);
+
+      $valor = trim($request->telefone_um);
+      $valor = str_replace("(", "", $valor);
+      $valor = str_replace(")", "", $valor);
+      $valor = str_replace(" ", "", $valor);
+      $telefone_um = str_replace("-", "", $valor);
+
+      $telefone_dois = trim($request->telefone_dois);
+      $telefone_dois = str_replace("(", "", $telefone_dois);
+      $telefone_dois = str_replace(")", "", $telefone_dois);
+      $telefone_dois = str_replace(" ", "", $telefone_dois);
+      $telefone_dois = str_replace("-", "", $telefone_dois);
+
+      $telefone = Telefone::create(['telefone_um' => $telefone_um,
+                                      'telefone_dois' => $telefone_dois, ]);
+
+
+      $user = new User();
+      $user->name = strtoupper($request->name);
+      $user->data_nascimento = $data;
+      $user->cpf = $cpf;
+      $user->rg = $request->rg;
+      $user->email = $request->email;
+      $user->password = bcrypt('QMS12345678');
+      $user->tipo = 'atendente';
+      $user->numero_alteracao_senha = 0;
+      $user->data_alteracao_senha = date('Y-m-d');
+      $user->telefone_id = $telefone->id_telefone;
+
+      $estado = Estado::create($request->all());
+      $cidade = new Cidade($request->all());
+      $cidade->estado_id = $estado->id_estado;
+
+      $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
+                                      'cep' => $cep,
+                                      'estado_id' => $cidade->estado_id, ]);
+      $endereco = new Endereco($request->all());
+
+      $endereco->cidade_id = $cidadeCreate->id_cidade;
+
+      $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
+                                      'numero' => $endereco->numero,
+                                      'complemento' => strtoupper($endereco->complemento),
+                                      'bairro' => strtoupper($endereco->bairro),
+                                      'cidade_id' => $endereco->cidade_id, ]);
+      $user->endereco_id = $enderecoCreate->id_endereco;
+
+      if ($user->save()) {
+        $request->session()->flash('sucesso', '  Cadastro realizado com sucesso!');
+        return redirect('/administrador/atendentes');
+      } else {
+        $request->session()->flash('erro', 'Erro inesperado, por favor tente em instantes!');
+        return redirect('/administrador/atendentes')->withInput();
+      }
+
+
+    } else {
+      $request->session()->flash('erro', 'Campos obrigatórios ficaram em branco!');
+      return redirect('/administrador/atendentes')->withInput();
+    }
+
+  }
+
+  public function editarAtendente(Request $request) {
+    if ($request->atendente_id != null && $request->name != null &&
+        $request->data_nascimento != null &&
+        $request->cpf != null && $request->rg != null &&
+        $request->email != null && $request->rua != null &&
+        $request->numero != null && $request->bairro != null &&
+        $request->nome_cidade != null && $request->cep != null &&
+        $request->nome_estado != null && $request->telefone_um != null) {
+
+        $atendente_id = $request->atendente_id;
+
+        $data_pt = str_replace("/", "-", $request->data_nascimento);
+        $data = date('Y-m-d', strtotime($data_pt));
+        list($ano, $mes, $dia,) = explode('-', $data);
+        $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+        $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
+
+        if ($idade < 18) {
+          $request->session()->flash('erroEdit', 'O Atendente não pode ser menor de idade, verifique a data informada!');
+          return redirect('/administrador/atendentes')->withInput();
+        }
+
+        $validacaoCpf = AdministradorController::validaCpf($request->cpf);
+        if (!$validacaoCpf) {
+          $request->session()->flash('erroEdit', 'O CPF informado é inválido!');
+          return redirect('/administrador/atendentes')->withInput();
+        }
+
+        $valor = trim($request->cpf);
+        $valor = str_replace(".", "", $valor);
+        $valor = str_replace(".", "", $valor);
+        $cpf = str_replace("-", "", $valor);
+
+        $operadorBanco = User::find($atendente_id);
+        if ($operadorBanco->cpf != $cpf) {
+          $operadorBancoCpf = User::where('cpf', $cpf)->first();
+          if ($operadorBancoCpf != null) {
+            $request->session()->flash('erroEdit', 'Esse CPF já está cadastrado!');
+            return redirect('/administrador/atendentes')->withInput();
+          }
+        }
+
+        $operadorBanco = User::find($atendente_id);
+        if ($operadorBanco->rg != $request->rg) {
+          $operadorBancoRg = User::where('rg', $request->rg)->first();
+          if ($operadorBancoRg != null) {
+            $request->session()->flash('erroEdit', 'Esse RG já está cadastrado!');
+            return redirect('/administrador/atendentes')->withInput();
+          }
+        }
+
+        $operadorBanco = User::find($atendente_id);
+        if ($operadorBanco->email != $request->email) {
+          $operadorBancoEmail = User::where('email', $request->email)->first();
+          if ($operadorBancoEmail != null) {
+            $request->session()->flash('erroEdit', 'Esse Email já está cadastrado!');
+            return redirect('/administrador/atendentes')->withInput();
+          }
+        }
+
+        $valor = trim($request->cep);
+        $cep = str_replace("-", "", $valor);
+
+        $valor = trim($request->telefone_um);
+        $valor = str_replace("(", "", $valor);
+        $valor = str_replace(")", "", $valor);
+        $valor = str_replace(" ", "", $valor);
+        $telefone_um = str_replace("-", "", $valor);
+
+        $telefone_dois = trim($request->telefone_dois);
+        $telefone_dois = str_replace("(", "", $telefone_dois);
+        $telefone_dois = str_replace(")", "", $telefone_dois);
+        $telefone_dois = str_replace(" ", "", $telefone_dois);
+        $telefone_dois = str_replace("-", "", $telefone_dois);
+
+        $user = User::find($atendente_id);
+        $telefone =Telefone::find($user->telefone_id);
+        $endereco = Endereco::find($user->endereco_id);
+        $cidade = Cidade::find($endereco->cidade_id);
+        $estado = Estado::find($cidade->estado_id);
+
+        $telefone->telefone_um = $telefone_um;
+        $telefone->telefone_dois = $telefone_dois;
+
+        $estado->nome_estado = strtoupper($request->nome_estado);
+
+        $cidade->nome_cidade = strtoupper($request->nome_cidade);
+        $cidade->cep = $request->cep;
+
+        $endereco->rua = strtoupper($request->rua);
+        $endereco->numero = $request->numero;
+        $endereco->bairro = strtoupper($request->bairro);
+        $endereco->complemento = strtoupper($request->complemento);
+
+        $user->name = strtoupper($request->name);
+        $user->data_nascimento = $data;
+        $user->cpf = $cpf;
+        $user->rg = $request->rg;
+        $user->email = $request->email;
+
+        $status = false;
+        try {
+          $user->save();
+          $telefone->save();
+          $endereco->save();
+          $cidade->save();
+          $estado->save();
+
+          $status = true;
+        } catch (Exception $e) {
+          dd($e);
+        }
+
+        if ($status) {
+          $request->session()->flash('sucesso', 'Atendente alterado com sucesso!');
+          return redirect('/administrador/atendentes');
+        } else {
+          $request->session()->flash('erroEdit', 'Não foi possível editar o Atendente, por favor tente em instantes!');
+          return redirect('/administrador/atendentes');
+        }
+
+    } else {
+      $request->session()->flash('erroEdit', 'Campos obrigatórios ficaram em branco!');
+      return redirect('/administrador/atendentes')->withInput();
+    }
+
+  }
+
+  public function excluirAtendente(Request $request) {
+    $atendente_id = $request->id;
+
+    $atendente = User::find($atendente_id);
+    $telefone =Telefone::find($atendente->telefone_id);
+    $endereco = Endereco::find($atendente->endereco_id);
+    $cidade = Cidade::find($endereco->cidade_id);
+    $estado = Estado::find($cidade->estado_id);
+
+    $status = false;
+    try {
+      $atendente->delete();
+      $telefone->delete();
+      $endereco->delete();
+      $cidade->delete();
+      $estado->delete();
+
+      $status = true;
+    } catch (Exception $e) {
+      dd($e);
+    }
+
+    $result;
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
+
+  }
+
+
 
   public function administradores(Request $request) {
     if ($request->session()->has('erro')) {
@@ -562,9 +876,329 @@ class AdministradorController extends Controller {
         $sucesso = $request->session()->get('sucesso');
         return view('administrador.admin.administradores', compact('sucesso'));
       } else {
-        return view('administrador.admin.administradores');
+        if ($request->session()->has('erroEdit')) {
+          $erroEdit = $request->session()->get('erroEdit');
+          return view('administrador.admin.administradores', compact('erroEdit'));
+        } else {
+          if ($request->session()->has('erroExcluir')) {
+            $erroExcluir = $request->session()->get('erroExcluir');
+            return view('administrador.admin.administradores', compact('erroExcluir'));
+          } else {
+            return view('administrador.admin.administradores');
+          }
+        }
       }
     }
+  }
+
+  public function getAdministrador() {
+    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'administrador');
+
+    return Datatables::of($users)->addColumn('action', function($user) {
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesAdministrador(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
+    })->make(true);
+  }
+
+  public function verAdministrador($id) {
+    $administrador = DB::table('users')
+        ->join('enderecos', 'users.endereco_id', '=', 'enderecos.id_endereco')
+        ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id_cidade')
+        ->join('estados', 'cidades.estado_id', '=', 'estados.id_estado')
+        ->join('telefones', 'users.telefone_id', '=', 'telefones.id_telefone')
+        ->select('users.*', 'enderecos.*', 'cidades.*', 'estados.*', 'telefones.*')
+        ->where('users.id', '=', $id)
+        ->get()
+        ->first();
+
+    return Response::json($administrador);
+  }
+
+  public function cadastrarAdministrador(Request $request) {
+    if ($request->name != null && $request->data_nascimento != null &&
+      $request->cpf != null && $request->rg != null &&
+      $request->email != null && $request->rua != null &&
+      $request->numero != null && $request->bairro != null &&
+      $request->nome_cidade != null && $request->cep != null &&
+      $request->nome_estado != null && $request->telefone_um != null) {
+
+      // $data = $request->data_nascimento;
+      $data_pt = str_replace("/", "-", $request->data_nascimento);
+      $data = date('Y-m-d', strtotime($data_pt));
+      // Separa em dia, mês e ano
+      list($ano, $mes, $dia,) = explode('-', $data);
+      // Descobre que dia é hoje e retorna a unix timestamp
+      $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+      // Descobre a unix timestamp da data de nascimento do fulano
+      $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+      // Depois apenas fazemos o cálculo já citado :)
+      $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
+      // dd($idade);
+
+      if ($idade < 18) {
+        $request->session()->flash('erro', 'O administrador não pode ser menor de idade, verifique a data informada!');
+        return redirect('/administrador/administradores')->withInput();
+      }
+
+      $validacaoCpf = AdministradorController::validaCpf($request->cpf);
+
+      if (!$validacaoCpf) {
+        $request->session()->flash('erro', 'O CPF informado é inválido!');
+        return redirect('/administrador/administradores')->withInput();
+      }
+
+      $valor = trim($request->cpf);
+      $valor = str_replace(".", "", $valor);
+      $valor = str_replace(".", "", $valor);
+      $cpf = str_replace("-", "", $valor);
+      $operadorBancoCpf = User::where('cpf', $cpf)->first();
+      if ($operadorBancoCpf != null) {
+        $request->session()->flash('erro', 'Esse CPF já está cadastrado!');
+        return redirect('/administrador/administradores')->withInput();
+      }
+      $operadorBancoRg = User::where('rg', $request->rg)->first();
+      if ($operadorBancoRg != null) {
+        $request->session()->flash('erro', 'Esse RG já está cadastrado!');
+        return redirect('/administrador/administradores')->withInput();
+      }
+      $operadorBancoEmail = User::where('email', $request->email)->first();
+      if ($operadorBancoEmail != null) {
+        $request->session()->flash('erro', 'Esse Email já está cadastrado!');
+        return redirect('/administrador/administradores')->withInput();
+      }
+
+      $valor = trim($request->cep);
+      $cep = str_replace("-", "", $valor);
+
+      $valor = trim($request->telefone_um);
+      $valor = str_replace("(", "", $valor);
+      $valor = str_replace(")", "", $valor);
+      $valor = str_replace(" ", "", $valor);
+      $telefone_um = str_replace("-", "", $valor);
+
+      $telefone_dois = trim($request->telefone_dois);
+      $telefone_dois = str_replace("(", "", $telefone_dois);
+      $telefone_dois = str_replace(")", "", $telefone_dois);
+      $telefone_dois = str_replace(" ", "", $telefone_dois);
+      $telefone_dois = str_replace("-", "", $telefone_dois);
+
+      $telefone = Telefone::create(['telefone_um' => $telefone_um,
+                                      'telefone_dois' => $telefone_dois, ]);
+
+
+      $user = new User();
+      $user->name = strtoupper($request->name);
+      $user->data_nascimento = $data;
+      $user->cpf = $cpf;
+      $user->rg = $request->rg;
+      $user->email = $request->email;
+      $user->password = bcrypt('QMS12345678');
+      $user->tipo = 'administrador';
+      $user->numero_alteracao_senha = 0;
+      $user->data_alteracao_senha = date('Y-m-d');
+      $user->telefone_id = $telefone->id_telefone;
+
+      $estado = Estado::create($request->all());
+      $cidade = new Cidade($request->all());
+      $cidade->estado_id = $estado->id_estado;
+
+      $cidadeCreate = Cidade::create(['nome_cidade' => strtoupper($cidade->nome_cidade),
+                                      'cep' => $cep,
+                                      'estado_id' => $cidade->estado_id, ]);
+      $endereco = new Endereco($request->all());
+
+      $endereco->cidade_id = $cidadeCreate->id_cidade;
+
+      $enderecoCreate = Endereco::create(['rua' => strtoupper($endereco->rua),
+                                      'numero' => $endereco->numero,
+                                      'complemento' => strtoupper($endereco->complemento),
+                                      'bairro' => strtoupper($endereco->bairro),
+                                      'cidade_id' => $endereco->cidade_id, ]);
+      $user->endereco_id = $enderecoCreate->id_endereco;
+
+      if ($user->save()) {
+        $request->session()->flash('sucesso', '  Cadastro realizado com sucesso!');
+        return redirect('/administrador/administradores');
+      } else {
+        $request->session()->flash('erro', 'Erro inesperado, por favor tente em instantes!');
+        return redirect('/administrador/administradores')->withInput();
+      }
+
+
+    } else {
+      $request->session()->flash('erro', 'Campos obrigatórios ficaram em branco!');
+      return redirect('/administrador/administradores')->withInput();
+    }
+
+  }
+
+  public function editarAdministrador(Request $request) {
+    if ($request->administrador_id != null && $request->name != null &&
+        $request->data_nascimento != null &&
+        $request->cpf != null && $request->rg != null &&
+        $request->email != null && $request->rua != null &&
+        $request->numero != null && $request->bairro != null &&
+        $request->nome_cidade != null && $request->cep != null &&
+        $request->nome_estado != null && $request->telefone_um != null) {
+
+        $administrador_id = $request->administrador_id;
+
+        $data_pt = str_replace("/", "-", $request->data_nascimento);
+        $data = date('Y-m-d', strtotime($data_pt));
+        list($ano, $mes, $dia,) = explode('-', $data);
+        $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+        $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
+
+        if ($idade < 18) {
+          $request->session()->flash('erroEdit', 'O administrador não pode ser menor de idade, verifique a data informada!');
+          return redirect('/administrador/administradores')->withInput();
+        }
+
+        $validacaoCpf = AdministradorController::validaCpf($request->cpf);
+        if (!$validacaoCpf) {
+          $request->session()->flash('erroEdit', 'O CPF informado é inválido!');
+          return redirect('/administrador/administradores')->withInput();
+        }
+
+        $valor = trim($request->cpf);
+        $valor = str_replace(".", "", $valor);
+        $valor = str_replace(".", "", $valor);
+        $cpf = str_replace("-", "", $valor);
+
+        $operadorBanco = User::find($administrador_id);
+        if ($operadorBanco->cpf != $cpf) {
+          $operadorBancoCpf = User::where('cpf', $cpf)->first();
+          if ($operadorBancoCpf != null) {
+            $request->session()->flash('erroEdit', 'Esse CPF já está cadastrado!');
+            return redirect('/administrador/administradores')->withInput();
+          }
+        }
+
+        $operadorBanco = User::find($administrador_id);
+        if ($operadorBanco->rg != $request->rg) {
+          $operadorBancoRg = User::where('rg', $request->rg)->first();
+          if ($operadorBancoRg != null) {
+            $request->session()->flash('erroEdit', 'Esse RG já está cadastrado!');
+            return redirect('/administrador/administradores')->withInput();
+          }
+        }
+
+        $operadorBanco = User::find($administrador_id);
+        if ($operadorBanco->email != $request->email) {
+          $operadorBancoEmail = User::where('email', $request->email)->first();
+          if ($operadorBancoEmail != null) {
+            $request->session()->flash('erroEdit', 'Esse Email já está cadastrado!');
+            return redirect('/administrador/administradores')->withInput();
+          }
+        }
+
+        $valor = trim($request->cep);
+        $cep = str_replace("-", "", $valor);
+
+        $valor = trim($request->telefone_um);
+        $valor = str_replace("(", "", $valor);
+        $valor = str_replace(")", "", $valor);
+        $valor = str_replace(" ", "", $valor);
+        $telefone_um = str_replace("-", "", $valor);
+
+        $telefone_dois = trim($request->telefone_dois);
+        $telefone_dois = str_replace("(", "", $telefone_dois);
+        $telefone_dois = str_replace(")", "", $telefone_dois);
+        $telefone_dois = str_replace(" ", "", $telefone_dois);
+        $telefone_dois = str_replace("-", "", $telefone_dois);
+
+        $user = User::find($administrador_id);
+        $telefone =Telefone::find($user->telefone_id);
+        $endereco = Endereco::find($user->endereco_id);
+        $cidade = Cidade::find($endereco->cidade_id);
+        $estado = Estado::find($cidade->estado_id);
+
+        $telefone->telefone_um = $telefone_um;
+        $telefone->telefone_dois = $telefone_dois;
+
+        $estado->nome_estado = strtoupper($request->nome_estado);
+
+        $cidade->nome_cidade = strtoupper($request->nome_cidade);
+        $cidade->cep = $request->cep;
+
+        $endereco->rua = strtoupper($request->rua);
+        $endereco->numero = $request->numero;
+        $endereco->bairro = strtoupper($request->bairro);
+        $endereco->complemento = strtoupper($request->complemento);
+
+        $user->name = strtoupper($request->name);
+        $user->data_nascimento = $data;
+        $user->cpf = $cpf;
+        $user->rg = $request->rg;
+        $user->email = $request->email;
+
+        $status = false;
+        try {
+          $user->save();
+          $telefone->save();
+          $endereco->save();
+          $cidade->save();
+          $estado->save();
+
+          $status = true;
+        } catch (Exception $e) {
+          dd($e);
+        }
+
+        if ($status) {
+          $request->session()->flash('sucesso', 'Administrador alterado com sucesso!');
+          return redirect('/administrador/administradores');
+        } else {
+          $request->session()->flash('erroEdit', 'Não foi possível editar o Administrador, por favor tente em instantes!');
+          return redirect('/administrador/administradores');
+        }
+
+    } else {
+      $request->session()->flash('erroEdit', 'Campos obrigatórios ficaram em branco!');
+      return redirect('/administrador/administradores')->withInput();
+    }
+
+  }
+
+  public function excluirAdministrador(Request $request) {
+    $administrador_id = $request->id;
+
+    $administrador = User::find($administrador_id);
+    $telefone =Telefone::find($administrador->telefone_id);
+    $endereco = Endereco::find($administrador->endereco_id);
+    $cidade = Cidade::find($endereco->cidade_id);
+    $estado = Estado::find($cidade->estado_id);
+
+    $result;
+
+    $qteAdministradores = DB::table('users')->where('tipo', 'administrador')->get();
+    $numAdmin = count($qteAdministradores);
+    if ($numAdmin <= 1) {
+      $result = ['menssage' => 'error_num'];
+      return Response::json($result);
+    }
+
+    $status = false;
+    try {
+      $administrador->delete();
+      $telefone->delete();
+      $endereco->delete();
+      $cidade->delete();
+      $estado->delete();
+
+      $status = true;
+    } catch (Exception $e) {
+      dd($e);
+    }
+
+    if ($status) {
+      $result = ['menssage' => 'success'];
+    } else {
+      $result = ['menssage' => 'error'];
+    }
+
+    return Response::json($result);
+
   }
 
   public function especialidades(Request $request) {
@@ -1451,14 +2085,14 @@ class AdministradorController extends Controller {
         $mes = $request->get('mes');
 
         if ($request->has('periodo')) {
-          $perido = $request->get('perido');
+          $periodo = $request->get('periodo');
 
           if ($request->has('especialidade')) {
             $especialidade = $request->get('especialidade');
 
             if ($request->has('medico')) {
               $medico = $request->get('medico');
-              #Imprimir com ano, mes, periodo, especialidades e medico
+              #Imprimir com ano, mes, periodo, especialidades e medico - OK
               $consultas = DB::table('consultas')
                                 ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                                 ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1467,9 +2101,10 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
-                                ->where('data', 'like', "%-{$mes}-%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "%-{$mes}-%")
                                 ->where('periodos.nome', '=', $periodo)
+                                ->where('id_especialidade', '=', $especialidade)
                                 ->where('id_medico', '=', $medico)
                                 ->orderBy('consultas.created_at', 'asc')
                                 ->get();
@@ -1479,7 +2114,7 @@ class AdministradorController extends Controller {
               $pdf->loadHTML($view)->setPaper('a4', 'landscape');
               return $pdf->stream('consultas');
             } else {
-              #Imprimir com ano, mes, perido e especialidades
+              #Imprimir com ano, mes, perido e especialidades - OK
               $consultas = DB::table('consultas')
                                 ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                                 ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1488,9 +2123,10 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
-                                ->where('data', 'like', "%-{$mes}-%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "%-{$mes}-%")
                                 ->where('periodos.nome', '=', $periodo)
+                                ->where('id_especialidade', '=', $especialidade)
                                 ->orderBy('consultas.created_at', 'asc')
                                 ->get();
 
@@ -1500,7 +2136,7 @@ class AdministradorController extends Controller {
               return $pdf->stream('consultas');
             }
           } else {
-            #Imprimir com ano, mes e periodo
+            #Imprimir com ano, mes e periodo - OK
             $consultas = DB::table('consultas')
                               ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                               ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1509,8 +2145,8 @@ class AdministradorController extends Controller {
                               ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                               ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                               ->where('system_status', '=', $this->ativado)
-                              ->where('data', 'like', "{$ano}%")
-                              ->where('data', 'like', "%-{$mes}-%")
+                              ->where('calendarios.data', 'like', "{$ano}%")
+                              ->where('calendarios.data', 'like', "%-{$mes}-%")
                               ->where('periodos.nome', '=', $periodo)
                               ->orderBy('consultas.created_at', 'asc')
                               ->get();
@@ -1527,7 +2163,7 @@ class AdministradorController extends Controller {
             $especialidade = $request->get('especialidade');
 
             if ($request->has('medico')) {
-              #Imprimir com ano, mes, especialidades e medico
+              #Imprimir com ano, mes, especialidades e medico - OK
               $medico = $request->get('medico');
 
               $consultas = DB::table('consultas')
@@ -1538,8 +2174,8 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
-                                ->where('data', 'like', "%-{$mes}-%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "%-{$mes}-%")
                                 ->where('id_especialidade', '=', $especialidade)
                                 ->where('id_medico', '=', $medico)
                                 ->orderBy('consultas.created_at', 'asc')
@@ -1550,7 +2186,7 @@ class AdministradorController extends Controller {
               $pdf->loadHTML($view)->setPaper('a4', 'landscape');
               return $pdf->stream('consultas');
             } else {
-              #Imprimir com ano, mes e especialidades
+              #Imprimir com ano, mes e especialidades - OK
               $consultas = DB::table('consultas')
                                 ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                                 ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1559,8 +2195,8 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
-                                ->where('data', 'like', "%-{$mes}-%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "%-{$mes}-%")
                                 ->orderBy('consultas.created_at', 'asc')
                                 ->get();
 
@@ -1570,7 +2206,7 @@ class AdministradorController extends Controller {
               return $pdf->stream('consultas');
             }
           } else {
-            #Imprimir com ano, mes
+            #Imprimir com ano, mes - OK
             $consultas = DB::table('consultas')
                               ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                               ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1579,8 +2215,8 @@ class AdministradorController extends Controller {
                               ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                               ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                               ->where('system_status', '=', $this->ativado)
-                              ->where('data', 'like', "{$ano}%")
-                              ->where('data', 'like', "%-{$mes}-%")
+                              ->where('calendarios.data', 'like', "{$ano}%")
+                              ->where('calendarios.data', 'like', "%-{$mes}-%")
                               ->orderBy('consultas.created_at', 'asc')
                               ->get();
 
@@ -1594,14 +2230,14 @@ class AdministradorController extends Controller {
 
       } else {
         if ($request->has('periodo')) {
-          $perido = $request->get('perido');
+          $periodo = $request->get('periodo');
 
           if ($request->has('especialidade')) {
             $especialidade = $request->get('especialidade');
 
             if ($request->has('medico')) {
               $medico = $request->get('medico');
-              #Imprimir ano, periodo, especialidades e medico
+              #Imprimir ano, periodo, especialidades e medico - OK
               $consultas = DB::table('consultas')
                                 ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                                 ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1610,7 +2246,7 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
                                 ->where('periodos.nome', '=', $periodo)
                                 ->where('id_especialidade', '=', $especialidade)
                                 ->where('id_medico', '=', $medico)
@@ -1622,7 +2258,7 @@ class AdministradorController extends Controller {
               $pdf->loadHTML($view)->setPaper('a4', 'landscape');
               return $pdf->stream('consultas');
             } else {
-              #Imprimir com ano, perido e especialidades
+              #Imprimir com ano, perido e especialidades - OK
               $consultas = DB::table('consultas')
                                 ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                                 ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1631,7 +2267,7 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
                                 ->where('periodos.nome', '=', $periodo)
                                 ->where('id_especialidade', '=', $especialidade)
                                 ->orderBy('consultas.created_at', 'asc')
@@ -1643,7 +2279,7 @@ class AdministradorController extends Controller {
               return $pdf->stream('consultas');
             }
           } else {
-            #Imprimir com ano e periodo
+            #Imprimir com ano e periodo - OK
             $consultas = DB::table('consultas')
                               ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                               ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1652,7 +2288,7 @@ class AdministradorController extends Controller {
                               ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                               ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                               ->where('system_status', '=', $this->ativado)
-                              ->where('data', 'like', "{$ano}%")
+                              ->where('calendarios.data', 'like', "{$ano}%")
                               ->where('periodos.nome', '=', $periodo)
                               ->orderBy('consultas.created_at', 'asc')
                               ->get();
@@ -1669,7 +2305,7 @@ class AdministradorController extends Controller {
             $especialidade = $request->get('especialidade');
 
             if ($request->has('medico')) {
-              #Imprimir com ano, especialidades e medico
+              #Imprimir com ano, especialidades e medico - OK
               $medico = $request->get('medico');
 
               $consultas = DB::table('consultas')
@@ -1680,7 +2316,7 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
                                 ->where('id_especialidade', '=', $especialidade)
                                 ->where('id_medico', '=', $medico)
                                 ->orderBy('consultas.created_at', 'asc')
@@ -1691,7 +2327,7 @@ class AdministradorController extends Controller {
               $pdf->loadHTML($view)->setPaper('a4', 'landscape');
               return $pdf->stream('consultas');
             } else {
-              #Imprimir com ano e especialidades
+              #Imprimir com ano e especialidades - OK
               $consultas = DB::table('consultas')
                                 ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                                 ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1700,7 +2336,7 @@ class AdministradorController extends Controller {
                                 ->join('medicos', 'consultas.medico_id', '=', 'medicos.id_medico')
                                 ->join('locals', 'consultas.local_id', '=', 'locals.id_local')
                                 ->where('system_status', '=', $this->ativado)
-                                ->where('data', 'like', "{$ano}%")
+                                ->where('calendarios.data', 'like', "{$ano}%")
                                 ->where('id_especialidade', '=', $especialidade)
                                 ->orderBy('consultas.created_at', 'asc')
                                 ->get();
@@ -1711,7 +2347,7 @@ class AdministradorController extends Controller {
               return $pdf->stream('consultas');
             }
           } else {
-            #Imprimir só com o ano
+            #Imprimir só com o ano - OK
             $consultas = DB::table('consultas')
                               ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                               ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')
@@ -1735,6 +2371,7 @@ class AdministradorController extends Controller {
       }
 
     } else {
+      // todas consultas marcadas: - OK
       $consultas = DB::table('consultas')
                         ->join('calendarios', 'consultas.calendario_id', '=', 'calendarios.id_calendario')
                         ->join('periodos', 'consultas.periodo_id', '=', 'periodos.id_periodo')

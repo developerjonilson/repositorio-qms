@@ -99,15 +99,15 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{action('AdministradorController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-						<li><a href="{{ action('AdministradorController@atendentes') }}" class=""><i class="lnr lnr-user"></i> <span>Atendentes</span></a></li>
-						<li><a href="{{ action('AdministradorController@operadores') }}" class=""><i class="lnr lnr-users"></i> <span>Operadores</span></a></li>
-						<li><a href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
-						<li><a href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
-						<li><a href="{{ action('AdministradorController@especialidades') }}" class=""><i class="fa fa-medkit"></i> <span>Especialidades</span></a></li>
+						<li><a id="home" href="{{action('AdministradorController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+						<li><a id="atendentes" href="{{ action('AdministradorController@atendentes') }}" class=""><i class="lnr lnr-user"></i> <span>Atendentes</span></a></li>
+						<li><a id="operadores" href="{{ action('AdministradorController@operadores') }}" class=""><i class="lnr lnr-users"></i> <span>Operadores</span></a></li>
+						<li><a id="administradores" href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
+						<li><a id="medicos" href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
+						<li><a id="especialidades" href="{{ action('AdministradorController@especialidades') }}" class=""><i class="fa fa-medkit"></i> <span>Especialidades</span></a></li>
 						{{-- <li><a href="{{ action('AdministradorController@relatorios') }}" class=""><i class="fa fa-bar-chart"></i> <span>Relatórios</span></a></li> --}}
 						<li>
-							<a href="#subRelatios" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a id="relatorios" href="#subRelatios" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subRelatios" class="collapse ">
 								<ul class="nav">
 									<li><a href="{{ action('AdministradorController@relatorioDiario') }}" class="">Diário</a></li>

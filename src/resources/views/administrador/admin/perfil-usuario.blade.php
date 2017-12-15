@@ -49,7 +49,7 @@
 				@if (isset($status) && $status === 1)
 					<div class="alert alert-success alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<i class="fa fa-times-circle"></i> Informações foram alteradas com sucesso!
+						<i class="fa fa-check-circle"></i> Informações foram alteradas com sucesso!
 					</div>
 				@else
 					@if (isset($status) && $status === 2)
@@ -70,8 +70,8 @@
 				<!-- TABBED CONTENT -->
 				<form class="" action="{{ action('AdministradorController@alterProfile')}}" method="post" id="edit-profile">
 					{{ csrf_field() }}
-					<input type="hidden" name="telefone_id" id="telefone_id" value="{{ $telefone->id }}">
-					<input type="hidden" name="endereco_id" id="endereco_id" value="{{ $endereco->id }}">
+					<input type="hidden" name="telefone_id" id="telefone_id" value="{{ $telefone->id_telefone }}">
+					<input type="hidden" name="endereco_id" id="endereco_id" value="{{ $endereco->id_endereco }}">
 					<div class="custom-tabs-line tabs-line-bottom left-aligned">
 						<ul class="nav" role="tablist">
 							<li class="active"><a href="#tab-bottom-left1" role="tab" data-toggle="tab">Contato</a></li>

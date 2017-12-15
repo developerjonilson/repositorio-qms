@@ -42,10 +42,9 @@ class AtendenteController extends Controller
                                   'especialidades' => $total_especialidades,
                                   'medicos' => $total_medicos]);
   }
-
-  public function acessoNegadoAtendente() {
-    return view('atendente.erro-acesso-atendente');
-  }
+  // public function acessoNegadoAtendente() {
+  //   return view('atendente.erro-acesso-atendente');
+  // }
 
   public function alterarSenha() {
     return view('atendente.alterar-senha');
@@ -113,7 +112,7 @@ class AtendenteController extends Controller
     $cidade = Cidade::find($endereco->cidade_id);
     $estado = Estado::find($cidade->estado_id);
 
-    return view('atendente.perfil-usuario')->with(compact('endereco', 'telefone', 'cidade', 'estado', 'status'));
+    return view('atendente.perfil-usuario', compact('endereco', 'telefone', 'cidade', 'estado', 'status'));
   }
 
   public function alterProfile(Request $request) {

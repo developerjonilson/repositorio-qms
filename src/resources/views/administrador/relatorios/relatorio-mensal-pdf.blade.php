@@ -64,6 +64,7 @@
 							<th><b>Médico</b></th>
 							<th><b>Data</b></th>
 							<th><b>Período</b></th>
+							<th><b>Atendido</b></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -75,8 +76,15 @@
 									<td>{{ $consulta->numero_cns }}</td>
 									<td>{{ $consulta->nome_especialidade }}</td>
 									<td>{{ $consulta->nome_medico }}</td>
-									<td>{{ date("d-m-Y", strtotime($consulta->data)) }}</td>
+									<td>{{ date("d/m/Y", strtotime($consulta->data)) }}</td>
 									<td>{{ $consulta->nome }}</td>
+									<td>
+										@if ($consulta->status_atendimento === 'true')
+											Sim
+										@else
+											Não
+										@endif
+									</td>
 								</tr>
 							@endforeach
 						@endisset
