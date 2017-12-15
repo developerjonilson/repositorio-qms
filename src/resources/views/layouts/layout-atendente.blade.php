@@ -18,6 +18,9 @@
 	<link rel="stylesheet" href="/css/my-style.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="/css/demo.css">
+	<link rel="stylesheet" href="/css/sweetalert2.min.css">
+
+	<link rel="stylesheet" href="/css/bootstrap-toggle/bootstrap-toggle.min.css">
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
@@ -57,7 +60,7 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="">
-							<a><i class="lnr lnr-clock"></i> <span class="hora"></span></a>
+							<a><i class="lnr lnr-calendar-full"></i> <span class="data_hoje"></span></a>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
@@ -93,17 +96,9 @@
 				<nav>
 					<ul class="nav">
 						<!-- meus itens meu -->
-						<li><a href="{{action('AtendenteController@index')}}" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+						<li><a href="{{action('AtendenteController@index')}}" class="active" id="home"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
 
-						<li>
-							<a href="#subAtendente" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Consultas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subAtendente" class="collapse ">
-								<ul class="nav">
-									<li><a href="#" class="">Cadastrar</a></li>
-									<li><a href="#" class="">Listar</a></li>
-								</ul>
-							</div>
-						</li>
+						<li><a href="{{action('AtendenteController@consultas')}}" class="" id="consultas"><i class="lnr lnr-heart"></i> <span>Consultas</span></a></li>
 
 						<li>
 								<a href="{{ route('logout') }}"	onclick="event.preventDefault();
@@ -151,18 +146,33 @@
 	<script src="/scripts/klorofil-common.js"></script>
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
-	<script src="/scripts/moment.js"></script>
-	{{-- <script src="/scripts/moment-with-locales.js"></script> --}}
+	{{-- <script src="/scripts/moment.js"></script> --}}
+	<script src="/scripts/moment-with-locales.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>
+	<script src="/scripts/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 	<script src="/scripts/script.js"></script>
+	<script src="/scripts/sweetalert2.min.js"></script>
 
+	{{-- @yield('pos-script')
+	<script>
+		$(document).ready(function () {
+			moment.locale('pt-br');
+
+			$('.data_hoje').html(moment().format('LL'));
+
+			@yield('scripts')
+		});
+	</script> --}}
 	@yield('pos-script')
 	<script>
-		moment.locale('pt-br');
+	moment.locale('pt-BR');
 
-		$('.hora').html(moment().format('llll'));
+	$('.data_hoje').html(moment().format('LL'));
+
+	@yield('scripts')
+
 	</script>
 
 </body>

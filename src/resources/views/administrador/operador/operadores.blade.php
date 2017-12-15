@@ -590,7 +590,7 @@
             swal({
               position: 'top',
               title: 'Excluído!',
-              text: 'O operador foi excluída com sucesso!',
+              text: 'O operador foi excluído com sucesso!',
               type: 'success'
             }).then(function (result) {
               $('.loading').fadeOut(700).removeClass('hidden');

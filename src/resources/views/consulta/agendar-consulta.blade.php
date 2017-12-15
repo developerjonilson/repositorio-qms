@@ -3,6 +3,13 @@
 @section('conteudo')
 
 	<div class="row">
+    <ol class="breadcrumb">
+      <li><a href="{{ action('OperadorController@index') }}">Operador</a></li>
+      <li class="active">Agendar Consulta</li>
+    </ol>
+  </div>
+
+	<div class="row">
 		<div class="col-md-12">
 			<!-- PANEL HEADLINE -->
 			<div class="panel panel-headline">

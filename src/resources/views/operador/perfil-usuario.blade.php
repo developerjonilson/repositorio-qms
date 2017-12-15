@@ -49,7 +49,7 @@
 				@if (isset($status) && $status === 1)
 					<div class="alert alert-success alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<i class="fa fa-times-circle"></i> Informações foram alteradas com sucesso!
+						<i class="fa fa-check-circle"></i> Informações foram alteradas com sucesso!
 					</div>
 				@else
 					@if (isset($status) && $status === 2)

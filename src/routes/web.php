@@ -29,7 +29,20 @@ Route::post('/administrador/editar-operador', 'AdministradorController@editarOpe
 Route::post('/administrador/excluir-operador', 'AdministradorController@excluirOperador')->name('administrador.excluir-operador');
 
 Route::get('/administrador/atendentes', 'AdministradorController@atendentes')->name('administrador.atendentes');
+Route::get('/administrador/get-atendentes', 'AdministradorController@getAtendente')->name('administrador.get-atendentes');
+Route::get('/administrador/ver-atendente/{id}', 'AdministradorController@verAtendente')->name('administrador.ver-atendente');
+Route::post('/administrador/cadastrar-atendente', 'AdministradorController@cadastrarAtendente')->name('administrador.cadastrar-atendente');
+Route::post('/administrador/editar-atendente', 'AdministradorController@editarAtendente')->name('administrador.editar-atendente');
+Route::post('/administrador/excluir-atendente', 'AdministradorController@excluirAtendente')->name('administrador.excluir-atendente');
+
+
 Route::get('/administrador/administradores', 'AdministradorController@administradores')->name('administrador.administradores');
+Route::get('/administrador/get-administradores', 'AdministradorController@getAdministrador')->name('administrador.get-administradores');
+Route::get('/administrador/ver-administrador/{id}', 'AdministradorController@verAdministrador')->name('administrador.ver-administrador');
+Route::post('/administrador/cadastrar-administrador', 'AdministradorController@cadastrarAdministrador')->name('administrador.cadastrar-administrador');
+Route::post('/administrador/editar-administrador', 'AdministradorController@editarAdministrador')->name('administrador.editar-administrador');
+Route::post('/administrador/excluir-administrador', 'AdministradorController@excluirAdministrador')->name('administrador.excluir-administrador');
+
 
 //rotas de medico:
 Route::get('/administrador/medicos', 'AdministradorController@medicos')->name('administrador.medicos');
@@ -57,7 +70,16 @@ Route::get('/administrador/medicos/calendario-atendimento/ver/{medico_id}', 'Adm
 Route::post('/administrador/medicos/calendario-atendimento/cadastrar', 'AdministradorController@calendarioCadastrar')->name('administrador.calendario.cadastrar');
 Route::post('/administrador/medicos/calendario-atendimento/excluir', 'AdministradorController@calendarioExcluir')->name('administrador.calendario.excluir');
 
+//rotas de relatorios:
+Route::get('/administrador/get-medicos/{idEspecialidade}', 'AdministradorController@getMedicos');
+Route::get('/administrador/relatorio-diario', 'AdministradorController@relatorioDiario')->name('administrador.relatorio-diario');
+Route::get('/administrador/relatorio-mensais', 'AdministradorController@relatorioMensal')->name('administrador.relatorio-mensal');
+Route::get('/administrador/relatorios/filter', 'AdministradorController@relatoriosFilter')->name('administrador.relatorio_filter');
+Route::get('/administrador/relatorios/filter-mensal', 'AdministradorController@relatoriosFilterMensal')->name('administrador.relatorio_filter_mensal');
+Route::post('/administrador/relatorio-diario-pdf', 'AdministradorController@relatorioPdf')->name('administrador.relatorio_diario_pdf');
+Route::post('/administrador/relatorio-mensal-pdf', 'AdministradorController@relatorioMensalPdf')->name('administrador.relatorio_mensal_pdf');
 
+Route::get('/administrador/get-meses/{ano}', 'AdministradorController@getMeses')->name('atendente.meses');
 
 
 
@@ -116,6 +138,13 @@ Route::post('/atendente/update-password', 'AtendenteController@updatePassword');
 Route::get('/atendente/perfil', 'AtendenteController@perfilUsuario');
 Route::post('/atendente/alterar-dados', 'AtendenteController@alterProfile');
 
+Route::get('/atendente/consultas', 'AtendenteController@consultas')->name('atendente.consultas');
+Route::get('/atendente/get-medicos/{idEspecialidade}', 'AtendenteController@getMedicos')->name('atendente.medicos');
+Route::get('/atendente/especialidade/{idEspecialidade}/medico/{idMedico}', 'AtendenteController@getPeriodos')->name('atendente.periodos');
+Route::post('/atendente/consulta/listar-atendimentos', 'AtendenteController@listarAtendimentos')->name('atendente.listar_atendimentos');
+Route::post('/atendente/consulta/gerar-pdf', 'AtendenteController@gerarPdf')->name('atendente.gerar_pdf');
+
+Route::post('/atendente/status', 'AtendenteController@status')->name('atendente.status');
 
 
 //   -------------------    Rotas do manual do sistema    -------------------------------------------------

@@ -1,11 +1,5 @@
 $(document).ready(function () {
 
-  // $('div[data-toggle="datepicker"]').datepicker({
-  //   language: 'pt-BR',
-  //   autoclose: true,
-  //   format: 'dd/mm/yyyy'
-  // });
-
   $(window).on('load', function() {
     let pathname = window.location.pathname.split('/')
     // console.log(pathname)
@@ -60,9 +54,49 @@ $(document).ready(function () {
         }
       }
     } else {
-
-      //$('#home').addClass('active')
-      //colocar outros usuarios
+      if (pathname[1]==='administrador') {
+        // $('#home').addClass('active')
+        // $('#home').removeClass('active')
+        switch (pathname[2]) {
+          case 'atendentes':
+            $('#home').removeClass('active')
+            $('#atendentes').removeClass('collapsed')
+            $('#atendentes').addClass('active')
+            break;
+          case 'operadores':
+            $('#home').removeClass('active')
+            $('#operadores').removeClass('collapsed')
+            $('#operadores').addClass('active')
+            break;
+          case 'administradores':
+            $('#home').removeClass('active')
+            $('#administradores').removeClass('collapsed')
+            $('#administradores').addClass('active')
+            break;
+          case 'medicos':
+            $('#home').removeClass('active')
+            $('#medicos').removeClass('collapsed')
+            $('#medicos').addClass('active')
+            break;
+          case 'especialidades':
+            $('#home').removeClass('active')
+            $('#especialidades').removeClass('collapsed')
+            $('#especialidades').addClass('active')
+            break;
+          case 'relatorio-diario':
+            $('#home').removeClass('active')
+            $('#relatorios').removeClass('collapsed')
+            $('#relatorios').addClass('active')
+            $('#subRelatios').addClass('in')
+            break;
+          case 'relatorio-mensais':
+            $('#home').removeClass('active')
+            $('#relatorios').removeClass('collapsed')
+            $('#relatorios').addClass('active')
+            $('#subRelatios').addClass('in');
+            break;
+        }
+      }
     }
   })
 

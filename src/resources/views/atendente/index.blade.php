@@ -1,7 +1,6 @@
 @extends('layouts.layout-atendente')
 
 @section('conteudo')
-
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<h3 class="panel-title">Visão Geral</h3>
@@ -22,7 +21,6 @@
 						<span class="icon"><i class="fa fa-users"></i></span>
 						<p>
 							<span class="number">{{$pacientes}}</span>
-							{{-- <span class="number">1.000.000.000.000</span> --}}
 							<span class="title">Pacientes</span>
 						</p>
 					</div>

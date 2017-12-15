@@ -354,11 +354,12 @@
       </div>
   </form>
 
-  <form class="" action="{{ route('administrador.cadastrar-especialidade-medico') }}" method="post" id="add_especialdiades">
+  <form class="" action="{{ route('administrador.cadastrar-especialidade-medico') }}" method="post" id="add_especialdiades" name="add_especialdiades">
     {{ csrf_field() }}
 
     <input type="hidden" name="medico_id" value="{{ old('medico_id') }}">
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalEspecialidades"  id="modal_especialidades" data-backdrop="static"  data-keyboard="false">
+    {{-- <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="model_new_atendimento" data-keyboard="false"> --}}
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal_add_especialidades" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -700,20 +701,18 @@
     };
 
     $('#btn_especialidade').click(function() {
-      $('#modal_actions_doctor').modal('hide');
-
-      let id = $('#form_actions_doctor input[name="medico_id"]').val();
-      $('#add_especialdiades input[name="medico_id"]').attr('value', id);
-
-      especialidadesDoctor(id);
-
-      $('#modal_especialidades').modal('show');
+      let id
+      Promise.resolve(()=>{
+        $('#modal_actions_doctor').modal('hide');
+      }).then(()=>{
+        id = $('#form_actions_doctor input[name="medico_id"]').val();
+        $('#add_especialdiades input[name="medico_id"]').attr('value', id);
+      }).then(()=>{
+        especialidadesDoctor(id);
+      }).then(()=>{
+        $('#modal_add_especialidades').modal('show');
+      })
     });
-
-    {{-- $('#btnExcluirEspecialidade').click(function() {
-
-
-    }); --}}
 
     function excluirEspecialidadeDeMedico(id) {
 

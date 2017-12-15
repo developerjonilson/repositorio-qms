@@ -2,6 +2,13 @@
 
 @section('conteudo')
 
+	<div class="row">
+    <ol class="breadcrumb">
+      <li><a href="{{ action('OperadorController@index') }}">Operador</a></li>
+      <li class="active">Alterar Paciente</li>
+    </ol>
+  </div>
+
 	{{-- <h3 class="page-title">Cadastro de pacientes</h3> --}}
 	<div class="row">
 		<div class="col-md-12">

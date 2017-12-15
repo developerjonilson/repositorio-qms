@@ -58,7 +58,7 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="">
-							<a><i class="lnr lnr-clock"></i> <span class="hora"></span></a>
+							<a><i class="lnr lnr-calendar-full"></i> <span class="data_hoje"></span></a>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ajuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
@@ -165,7 +165,7 @@
 	<script src="/scripts/jquery.validate.js"></script>
 	<script src="/scripts/additional-methods.js"></script>
 	<script src="/scripts/moment.js"></script>
-	{{-- <script src="/scripts/moment-with-locales.js"></script> --}}
+	<script src="/scripts/moment-with-locales.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 	<script src="/scripts/validation.js"></script>
 	<script src="/scripts/validator.min.js"></script>
@@ -175,9 +175,9 @@
 	<script>
 		moment.locale('pt-br');
 
-		$('.hora').html(moment().format('llll'));
+		$('.data_hoje').html(moment().format('LL'));
 	</script>
-	
+
 </body>
 
 </html>
