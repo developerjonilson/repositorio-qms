@@ -21,46 +21,40 @@ A seguir são dispostos os requisitos do sistema, em forma de lista de tarefas, 
 - [x] Listar Pacientes
 - [x] Editar Pacientes
 - [x] Excluir Pacientes
-
 - [x] Agendar Consultas
 - [x] Listar Consultas
 - [x] Pesquisar Consultas
 - [x] Cancelar Agendamento
+
 
 ### Módulo Administrador
 - [x] Cadastrar atendente
 - [x] Listar atendente
 - [x] Editar atendente
 - [x] Excluir atendente
-
 - [x] Cadastrar administrador
 - [x] Listar administrador
 - [x] Editar administrador
 - [x] Excluir administrador
-
 - [x] Cadastrar operador
 - [x] Listar operador
 - [x] Editar operador
 - [x] Excluir operador
-
 - [x] Cadastrar especialidades médicas
 - [x] Listar especialidades médicas
 - [x] Excluir especialidades médicas
-
 - [x] Cadastrar médicos
 - [x] Listar médicos
 - [x] Editar médicos
 - [x] Excluir médicos
-
 - [x] Vincular médicos a especialidades
 - [x] Desvincular médicos a especialidades
-
 - [x] Cadastrar Calendário de Atendimento Médico
 - [x] Visualizar Calendário de Atendimento Médico
 - [x] Excluir Calendário de Atendimento Médico
-
 - [x] Relatório Diário de Consulas
 - [x] Relatório Personalizado de Consulas
+
 
 ### Módulo Atendente
 - [x] Listar consultas por diarias
