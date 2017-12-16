@@ -28,7 +28,7 @@
         <table id="operadores-table" class="table table-striped table-bordered table-responsive table-hover table-condensed data-table">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Código Operador</th>
               <th>Nome</th>
               <th>Email</th>
               <th width="150">Ações</th>

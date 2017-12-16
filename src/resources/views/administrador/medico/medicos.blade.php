@@ -28,7 +28,7 @@
         <table id="medicos_table" class="table table-striped table-bordered table-responsive table-hover table-condensed data-table">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Código Médico</th>
               <th>CRM</th>
               <th>Nome</th>
               <th width="250">Ações</th>

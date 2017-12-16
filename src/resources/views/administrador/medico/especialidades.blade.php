@@ -28,7 +28,7 @@
         <table id="especialidades_table" class="table table-striped table-bordered table-responsive table-hover table-condensed data-table">
           <thead>
             <tr>
-              <th>Código</th>
+              <th>Código Especialidade</th>
               <th>Nome</th>
               <th width="80">Ações</th>
             </tr>
