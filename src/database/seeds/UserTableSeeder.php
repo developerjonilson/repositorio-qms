@@ -13,6 +13,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
       DB::table('users')->insert([
+        'codigo'=> 1,
         'name'=> 'Bruno da Silva Santos',
         'email'=> 'bruno@gmail.com',
         'password'=> bcrypt('87654321'),
@@ -28,6 +29,7 @@ class UserTableSeeder extends Seeder
       ]);
 
       DB::table('users')->insert([
+        'codigo'=> 1,
         'name'=> 'Pedro da Silva',
         'email'=> 'pedro.adm@gmail.com',
         'password'=> bcrypt('87654321'),
@@ -44,6 +46,7 @@ class UserTableSeeder extends Seeder
       ]);
 
       DB::table('users')->insert([
+        'codigo'=> 1,
         'name'=> 'Marcos dos Santos',
         'email'=> 'marcos@gmail.com',
         'password'=> bcrypt('87654321'),

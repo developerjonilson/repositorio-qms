@@ -456,7 +456,7 @@
         serverSide: true,
         ajax: '{{ route('administrador.get-operadores') }}',
         columns: [
-            { data: 'id', name: 'id' },
+            { data: 'codigo', name: 'codigo' },
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
