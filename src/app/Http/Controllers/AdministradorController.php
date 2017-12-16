@@ -1711,14 +1711,6 @@ class AdministradorController extends Controller {
   }
 
   public function verCalendarioAtendimento($crm_medico) {
-    // $data = DB::table('periodos')
-    //     ->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
-    //     ->join('locals', 'periodos.local_id', '=', 'locals.id_local')
-    //     ->join('medicos', 'calendarios.medico_id', '=', 'medicos.id_medico')
-    //     ->join('especialidades', 'calendarios.especialidade_id', '=', 'especialidades.id_especialidade')
-    //     ->select('periodos.*', 'calendarios.*', 'locals.*', 'medicos.*', 'especialidades.*')
-    //     ->where('calendarios.medico_id', '=', $medico_id)
-    //     ->get();
     $data = DB::table('periodos')
         ->join('calendarios', 'periodos.calendario_id', '=', 'calendarios.id_calendario')
         ->join('locals', 'periodos.local_id', '=', 'locals.id_local')
@@ -1733,7 +1725,6 @@ class AdministradorController extends Controller {
 
   public function calendarioCadastrar(Request $request) {
     $id_medico = $request->medico_id;
-    // $id_medico = $medico->numero_crm;
     $id_especialidade = $request->especialidade;
     $id_local = $request->local;
     $medico_return = Medico::where('id_medico', $request->medico_id)->get()->first();
@@ -1955,7 +1946,10 @@ class AdministradorController extends Controller {
                       ->where('system_status', '=', $this->ativado);
 
    return Datatables::of($queries)
-       ->filter(function ($query) use ($request) {
+        ->editColumn('data', function ($queries) {
+          return $queries->data ? with(new Carbon($queries->data))->format('d/m/Y') : '';
+        })
+        ->filter(function ($query) use ($request) {
            if ($request->has('ano')) {
              $query->where('data', 'like', "{$request->get('ano')}%");
            }
@@ -1975,8 +1969,8 @@ class AdministradorController extends Controller {
            if ($request->has('periodo')) {
              $query->where('nome', 'like', "%{$request->get('periodo')}%");
            }
-       })
-       ->make(true);
+        })
+        ->make(true);
   }
 
   public function relatorioPdf(Request $request) {
