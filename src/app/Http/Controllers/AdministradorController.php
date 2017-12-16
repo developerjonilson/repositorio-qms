@@ -234,7 +234,8 @@ class AdministradorController extends Controller {
   }
 
   public function getOperador() {
-    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
+    // $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'operador');
+    $users = User::where('tipo', '=', 'operador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
       return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesOperator(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
@@ -327,7 +328,13 @@ class AdministradorController extends Controller {
                                       'telefone_dois' => $telefone_dois, ]);
 
 
+      $operadores = User::where('tipo', 'operador')->get();
+      $ultimo_operador = end($operadores);
+      $ultimo_operador_final = end($ultimo_operador);
+      $num_operadores_next = $ultimo_operador_final->codigo + 1;
+
       $user = new User();
+      $user->codigo = $num_operadores_next;
       $user->name = strtoupper($request->name);
       $user->data_nascimento = $data;
       $user->cpf = $cpf;
@@ -563,7 +570,8 @@ class AdministradorController extends Controller {
   }
 
   public function getAtendente() {
-    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'atendente');
+    // $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'atendente');
+    $users = User::where('tipo', '=', 'atendente');
 
     return Datatables::of($users)->addColumn('action', function($user) {
       return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesAtendente(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
@@ -656,7 +664,14 @@ class AdministradorController extends Controller {
                                       'telefone_dois' => $telefone_dois, ]);
 
 
+      // $user = new User();
+      $atendentes = User::where('tipo', 'atendente')->get();
+      $ultimo_atentende = end($atendentes);
+      $ultimo_atentende_final = end($ultimo_atentende);
+      $num_atendentes_next = $ultimo_atentende_final->codigo + 1;
+
       $user = new User();
+      $user->codigo = $num_atendentes_next;
       $user->name = strtoupper($request->name);
       $user->data_nascimento = $data;
       $user->cpf = $cpf;
@@ -892,7 +907,8 @@ class AdministradorController extends Controller {
   }
 
   public function getAdministrador() {
-    $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'administrador');
+    // $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'administrador');
+    $users = User::where('tipo', '=', 'administrador');
 
     return Datatables::of($users)->addColumn('action', function($user) {
       return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesAdministrador(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
@@ -985,7 +1001,14 @@ class AdministradorController extends Controller {
                                       'telefone_dois' => $telefone_dois, ]);
 
 
+      // $user = new User();
+      $administradores = User::where('tipo', 'administrador')->get();
+      $ultimo_administrador = end($administradores);
+      $ultimo_administrador_final = end($ultimo_administrador);
+      $num_administrador_next = $ultimo_administrador_final->codigo + 1;
+
       $user = new User();
+      $user->codigo = $num_administrador_next;
       $user->name = strtoupper($request->name);
       $user->data_nascimento = $data;
       $user->cpf = $cpf;
