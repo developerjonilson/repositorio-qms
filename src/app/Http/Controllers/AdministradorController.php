@@ -566,7 +566,7 @@ class AdministradorController extends Controller {
     $users = User::select(['id', 'name', 'email'])->where('tipo', '=', 'atendente');
 
     return Datatables::of($users)->addColumn('action', function($user) {
-      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesAdministrador(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
+      return '<button type="button" id="ver" class="btn btn-info btn-xs" value="'.$user->id.'" onclick="detalhesAtendente(this.value)"><i class="fa fa-eye"></i> Ver Detalhes</button> ';
     })->make(true);
   }
 
