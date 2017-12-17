@@ -20,7 +20,11 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						PDF fica aqui!
+
+						<div class="center" align="center">
+							<iframe class="manual" src="/docs/manual_atendente.pdf" width="1000" height="500" style="border: none;" align="middle"></iframe>
+						</div>
+
 					</div>
 				</div>
 			</div>

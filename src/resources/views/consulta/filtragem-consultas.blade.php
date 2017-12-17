@@ -25,7 +25,7 @@
 						<table class="table table-striped table-bordered table-responsive table-hover table-condensed">
 							<thead>
 								<tr>
-									<th>#</th>
+									<th>Código</th>
 									<th>Paciente</th>
 									<th>Especialidade</th>
 									<th>Médico</th>

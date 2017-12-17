@@ -105,7 +105,6 @@
 						<li><a id="administradores" href="{{ action('AdministradorController@administradores') }}" class=""><i class="fa fa-user-secret"></i> <span>Administradores</span></a></li>
 						<li><a id="medicos" href="{{ action('AdministradorController@medicos') }}" class=""><i class="fa fa-user-md"></i> <span>Médicos</span></a></li>
 						<li><a id="especialidades" href="{{ action('AdministradorController@especialidades') }}" class=""><i class="fa fa-medkit"></i> <span>Especialidades</span></a></li>
-						{{-- <li><a href="{{ action('AdministradorController@relatorios') }}" class=""><i class="fa fa-bar-chart"></i> <span>Relatórios</span></a></li> --}}
 						<li>
 							<a id="relatorios" href="#subRelatios" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart"></i> <span>Relatórios</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subRelatios" class="collapse ">
@@ -114,6 +113,16 @@
 									<li><a href="{{ action('AdministradorController@relatorioMensal') }}" class="">Mensal</a></li>
 								</ul>
 							</div>
+						</li>
+						<li>
+								<a href="{{ route('logout') }}"	onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
+										<i class="lnr lnr-exit"></i> <span>Sair</span>
+								</a>
+
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										{{ csrf_field() }}
+								</form>
 						</li>
 					</ul>
 
