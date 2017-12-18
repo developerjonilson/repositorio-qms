@@ -22,7 +22,7 @@
 					<div class="row">
 
 						<div class="center" align="center">
-							<iframe class="manual" src="/docs/manual_atendente.pdf" width="1000" height="500" style="border: none;" align="middle"></iframe>
+							<iframe class="manual" src="/docs/manual_administrador.pdf" width="1000" height="500" style="border: none;" align="middle"></iframe>
 						</div>
 
 					</div>
